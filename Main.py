@@ -9,9 +9,13 @@ class MyWindow(QtWidgets.QMainWindow):
         Loads the ui from the .ui file generated from the qt designer
         
         """
+        #Pass into the constructor
         super(MyWindow, self).__init__()
+        #Load the file 
         uic.loadUi('RobotUI.ui', self)
+        #Setup widgets and event handlers
         self.setupUI()
+        #Set it able to be seen
         self.show()
     def setupUI(self):
         """
@@ -49,8 +53,9 @@ class MyWindow(QtWidgets.QMainWindow):
         #Temporary command
         print('btnBegin clicked')
 
-    
+#Main
 if __name__ == '__main__':
+    #Launch the program
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
     sys.exit(app.exec_())
