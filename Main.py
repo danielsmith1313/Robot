@@ -12,15 +12,21 @@ class MyWindow(QtWidgets.QMainWindow):
         #Pass into the constructor
         super(MyWindow, self).__init__()
         #Declare fields
-        self.__lattitude = 0
-        self.__longitude = 0
-        self.__altitude = 0
+        self.__lattitude = 0            #Contains the lattitude from the user input
+        self.__longitude = 0            #Contains the longitude from the user input
+        self.__altitude = 0             #Contains the altitude from the user input
+        self.__coordString = ""
+        
         #Load the file 
         uic.loadUi('RobotUI.ui', self)
+        
         #Setup widgets and event handlers
         self.setupUI()
+        
         #Set it able to be seen
         self.show()
+    
+    
     def setupUI(self):
         """
         The widgets are already created, however in order to add listeners to them they must be manually added here
@@ -42,7 +48,8 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__lattitude = self.txtLattitude.text()
         self.__longitude = self.txtLongitude.text()
         self.__altitude = self.txtAltitude.text()
-        print(self.__lattitude, self.__longitude, self.__altitude)
+        
+
 
     #btnRemoveCoordinates
     def removeCoordinates(self):
