@@ -44,6 +44,9 @@
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
          <widget class="QFrame" name="frame">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -441,6 +444,9 @@
               <property name="text">
                <string>Begin Movement</string>
               </property>
+              <property name="autoDefault">
+               <bool>true</bool>
+              </property>
              </widget>
              <widget class="QPushButton" name="btnRemoveCoordinates">
               <property name="geometry">
@@ -453,6 +459,9 @@
               </property>
               <property name="text">
                <string>Remove Coordinates</string>
+              </property>
+              <property name="autoDefault">
+               <bool>true</bool>
               </property>
              </widget>
              <widget class="QLineEdit" name="txtAltitude">
@@ -497,6 +506,12 @@
               <property name="text">
                <string>Add Coordinates</string>
               </property>
+              <property name="autoDefault">
+               <bool>true</bool>
+              </property>
+              <property name="default">
+               <bool>true</bool>
+              </property>
              </widget>
              <widget class="QLabel" name="label_6">
               <property name="geometry">
@@ -522,6 +537,9 @@
               </property>
               <property name="text">
                <string>Clear All</string>
+              </property>
+              <property name="autoDefault">
+               <bool>true</bool>
               </property>
              </widget>
             </widget>
@@ -1205,6 +1223,7 @@
   <tabstop>btnAdd</tabstop>
   <tabstop>btnRemoveCoordinates</tabstop>
   <tabstop>btnBegin</tabstop>
+  <tabstop>btnClear</tabstop>
   <tabstop>lstPoints</tabstop>
   <tabstop>picFisheye</tabstop>
   <tabstop>picCanopy</tabstop>

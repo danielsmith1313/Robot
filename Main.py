@@ -15,6 +15,12 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__lattitude = 0            #Contains the lattitude from the user input
         self.__longitude = 0            #Contains the longitude from the user input
         self.__altitude = 0             #Contains the altitude from the user input
+        self.__strLattitude = ""            #Contains the lattitude from the user input
+        self.__strLongitude = ""            #Contains the longitude from the user input
+        self.__strAltitude = ""             #Contains the altitude from the user input
+        self.__lattitudeList = []           #Contains the lattitude of all inputs
+        self.__longitudeList = []           #Contains the longitude of all inputs
+        self.__altitudeList = []            #Contains the altitude of all the inputs
         self.__coordString = ""
         
         #Load the file 
@@ -34,7 +40,9 @@ class MyWindow(QtWidgets.QMainWindow):
         self.btnAdd.clicked.connect(self.addCoordinates)
         self.btnRemoveCoordinates.clicked.connect(self.removeCoordinates)
         self.btnBegin.clicked.connect(self.beginMovement)
-    
+        self.btnClear.clicked.connect(self.clearAll)
+        
+        
     #-----
     #Functions for event handlers
     #-----
@@ -48,8 +56,23 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__lattitude = self.txtLattitude.text()
         self.__longitude = self.txtLongitude.text()
         self.__altitude = self.txtAltitude.text()
-        
 
+        #Get the string version for output
+        self.__strAltitude = str(self.__altitude)
+        self.__strLattitude = str(self.__lattitude)
+        self.__strLongitude = str(self.__longitude)
+        
+        #Append the data onto a list for use in other algorithms
+        self.__lattitudeList.append(self.__lattitude)
+        self.__longitudeList.append(self.__longitude)
+        self.__altitudeList.append(self.__altitude)
+        
+        self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+        print(self.__coordString)
+        self.lstPoints.addItem(self.__coordString)
+        #Clears the inputs for the next input
+        self.clearData()
+        self.txtLattitude.setFocus()
 
     #btnRemoveCoordinates
     def removeCoordinates(self):
@@ -66,6 +89,32 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         #Temporary command
         print('btnBegin clicked')
+
+    #btnClear
+    def clearAll(self):
+        """
+        Whenever the btnClear is clicked (Clear All) trigger this action
+        """
+        #Clear the display
+        self.lstPoints.clear()
+        #Clear the data that was inputted to the text widgets
+        self.clearData()
+        #Reset the double data
+        self.lattitudeList = []
+        self.longitudeList = []
+        self.altitudeList = []
+
+    #Function clears the lattitude longitude and altitude input text widgets
+    def clearData(self):
+        #Reset the
+        self.txtLattitude.clear()
+        self.txtLongitude.clear()
+        self.txtAltitude.clear()
+
+        
+
+        
+        
 
 #Main
 if __name__ == '__main__':
