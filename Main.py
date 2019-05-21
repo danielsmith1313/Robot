@@ -11,6 +11,10 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         #Pass into the constructor
         super(MyWindow, self).__init__()
+        #Declare fields
+        self.__lattitude = 0
+        self.__longitude = 0
+        self.__altitude = 0
         #Load the file 
         uic.loadUi('RobotUI.ui', self)
         #Setup widgets and event handlers
@@ -34,8 +38,11 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Whenever the btnAdd is clicked (Add Coordinates) trigger this action
         """
-        #Temporary command
-        print('btnAdd clicked')
+        #Get Lattitude Longitude and Altitude from the three QLineEdits
+        self.__lattitude = self.txtLattitude.text()
+        self.__longitude = self.txtLongitude.text()
+        self.__altitude = self.txtAltitude.text()
+        print(self.__lattitude, self.__longitude, self.__altitude)
 
     #btnRemoveCoordinates
     def removeCoordinates(self):
