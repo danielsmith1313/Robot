@@ -24,7 +24,7 @@ class MoveRobot():
         Uses SSH to execute a remote file to take a forward faciing picture
         """
         SSHRemote.SendSignalToTakePicture()
-        FrontFacingCamera.TakePicture
+        FrontFacingCamera.TakePicture()
 
     def GetCurrentCoordinates(self):
         """
