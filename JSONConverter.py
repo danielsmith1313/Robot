@@ -10,7 +10,7 @@ class JSONConverter():
         Converts the file of points from the given path to the file
         """
         pass
-    def ListToJson(self, lattitude, longitude, altitude, filename):
+    def ListToJSON(self, lattitude, longitude, altitude):
         """
         Converts three lists to a JSON file
         """
@@ -21,7 +21,7 @@ class JSONConverter():
         with open("altitude.txt", "w") as f:
             json.dump(altitude, f, ensure_ascii= False)
         
-    def JSONToList(self, path):
+    def JSONToList(self):
         """
         Converts JSON to Longitude Lattitude and Altitude lists
         """

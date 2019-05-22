@@ -4,7 +4,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap
 from MoveRobot import MoveRobot
-
+from JSONConverter import JSONConverter
 
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -29,6 +29,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__noImagePath = "NoImageFound.png"
         self.__noImagePixmap = QPixmap(self.__noImagePath)
         self.__controller = MoveRobot()
+        self.__readwrite = JSONConverter()
         
         #Load the file 
         uic.loadUi('RobotUI.ui', self)
@@ -50,6 +51,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.btnClear.clicked.connect(self.clearAll)
         #Set the action listeners for the menu items
         self.actionSaveCoordinates.triggered.connect(self.save)
+        self.actionLoadCoordinates.triggered.connect(self.load)
         #Set a default picture when there are no images that can be read
         self.lblFisheyeNormal.setPixmap(self.__noImagePixmap)
         self.lblFisheyeProcessed.setPixmap(self.__noImagePixmap)
@@ -102,8 +104,6 @@ class MyWindow(QtWidgets.QMainWindow):
 
         self.lstPoints.takeItem(selectedIndex)
 
-        print(self.__lattitudeList)
-
     #btnBegin
     def beginMovement(self):
         """
@@ -121,14 +121,37 @@ class MyWindow(QtWidgets.QMainWindow):
         #Clear the data that was inputted to the text widgets
         self.clearData()
         #Reset the double data
-        self.lattitudeList = []
-        self.longitudeList = []
-        self.altitudeList = []
+        self.__lattitudeList = []
+        self.__longitudeList = []
+        self.__altitudeList = []
 
     #actionSaveCoordinates
     def save(self):
-        
+        """
+        Saves the current lists as a JSON text file
+        """
+        self.__readwrite.ListToJSON(self.__lattitudeList, self.__longitudeList, self.__altitudeList)
 
+    def load(self):
+        """
+        Loads the saved list to the application
+        """
+        #Update by reading the files
+        self.__readwrite.JSONToList()
+        self.clearAll
+        
+        #Read from the files
+        self.__lattitudeList = self.__readwrite.getLattitude()
+        self.__longitudeList = self.__readwrite.getLongitude()
+        self.__altitudeList = self.__readwrite.getAltitude()
+
+        for i in range(len(self.__lattitudeList)):
+            #Get the string version for output
+            self.__strAltitude = str(self.__altitudeList[i])
+            self.__strLattitude = str(self.__lattitudeList[i])
+            self.__strLongitude = str(self.__longitudeList[i])
+            self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+            self.lstPoints.addItem(self.__coordString)
     #Function clears the lattitude longitude and altitude input text widgets
     def clearData(self):
         """
