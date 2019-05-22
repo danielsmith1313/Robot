@@ -16,6 +16,8 @@ class MoveRobot():
         longitudeIn is a list of longitude points
         Both arguments must be the same length
         """
+        for i in lattitudeIn:
+            while (lattitudeIn[i] 
         pass
     
     def TakePhotos(self):
