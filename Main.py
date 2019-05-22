@@ -2,6 +2,8 @@ import sys
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 from PyQt5 import QtCore
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QPixmap
+from MoveRobot import MoveRobot
 
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -23,6 +25,9 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__longitudeList = []           #Contains the longitude of all inputs
         self.__altitudeList = []            #Contains the altitude of all the inputs
         self.__coordString = ""
+        self.__noImagePath = "NoImageFound.png"
+        self.__noImagePixmap = QPixmap(self.__noImagePath)
+        self.__controller = MoveRobot()
         
         #Load the file 
         uic.loadUi('RobotUI.ui', self)
@@ -42,12 +47,17 @@ class MyWindow(QtWidgets.QMainWindow):
         self.btnRemoveCoordinates.clicked.connect(self.removeCoordinates)
         self.btnBegin.clicked.connect(self.beginMovement)
         self.btnClear.clicked.connect(self.clearAll)
-        
+        #Set a default picture when there are no images that can be read
+        self.lblFisheyeNormal.setPixmap(self.__noImagePixmap)
+        self.lblFisheyeProcessed.setPixmap(self.__noImagePixmap)
+        self.lblFrontFacingNormal.setPixmap(self.__noImagePixmap)
+        self.lblFrontFacingProcessed.setPixmap(self.__noImagePixmap)
+
         
     #-----
     #Functions for event handlers
     #-----
-        
+
     #btnAdd
     def addCoordinates(self):
         """
@@ -75,6 +85,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.clearData()
         self.txtLattitude.setFocus()
 
+
     #btnRemoveCoordinates
     def removeCoordinates(self):
         """
@@ -88,8 +99,7 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Whenever the btnBegin is clicked (Begin Movement) trigger this action
         """
-        #Temporary command
-        print('btnBegin clicked')
+        self.__controller.FollowCoordinates(self.__lattitudeList, self.__longitudeList)
 
     #btnClear
     def clearAll(self):
@@ -117,7 +127,7 @@ class MyWindow(QtWidgets.QMainWindow):
         
         
 
-#Main
+#Test if this is being run directly or being imported as a class
 if __name__ == '__main__':
     #Launch the program
     app = QtWidgets.QApplication(sys.argv)

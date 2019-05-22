@@ -14,8 +14,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QScrollArea" name="scrollArea">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -37,8 +37,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1246</width>
-         <height>1078</height>
+         <width>1253</width>
+         <height>893</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -53,7 +53,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QGridLayout" name="gridLayout">
+          <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0" rowspan="2">
             <widget class="QGroupBox" name="groupBox_3">
              <property name="sizePolicy">
@@ -334,7 +334,7 @@
              </widget>
             </widget>
            </item>
-           <item row="0" column="1" colspan="2">
+           <item row="0" column="1">
             <widget class="QGroupBox" name="groupBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -389,7 +389,7 @@
              </widget>
             </widget>
            </item>
-           <item row="0" column="3" colspan="2">
+           <item row="0" column="2">
             <widget class="QGroupBox" name="groupBox_5">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -458,7 +458,7 @@
                </rect>
               </property>
               <property name="text">
-               <string>Remove Coordinates</string>
+               <string>Remove Last Coordinate</string>
               </property>
               <property name="autoDefault">
                <bool>true</bool>
@@ -544,7 +544,7 @@
              </widget>
             </widget>
            </item>
-           <item row="0" column="5" rowspan="2">
+           <item row="0" column="3" rowspan="2">
             <widget class="QListWidget" name="lstPoints">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -560,7 +560,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1" colspan="4">
+           <item row="1" column="1" colspan="2">
             <widget class="QGroupBox" name="groupBox_4">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -631,7 +631,7 @@
              </widget>
             </widget>
            </item>
-           <item row="2" column="0" colspan="6">
+           <item row="2" column="0" colspan="4">
             <widget class="Line" name="line_2">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -651,20 +651,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Normal:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1" rowspan="2" colspan="2">
+           <item row="3" column="1">
             <widget class="QLabel" name="label_4">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -683,7 +670,20 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="3" rowspan="2">
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Normal:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1" colspan="2">
             <widget class="QLabel" name="lblCurrentCanopyCoverage">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -705,7 +705,33 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="4" rowspan="2" colspan="2">
+           <item row="5" column="0">
+            <widget class="QLabel" name="lblFisheyeNormal">
+             <property name="minimumSize">
+              <size>
+               <width>331</width>
+               <height>241</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="2">
+            <widget class="QLabel" name="lblFisheyeProcessed">
+             <property name="minimumSize">
+              <size>
+               <width>420</width>
+               <height>241</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
             <widget class="QGroupBox" name="groupBox_2">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1015,38 +1041,6 @@
             </widget>
            </item>
            <item row="6" column="0">
-            <widget class="QGraphicsView" name="picFisheye">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>330</width>
-               <height>330</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1" colspan="3">
-            <widget class="QGraphicsView" name="picCanopy">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>330</width>
-               <height>330</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
             <widget class="QLabel" name="label_28">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
@@ -1059,20 +1053,7 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_17">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Normal:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
+           <item row="6" column="1">
             <widget class="QLabel" name="label_29">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1091,7 +1072,20 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="2" colspan="2">
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Normal:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1" colspan="2">
             <widget class="QLabel" name="lblOtherPictureData">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1113,29 +1107,29 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
-            <widget class="QGraphicsView" name="picFisheye_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="8" column="0">
+            <widget class="QLabel" name="lblFrontFacingNormal">
              <property name="minimumSize">
               <size>
-               <width>330</width>
-               <height>330</height>
+               <width>331</width>
+               <height>241</height>
               </size>
+             </property>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
-           <item row="9" column="1" colspan="3">
-            <widget class="QGraphicsView" name="picFisheye_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+           <item row="8" column="1" colspan="2">
+            <widget class="QLabel" name="lblFrontFacingProcessed">
+             <property name="minimumSize">
+              <size>
+               <width>420</width>
+               <height>241</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
@@ -1225,10 +1219,6 @@
   <tabstop>btnBegin</tabstop>
   <tabstop>btnClear</tabstop>
   <tabstop>lstPoints</tabstop>
-  <tabstop>picFisheye</tabstop>
-  <tabstop>picCanopy</tabstop>
-  <tabstop>picFisheye_2</tabstop>
-  <tabstop>picFisheye_3</tabstop>
  </tabstops>
  <resources/>
  <connections/>
