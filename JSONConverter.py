@@ -35,3 +35,9 @@ class JSONConverter():
     #-----
     #Getters and setters
     #-----
+    def getLongitude(self):
+        return self.__longitude
+    def getLattitude(self):
+        return self.__lattitude
+    def getAltitude(self):
+        return self.__altitude
