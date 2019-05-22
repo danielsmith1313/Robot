@@ -2,6 +2,7 @@ import sys
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 from PyQt5 import QtCore
 from PyQt5.QtCore import *
+
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
         """
