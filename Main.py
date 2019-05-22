@@ -91,8 +91,15 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Whenever the btnRemoveCoordinates is clicked (Remove Coordinates) trigger this action
         """
-        #Temporary command
-        print('btnRemoveCoordinates clicked')
+        selectedIndex = self.lstPoints.currentRow()
+
+        del(self.__lattitudeList[selectedIndex])
+        del(self.__longitudeList[selectedIndex])
+        del(self.__altitudeList[selectedIndex])
+
+        self.lstPoints.takeItem(selectedIndex)
+
+        print(self.__lattitudeList)
 
     #btnBegin
     def beginMovement(self):

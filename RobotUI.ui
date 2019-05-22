@@ -458,7 +458,7 @@
                </rect>
               </property>
               <property name="text">
-               <string>Remove Last Coordinate</string>
+               <string>Remove Coordinates</string>
               </property>
               <property name="autoDefault">
                <bool>true</bool>
