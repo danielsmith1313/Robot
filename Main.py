@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap
 from MoveRobot import MoveRobot
 
+
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
         """
@@ -47,6 +48,8 @@ class MyWindow(QtWidgets.QMainWindow):
         self.btnRemoveCoordinates.clicked.connect(self.removeCoordinates)
         self.btnBegin.clicked.connect(self.beginMovement)
         self.btnClear.clicked.connect(self.clearAll)
+        #Set the action listeners for the menu items
+        self.actionSaveCoordinates.triggered.connect(self.save)
         #Set a default picture when there are no images that can be read
         self.lblFisheyeNormal.setPixmap(self.__noImagePixmap)
         self.lblFisheyeProcessed.setPixmap(self.__noImagePixmap)
@@ -122,12 +125,20 @@ class MyWindow(QtWidgets.QMainWindow):
         self.longitudeList = []
         self.altitudeList = []
 
+    #actionSaveCoordinates
+    def save(self):
+        
+
     #Function clears the lattitude longitude and altitude input text widgets
     def clearData(self):
-        #Reset the
+        """
+        Resets the three input text boxes
+        """
         self.txtLattitude.clear()
         self.txtLongitude.clear()
         self.txtAltitude.clear()
+
+    
 
         
 
