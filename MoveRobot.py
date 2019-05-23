@@ -48,7 +48,7 @@ class MoveRobot():
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
         """
-        return self.__lattitude, self.__longitude, self.__altitude
+        return self.__lattitude, self.__longitude
 
     def GetCurrentTrackAngle(self):
         """
