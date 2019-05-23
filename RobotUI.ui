@@ -36,7 +36,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-38</y>
          <width>1253</width>
          <height>893</height>
         </rect>
@@ -603,7 +603,7 @@
                <string>Canopy Coverage Pictures?</string>
               </property>
              </widget>
-             <widget class="QCheckBox" name="chk1">
+             <widget class="QCheckBox" name="chkPictures2">
               <property name="geometry">
                <rect>
                 <x>240</x>
@@ -1208,7 +1208,7 @@
   <tabstop>rdoMedium</tabstop>
   <tabstop>rdoHigh</tabstop>
   <tabstop>chkPictures</tabstop>
-  <tabstop>chk1</tabstop>
+  <tabstop>chkPictures2</tabstop>
   <tabstop>chk2</tabstop>
   <tabstop>chk3</tabstop>
   <tabstop>txtLattitude</tabstop>

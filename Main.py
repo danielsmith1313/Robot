@@ -25,11 +25,16 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__lattitudeList = []           #Contains the lattitude of all inputs
         self.__longitudeList = []           #Contains the longitude of all inputs
         self.__altitudeList = []            #Contains the altitude of all the inputs
-        self.__coordString = ""
-        self.__noImagePath = "NoImageFound.png"
-        self.__noImagePixmap = QPixmap(self.__noImagePath)
-        self.__controller = MoveRobot()
-        self.__readwrite = JSONConverter()
+        self.__coordString = ""             #Contains the concantenated string to output to the application
+        self.__noImagePath = "NoImageFound.png"                 #Filename of the image for when there is no image
+        self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
+        self.__controller = MoveRobot()                         #MoveRobot object
+        self.__readwrite = JSONConverter()                      #JSONConverter object
+        self.__speedSetting                                     #Which speed rdo button is checked
+        self.__option1 = False                  #Wether the four options are selected
+        self.__option2 = False
+        self.__option3 = False
+        self.__option4 = False
         
         #Load the file 
         uic.loadUi('RobotUI.ui', self)
@@ -68,7 +73,7 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Whenever the btnAdd is clicked (Add Coordinates) trigger this action
         """
-        #Get Lattitude Longitude and Altitude from the three QLineEdits
+        #Get Lattitude Longitude and Altitude from the three QLineEdits text boxes
         self.__lattitude = self.txtLattitude.text()
         self.__longitude = self.txtLongitude.text()
         self.__altitude = self.txtAltitude.text()
@@ -83,8 +88,10 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__longitudeList.append(self.__longitude)
         self.__altitudeList.append(self.__altitude)
         
+        #Concantenate into a single string
         self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
-        print(self.__coordString)
+        
+        #Add to the list
         self.lstPoints.addItem(self.__coordString)
         #Clears the inputs for the next input
         self.clearData()
@@ -109,7 +116,21 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Whenever the btnBegin is clicked (Begin Movement) trigger this action
         """
-        self.__controller.FollowCoordinates(self.__lattitudeList, self.__longitudeList)
+        #Check for each speed setting
+        if(self.rdoLow.isChecked):
+            self.__speedSetting = 1
+        elif(self.rdoMedium.isChecked):
+            self.__speedSetting = 2
+        elif(self.rdoHigh.isChecked):
+            self.__speedSetting = 3
+        
+        #Check for each setting
+        if(self.__chkPictures.isChecked):
+            self.__option1 = True
+        if(self.__chkPictures2.isChecked):
+            self.__option2 = True
+            
+        self.__controller.FollowCoordinates(self.__lattitudeList, self.__longitudeList, self.__speedSetting, self.__option1, self.__option2, self.__option3, self.__option4)
 
     #btnClear
     def clearAll(self):
@@ -152,6 +173,9 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__strLongitude = str(self.__longitudeList[i])
             self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
             self.lstPoints.addItem(self.__coordString)
+
+        #Set focus to the beginning
+        self.txtLattitude.setFocus()
     #Function clears the lattitude longitude and altitude input text widgets
     def clearData(self):
         """
