@@ -1,10 +1,31 @@
 import sys
-from PyQt5 import uic, QtCore, QtGui, QtWidgets
-from PyQt5 import QtCore
-from PyQt5.QtCore import *
-from PyQt5.QtGui import QPixmap
-from MoveRobot import MoveRobot
-from JSONConverter import JSONConverter
+import traceback
+#Import external libraries
+try:
+    from PyQt5 import uic, QtCore, QtGui, QtWidgets
+    from PyQt5 import QtCore
+    from PyQt5.QtCore import *
+    from PyQt5.QtGui import QPixmap
+except ImportError:
+    print("Error importing the external library and components, make sure it is installed")
+    tb = traceback.format_exc()
+else:
+    tb = "No error"
+finally:
+    print(tb)
+#Import local classes
+try:
+    from MoveRobot import MoveRobot
+    from JSONConverter import JSONConverter
+except ImportError:
+    print("Error importing the MoveRobot.py file. Make sure the file is in the same directory")
+    tb = traceback.format_exc()
+else:
+    tb = "No error"
+finally:
+    print(tb)
+
+
 
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -30,14 +51,25 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
         self.__controller = MoveRobot()                         #MoveRobot object
         self.__readwrite = JSONConverter()                      #JSONConverter object
-        self.__speedSetting                                     #Which speed rdo button is checked
+        self.__speedSetting = 2                                     #Which speed rdo button is checked
         self.__option1 = False                  #Wether the four options are selected
         self.__option2 = False
         self.__option3 = False
         self.__option4 = False
         
         #Load the file 
-        uic.loadUi('RobotUI.ui', self)
+        try:
+            uic.loadUi('RobotUI.ui', self)
+        except TypeError:
+            print("Error loading the .ui file, wrong type specified")
+            tb = traceback.format_exc()
+        except Exception:
+            print("Error loading the .ui file, general failure")
+            tb = traceback.format_exc()
+        else:
+            tb = "No error"
+        finally:
+            print(tb)
         
         #Setup widgets and event handlers
         self.setupUI()
@@ -84,18 +116,22 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__strLongitude = str(self.__longitude)
         
         #Append the data onto a list for use in other algorithms
-        self.__lattitudeList.append(self.__lattitude)
-        self.__longitudeList.append(self.__longitude)
-        self.__altitudeList.append(self.__altitude)
+        try:
+            self.__lattitudeList.append(float(self.__lattitude))
+            self.__longitudeList.append(float(self.__longitude))
+            self.__altitudeList.append(float(self.__altitude))
+            #Concantenate into a single string
+            self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
         
-        #Concantenate into a single string
-        self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+            #Add to the list
+            self.lstPoints.addItem(self.__coordString)
+            #Clears the inputs for the next input
+            self.clearData()
+            self.txtLattitude.setFocus()
+        except Exception:
+            tb = traceback.format_exc()
+            print("Error: invalid input")
         
-        #Add to the list
-        self.lstPoints.addItem(self.__coordString)
-        #Clears the inputs for the next input
-        self.clearData()
-        self.txtLattitude.setFocus()
 
 
     #btnRemoveCoordinates

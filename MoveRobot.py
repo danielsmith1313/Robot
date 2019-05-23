@@ -1,14 +1,19 @@
 #Import libraries
 from SSHRemote import SSHRemote
 from FrontFacingCamera import FrontFacingCamera
+import numpy as np
 class MoveRobot():
     LOW_SPEED = 1
     MEDIUM_SPEED = 2
     HIGH_SPEED = 3
+    #Coordinate length +- of error before moving on to the next point
+    MARGIN_OF_ERROR = .01
     def __init__(self):
         #Declare variables
         self.__lattitude = []        #Coordinates imported from main
         self.__longitude = []
+        self.__currentLattitude = 0
+        self.__currentLongitude = 0
         
         
         self.__trackAngle = 0       #Bearing
@@ -21,6 +26,8 @@ class MoveRobot():
         longitudeIn is a list of longitude points
         Both lat and long arguments must be the same length
         """
+        self.__lattitude = lattitudeIn
+        self.__longitude = longitudeIn
         #Get the speed of the function
         if(speed == 1):
             self.__speed = self.LOW_SPEED
@@ -28,8 +35,21 @@ class MoveRobot():
             self.__speed = self.MEDIUM_SPEED
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
+
+        for i in range(len(lattitudeIn)):
+            #while the robot is not close enough to the specified point
+            while(self.__lattitude[i] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
+                #Move robot to the point
+                break
+            if(option1 == True):
+                SSHRemote.SendSignalToTakePicture()
+            if(option2 == True):
+                FrontFacingCamera.TakePicture
+
+
+
         
-        
+    
 
         
 
@@ -44,11 +64,14 @@ class MoveRobot():
         FrontFacingCamera.TakePicture()
         
 
-    def GetCurrentCoordinates(self):
+    def GetCurrentCoordinates(self, latorlong):
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
         """
-        return self.__lattitude, self.__longitude
+        if (latorlong == 0):
+            return self.__currentLattitude
+        elif(latorlong == 1):
+            return self.__currentLongitude
 
     def GetCurrentTrackAngle(self):
         """
