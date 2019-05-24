@@ -1,7 +1,19 @@
 #Import libraries
-from SSHRemote import SSHRemote
-from FrontFacingCamera import FrontFacingCamera
-import numpy as np
+import traceback
+try:
+    from SSHRemote import SSHRemote
+    from FrontFacingCamera import FrontFacingCamera
+except ImportError:
+    print("Error importing local classes")
+    tb = traceback.format_exc()
+    print(tb)
+try:
+    import numpy as np
+except ImportError:
+    print("Error importing external library, check to make sure it is installed")
+    tb = traceback.format_exc()
+    print(tb)
+
 class MoveRobot():
     LOW_SPEED = 1
     MEDIUM_SPEED = 2

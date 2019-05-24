@@ -9,10 +9,10 @@ try:
 except ImportError:
     print("Error importing the external library and components, make sure it is installed")
     tb = traceback.format_exc()
+    print(tb)
+
 else:
     tb = "No error"
-finally:
-    print(tb)
 #Import local classes
 try:
     from MoveRobot import MoveRobot
@@ -20,10 +20,10 @@ try:
 except ImportError:
     print("Error importing the MoveRobot.py file. Make sure the file is in the same directory")
     tb = traceback.format_exc()
+    print(tb)
 else:
     tb = "No error"
-finally:
-    print(tb)
+
 
 
 
@@ -131,6 +131,7 @@ class MyWindow(QtWidgets.QMainWindow):
         except Exception:
             tb = traceback.format_exc()
             print("Error: invalid input")
+            print(tb)
         
 
 
