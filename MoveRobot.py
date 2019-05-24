@@ -55,10 +55,10 @@ class MoveRobot():
                 break
             #Take the picture
             if(option1 == True):
-                SSHRemote.SendSignalToTakePicture()
+                SSHRemote.SendSignalToTakePicture("","")
             #Take the second picture
             if(option2 == True):
-                FrontFacingCamera.TakePicture
+                FrontFacingCamera.TakePicture()
 
 
 
