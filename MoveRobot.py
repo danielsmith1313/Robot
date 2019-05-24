@@ -26,13 +26,13 @@ class MoveRobot():
         #Declare variables
         self.__lattitude = []        #Coordinates imported from main
         self.__longitude = []
-        self.__currentLattitude = 0
+        self.__currentLattitude = 0 #Stores coordinate data
         self.__currentLongitude = 0
         
         
-        self.__desiredTrackAngle = 0
-        self.__trackAngle = 0       #Bearing
-        self.__speed = 0
+        self.__desiredTrackAngle = 0    #Stores the calculated bearing
+        self.__trackAngle = 0           #Bearing
+        self.__speed = 0                #Stores the speed to be ussed in the motor power
     
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
