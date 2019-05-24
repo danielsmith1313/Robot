@@ -91,9 +91,8 @@ class MyWindow(QtWidgets.QMainWindow):
         self.actionLoadCoordinates.triggered.connect(self.load)
         #Set a default picture when there are no images that can be read
         self.lblFisheyeNormal.setPixmap(self.__noImagePixmap)
-        self.lblFisheyeProcessed.setPixmap(self.__noImagePixmap)
         self.lblFrontFacingNormal.setPixmap(self.__noImagePixmap)
-        self.lblFrontFacingProcessed.setPixmap(self.__noImagePixmap)
+        
 
         
     #-----

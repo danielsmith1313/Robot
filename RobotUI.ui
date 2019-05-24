@@ -1050,6 +1050,7 @@
     <addaction name="actionSaveCoordinates"/>
     <addaction name="actionLoadCoordinates"/>
     <addaction name="actionExportData"/>
+    <addaction name="actionOpenConverter"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -1091,6 +1092,11 @@
   <action name="actionExportData">
    <property name="text">
     <string>Export Data</string>
+   </property>
+  </action>
+  <action name="actionOpenConverter">
+   <property name="text">
+    <string>Open External Data Converter</string>
    </property>
   </action>
  </widget>
