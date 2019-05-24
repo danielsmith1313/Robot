@@ -59,16 +59,7 @@ class MoveRobot():
             #Take the second picture
             if(option2 == True):
                 FrontFacingCamera.TakePicture()
-
-
-
-        
-    
-
-        
-
-            
-    
+                
     def TakePhotos(self):
         """
         Uses the FisheyeCam class to take a upward facing picture
