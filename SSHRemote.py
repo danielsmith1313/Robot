@@ -2,8 +2,7 @@ import subprocess
 
 class SSHRemote():
     def __init__(self):
-        self.__remoteIPAddress = ""
-        self.__scriptPath = ""
+        pass
 
     @classmethod
     def SendSignalToTakePicture(self, IPIn, scriptName):

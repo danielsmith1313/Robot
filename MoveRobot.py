@@ -47,7 +47,7 @@ class MoveRobot():
             self.__speed = self.MEDIUM_SPEED
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
-
+        #Go through every single point
         for i in range(len(lattitudeIn)):
             #while the robot is not close enough to the specified point
             while(self.__lattitude[i] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):

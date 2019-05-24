@@ -208,6 +208,7 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__strAltitude = str(self.__altitudeList[i])
             self.__strLattitude = str(self.__lattitudeList[i])
             self.__strLongitude = str(self.__longitudeList[i])
+            #Concantenate into an output
             self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
             self.lstPoints.addItem(self.__coordString)
 
