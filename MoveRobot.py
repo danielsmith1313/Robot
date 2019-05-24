@@ -1,5 +1,6 @@
 #Import libraries
 import traceback
+import time
 try:
     from SSHRemote import SSHRemote
     from FrontFacingCamera import FrontFacingCamera
@@ -9,6 +10,7 @@ except ImportError:
     print(tb)
 try:
     import numpy as np
+    from math import degrees, atan2
 except ImportError:
     print("Error importing external library, check to make sure it is installed")
     tb = traceback.format_exc()
@@ -28,6 +30,7 @@ class MoveRobot():
         self.__currentLongitude = 0
         
         
+        self.__desiredTrackAngle = 0
         self.__trackAngle = 0       #Bearing
         self.__speed = 0
     
@@ -40,6 +43,9 @@ class MoveRobot():
         """
         self.__lattitude = lattitudeIn
         self.__longitude = longitudeIn
+        #Add two 0 to each list to represent the end of the array
+        self.__lattitude.append(0)
+        self.__longitude.append(0)
         #Get the speed of the function
         if(speed == 1):
             self.__speed = self.LOW_SPEED
@@ -50,16 +56,33 @@ class MoveRobot():
         #Go through every single point
         for i in range(len(lattitudeIn)):
             #while the robot is not close enough to the specified point
-            while(self.__lattitude[i] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
-                #Move robot to the point
-                break
+            #MoveForward(self.__speed)
+            while(self.__lattitude[i+1] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
+                self.__desiredTrackAngle = self.CalculateBearing(i+1)
+                
+                if(self.__desiredTrackAngle < self.GetCurrentTrackAngle):
+                    #IncreaseRightTurn(x)
+                    #DecreaseLeftTurn(x)
+                    pass
+                elif(self.__desiredTrackAngle > self.GetCurrentTrackAngle):
+                    #IncreaseLeftTurn(x)
+                    #DecreaseLeftTurn(x)
+                    pass
+                time.sleep(.5)
+            #Stop()
             #Take the picture
             if(option1 == True):
                 SSHRemote.SendSignalToTakePicture("","")
             #Take the second picture
             if(option2 == True):
                 FrontFacingCamera.TakePicture()
-                
+    def CalculateBearing(self, indx):
+        """
+        Calculates the bearing (Degree on the earth) the current point to another
+        """
+        angle = degrees(atan2(self.__lattitude[indx] - self.GetCurrentCoordinates(0), self.__longitude[indx] - self.GetCurrentCoordinates(1)))
+        bearing1 = (angle + 360) % 360
+        return bearing1
     def TakePhotos(self):
         """
         Uses the FisheyeCam class to take a upward facing picture
