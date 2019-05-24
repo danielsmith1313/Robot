@@ -53,8 +53,10 @@ class MoveRobot():
             while(self.__lattitude[i] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
                 #Move robot to the point
                 break
+            #Take the picture
             if(option1 == True):
                 SSHRemote.SendSignalToTakePicture()
+            #Take the second picture
             if(option2 == True):
                 FrontFacingCamera.TakePicture
 
