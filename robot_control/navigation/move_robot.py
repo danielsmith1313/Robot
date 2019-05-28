@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
 from ssh_remote import SSHRemote as ssh
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
 from front_facing_camera import FrontFacingCamera as ffc
+from gps import GPS as ffc
 print(sys.path)    
 
 try:
