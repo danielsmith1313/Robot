@@ -13,7 +13,7 @@ class ImportImage():
         """
         self.__data = socket.recv(1024)
         self.__data = json.loads(self.__data.decode())
-
+        
         
     def GetImage(self):
         """

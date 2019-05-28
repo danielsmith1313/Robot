@@ -59,7 +59,7 @@ class MyWindow(QtWidgets.QMainWindow):
         
         #Load the file 
         try:
-            uic.loadUi('RobotUI.ui', self)
+            uic.loadUi('data/RobotUI.ui', self)
         except TypeError:
             print("Error loading the .ui file, wrong type specified")
             tb = traceback.format_exc()
