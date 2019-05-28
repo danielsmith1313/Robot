@@ -5,7 +5,7 @@ class SSHRemote():
         pass
 
     @classmethod
-    def SendSignalToTakePicture(self, IPIn, scriptName):
+    def SendSignalToRunScript(self, IPIn, scriptName):
         """
         Sends a signal to the second raspberry pi using ssh
         telling it to take a picture. 

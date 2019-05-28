@@ -88,7 +88,7 @@ class MoveRobot():
         Uses the FisheyeCam class to take a upward facing picture
         Uses SSH to execute a remote file to take a forward facing picture
         """
-        SSHRemote.SendSignalToTakePicture()
+        SSHRemote.SendSignalToRunScript()
         FrontFacingCamera.TakePicture()
         
 

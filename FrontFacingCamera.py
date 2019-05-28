@@ -15,6 +15,3 @@ class FrontFacingCamera():
         """
         pass
 
-#Put code here to run this script
-FrontFacingCamera.TakePicture()
-FrontFacingCamera.ExportImage()
