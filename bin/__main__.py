@@ -14,6 +14,7 @@ except ImportError:
 else:
     tb = "No error"
 #Import local classes
+sys.path.append("..")
 from robot_control.MoveRobot import MoveRobot
 from robot_control.JSONConverter import JSONConverter
 from robot_control.SSHRemote import SSHRemote
@@ -40,7 +41,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__longitudeList = []           #Contains the longitude of all inputs
         self.__altitudeList = []            #Contains the altitude of all the inputs
         self.__coordString = ""             #Contains the concantenated string to output to the application
-        self.__noImagePath = "data/NoImageFound.png"                 #Filename of the image for when there is no image
+        self.__noImagePath = "../data/NoImageFound.png"                 #Filename of the image for when there is no image
         self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
         self.__controller = MoveRobot()                         #MoveRobot object
         self.__readwrite = JSONConverter()                      #JSONConverter object
@@ -52,7 +53,7 @@ class MyWindow(QtWidgets.QMainWindow):
         
         #Load the file 
         try:
-            uic.loadUi('data/RobotUI.ui', self)
+            uic.loadUi('../data/RobotUI.ui', self)
         except TypeError:
             print("Error loading the .ui file, wrong type specified")
             tb = traceback.format_exc()
