@@ -2,7 +2,7 @@
 import os
 
 #SSH remote class
-from SSHRemote import SSHRemote
+from .SSHRemote import SSHRemote
 #Low level networking library
 import socket
 import json

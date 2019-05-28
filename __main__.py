@@ -14,16 +14,9 @@ except ImportError:
 else:
     tb = "No error"
 #Import local classes
-try:
-    from MoveRobot import MoveRobot
-    from JSONConverter import JSONConverter
-except ImportError:
-    print("Error importing the MoveRobot.py file. Make sure the file is in the same directory")
-    tb = traceback.format_exc()
-    print(tb)
-else:
-    tb = "No error"
-
+from robot_control.MoveRobot import MoveRobot
+from robot_control.JSONConverter import JSONConverter
+from robot_control.SSHRemote import SSHRemote
 
 
 
@@ -47,7 +40,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__longitudeList = []           #Contains the longitude of all inputs
         self.__altitudeList = []            #Contains the altitude of all the inputs
         self.__coordString = ""             #Contains the concantenated string to output to the application
-        self.__noImagePath = "NoImageFound.png"                 #Filename of the image for when there is no image
+        self.__noImagePath = "data/NoImageFound.png"                 #Filename of the image for when there is no image
         self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
         self.__controller = MoveRobot()                         #MoveRobot object
         self.__readwrite = JSONConverter()                      #JSONConverter object
@@ -161,9 +154,9 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__speedSetting = 3
         
         #Check for each setting
-        if(self.__chkPictures.isChecked):
+        if(self.chkPictures.isChecked):
             self.__option1 = True
-        if(self.__chkPictures2.isChecked):
+        if(self.chkPictures2.isChecked):
             self.__option2 = True
             
         self.__controller.FollowCoordinates(self.__lattitudeList, self.__longitudeList, self.__speedSetting, self.__option1, self.__option2, self.__option3, self.__option4)

@@ -2,8 +2,8 @@
 import traceback
 import time
 try:
-    from SSHRemote import SSHRemote
-    from FrontFacingCamera import FrontFacingCamera
+    from .SSHRemote import SSHRemote
+    from .FrontFacingCamera import FrontFacingCamera
 except ImportError:
     print("Error importing local classes")
     tb = traceback.format_exc()
