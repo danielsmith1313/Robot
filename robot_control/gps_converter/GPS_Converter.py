@@ -22,7 +22,7 @@ class MyWindow(QtWidgets.QMainWindow):
     
         
         #Load the file 
-        uic.loadUi('GPSConverter.ui', self)
+        uic.loadUi('../../resources/gps_converter.ui', self)
         
         #Setup widgets and event handlers
         self.setupUI()
@@ -45,6 +45,8 @@ class MyWindow(QtWidgets.QMainWindow):
         self.actionLoad_New_File.triggered.connect(self.loadNewFile)
         self.actionSave.triggered.connect(self.showSaveDialog)
         self.actionExit.triggered.connect(self.exit)
+        self.actionAbout.triggered.connect(self.about)
+
         
     #-----
     #Functions for event handlers
@@ -181,6 +183,13 @@ class MyWindow(QtWidgets.QMainWindow):
             sys.exit()
         else:
             pass
+
+
+    def about(self):
+        buttonAbout = QMessageBox.question(self, 'About This Application',
+                                           "GPS Converter. \nVersion 1.0.0 \n\nThis program is to help read texts from specified files \nand convert the content to GPS coordinates.",
+                                           QMessageBox.Ok, QMessageBox.Ok)
+        
 
 #Test if this is being run directly or being imported as a class
 if __name__ == '__main__':
