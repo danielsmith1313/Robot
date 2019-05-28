@@ -16,9 +16,9 @@ else:
 #Import local classes
 sys.path.append("..")
 #Import from the local package
-from robot_control.MoveRobot import MoveRobot
-from robot_control.JSONConverter import JSONConverter
-from robot_control.SSHRemote import SSHRemote
+from robot_control.navigation.move_robot import MoveRobot
+from robot_control.file_handling.json_converter import JSONConverter
+from robot_control.network.ssh_remote import SSHRemote
 
 
 

@@ -1,13 +1,20 @@
 #Import libraries
 import traceback
 import time
-try:
-    from .SSHRemote import SSHRemote
-    from .FrontFacingCamera import FrontFacingCamera
-except ImportError:
-    print("Error importing local classes")
-    tb = traceback.format_exc()
-    print(tb)
+import sys
+import os
+
+
+
+    #Note: due to python not indexing folders other than the executable and current class
+    #the parent folder must be manually appended to the system path. 
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
+from ssh_remote import SSHRemote as ssh
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
+from front_facing_camera import FrontFacingCamera as ffc
+print(sys.path)    
+
 try:
     import numpy as np
     from math import degrees, atan2
@@ -72,10 +79,10 @@ class MoveRobot():
             #Stop()
             #Take the picture
             if(option1 == True):
-                SSHRemote.SendSignalToTakePicture("","")
+                ssh.SendSignalToRunScript("","")
             #Take the second picture
             if(option2 == True):
-                FrontFacingCamera.TakePicture()
+                ffc.TakePicture()
     def CalculateBearing(self, indx):
         """
         Calculates the bearing (Degree on the earth) the current point to another
@@ -88,8 +95,8 @@ class MoveRobot():
         Uses the FisheyeCam class to take a upward facing picture
         Uses SSH to execute a remote file to take a forward facing picture
         """
-        SSHRemote.SendSignalToRunScript()
-        FrontFacingCamera.TakePicture()
+        ssh.SendSignalToRunScript()
+        ffc.TakePicture()
         
 
     def GetCurrentCoordinates(self, latorlong):
