@@ -42,8 +42,8 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__longitudeList = []           #Contains the longitude of all inputs
         self.__altitudeList = []            #Contains the altitude of all the inputs
         self.__coordString = ""             #Contains the concantenated string to output to the application
-        self.__noImagePath = "../data/no_image.png"                 #Filename of the image for when there is no image
-        self.__guiPath = "../data/robot_ui.ui"
+        self.__noImagePath = "../resources/no_image.png"                 #Filename of the image for when there is no image
+        self.__guiPath = "../resources/robot_ui.ui"
         self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
         self.__controller = MoveRobot()                         #MoveRobot object
         self.__readwrite = JSONConverter("../data/longitude.txt", "../data/lattitude.txt","../data/altitude.txt")                      #JSONConverter object
