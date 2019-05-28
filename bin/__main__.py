@@ -15,6 +15,7 @@ else:
     tb = "No error"
 #Import local classes
 sys.path.append("..")
+#Import from the local package
 from robot_control.MoveRobot import MoveRobot
 from robot_control.JSONConverter import JSONConverter
 from robot_control.SSHRemote import SSHRemote
@@ -45,7 +46,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__guiPath = "../data/robot_ui.ui"
         self.__noImagePixmap = QPixmap(self.__noImagePath)      #Convert the image to a QPixmap
         self.__controller = MoveRobot()                         #MoveRobot object
-        self.__readwrite = JSONConverter()                      #JSONConverter object
+        self.__readwrite = JSONConverter("../data/longitude.txt", "../data/lattitude.txt","../data/altitude.txt")                      #JSONConverter object
         self.__speedSetting = 2                                     #Which speed rdo button is checked
         self.__option1 = False                  #Wether the four options are selected
         self.__option2 = False
@@ -115,7 +116,7 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__longitudeList.append(float(self.__longitude))
             self.__altitudeList.append(float(self.__altitude))
             #Concantenate into a single string
-            self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+            self.concantenateString()
         
             #Add to the list
             self.lstPoints.addItem(self.__coordString)
@@ -203,7 +204,7 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__strLattitude = str(self.__lattitudeList[i])
             self.__strLongitude = str(self.__longitudeList[i])
             #Concantenate into an output
-            self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+            self.concantenateString
             self.lstPoints.addItem(self.__coordString)
 
         #Set focus to the beginning
@@ -216,6 +217,12 @@ class MyWindow(QtWidgets.QMainWindow):
         self.txtLattitude.clear()
         self.txtLongitude.clear()
         self.txtAltitude.clear()
+
+    def concantenateString(self):
+        """
+        Concantenates three data sets together
+        """
+        self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
 
     
 

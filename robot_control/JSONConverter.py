@@ -1,10 +1,14 @@
 import json
 
 class JSONConverter():
-    def __init__(self):
+    def __init__(self, longitudePath, lattitudePath, altitudePath):
         self.__lattitude = []
         self.__longitude = []
         self.__altitude = []
+        self.__longitudePath = longitudePath
+        self.__lattitudePath = lattitudePath
+        self.__altitudePath = altitudePath
+
     def VehicleDataToJSON(self, path):
         """
         Converts the file of points from the given path to the file
@@ -14,22 +18,22 @@ class JSONConverter():
         """
         Converts three lists to a JSON file
         """
-        with open("data/lattitude.txt", "w") as f:
+        with open(self.__lattitudePath, "w") as f:
             json.dump(lattitude, f, ensure_ascii=False)
-        with open("data/longitude.txt", "w") as f:
+        with open(self.__longitudePath, "w") as f:
             json.dump(longitude, f, ensure_ascii=False)
-        with open("data/altitude.txt", "w") as f:
+        with open(self.__altitudePath, "w") as f:
             json.dump(altitude, f, ensure_ascii= False)
         
     def JSONToList(self):
         """
         Converts JSON to Longitude Lattitude and Altitude lists
         """
-        with open("data/lattitude.txt") as f:
+        with open(self.__lattitudePath) as f:
             self.__lattitude = json.load(f)
-        with open("data/longitude.txt") as f:
+        with open(self.__longitudePath) as f:
             self.__longitude = json.load(f)
-        with open("data/altitude.txt") as f:
+        with open(self.__altitudePath) as f:
             self.__altitude = json.load(f)
 
     #-----
