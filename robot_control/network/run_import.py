@@ -1,3 +1,3 @@
 from .ImportImage import ImportImage
 imageHandler = ImportImage()
-imageHandler.RecieveImage
+imageHandler.RecieveImage()
