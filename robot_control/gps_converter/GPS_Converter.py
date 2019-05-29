@@ -1,3 +1,11 @@
+#Filename: gps_converter.py
+#Author: Joseph Oboamah
+#Created: 5/24/2019
+#Last edited: 5/29/2019 by Joseph Oboamah
+#TODO: read raw GPS coordinates from csv file, find the median of pairing
+#      coordinates and save the coordinates to a text file to direct the
+#      movement of the robot.
+
 #Importing the necessary modules and libraries to help access
 #specific functions for this program
 import sys
