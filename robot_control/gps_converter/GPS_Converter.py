@@ -1,3 +1,5 @@
+#Importing the necessary modules and libraries to help access
+#specific functions for this program
 import sys
 import csv
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
@@ -21,7 +23,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.__coordString = ""             #Contains the concantenated string to output to the application
     
         
-        #Load the file 
+        #Load the graphical ui file 
         uic.loadUi('../../resources/gps_converter.ui', self)
         
         #Setup widgets and event handlers
@@ -32,9 +34,7 @@ class MyWindow(QtWidgets.QMainWindow):
     
     
     def setupUI(self):
-        """
-        The widgets are already created, however in order to add listeners to them they must be manually added here
-        """
+        #The widgets are already created, however in order to add listeners to them they must be manually added here
         self.btnLoadNewFile.clicked.connect(self.loadNewFile)
         self.btnRemoveCoordinates.clicked.connect(self.removeCoordinates)
         self.btnConvertToGPSCoordinates.clicked.connect(self.convertToGPSCoordinates)
@@ -71,9 +71,13 @@ class MyWindow(QtWidgets.QMainWindow):
             self.loadList.addItem(self.__coordString)
         """
 
+        #Verify from the user if they want to load a new file
+        #because that will clear any data that already exists in the arrays for the coordinates
         buttonLoadFile = QMessageBox.question(self, 'Load New File',
                                               "Do you want to load a new file? \nDoing this will clear the existing data from the display boxes!",
                                               QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        #If the user chooses yes, open the file the user chooses and read the GPS coordinates from the file else do nothing
         if buttonLoadFile == QMessageBox.Yes:
             try:
                 self.clearAll()
@@ -160,7 +164,7 @@ class MyWindow(QtWidgets.QMainWindow):
                 pass
             
         except Exception as e:
-            print (e)
+            buttonMessage = QMessageBox.question(self, 'Error!', 'There were no GPS coordinates to save!', QMessageBox.Ok, QMessageBox.Ok)
 
     #btnClearAll
     def clearAll(self):
