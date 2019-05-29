@@ -11,7 +11,7 @@ import json
 
 #Declare variables
 recievingIP = ""                        #IP address of the raspberry pi
-filename = ""              #Path to the script
+fileName = ""              #Path to the script
 #Take picture here and export it to the other pi as an array
 pic = []
 
@@ -20,4 +20,4 @@ data = json.dumps({"A": pic})
 socket.send(data.encode)
 
 #Tell the socket to recieve data
-SSHRemote.SendSignalToRunScript(recievingIP,)
+SSHRemote.SendSignalToRunScript(recievingIP,fileName)
