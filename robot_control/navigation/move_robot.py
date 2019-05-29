@@ -1,3 +1,8 @@
+#Filename: move_robot.py
+#Author: Daniel Smith
+#Created: 5/23/2019
+#Last edited: 5/29/2019 by Daniel Smith
+
 #Import libraries
 import traceback
 import time
@@ -13,7 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
 from ssh_remote import SSHRemote as ssh
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
 from front_facing_camera import FrontFacingCamera as ffc
-from gps import GPS as ffc
+from gps_reader import GPSReader as ffc
 print(sys.path)    
 
 try:
@@ -25,6 +30,9 @@ except ImportError:
     print(tb)
 
 class MoveRobot():
+    """
+    This class is in charge of moving the robot to follow a set amount of poiints
+    """
     LOW_SPEED = 1
     MEDIUM_SPEED = 2
     HIGH_SPEED = 3
@@ -88,7 +96,9 @@ class MoveRobot():
         """
         Calculates the bearing (Degree on the earth) the current point to another
         """
+        #Calculate the bearing of two points
         angle = degrees(atan2(self.__lattitude[indx] - self.GetCurrentCoordinates(0), self.__longitude[indx] - self.GetCurrentCoordinates(1)))
+        #If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
     def TakePhotos(self):
@@ -104,6 +114,8 @@ class MoveRobot():
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
         """
+        #TODO: Use gps to get current coordinates
+        #Return based on which option was chosen
         if (latorlong == 0):
             return self.__currentLattitude
         elif(latorlong == 1):
@@ -113,5 +125,6 @@ class MoveRobot():
         """
         Returns the most recent track angle
         """
+        #TODO: use gps coordinates to get actual tracking
         return self.__trackAngle
     

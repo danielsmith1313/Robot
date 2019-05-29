@@ -1,7 +1,15 @@
+#Filename: import_image.py
+#Author: Daniel Smith
+#Created: 5/23/2019
+#Last edited: 5/29/2019 by Daniel Smith
+
 import socket
 import json
 
 class ImportImage():
+    """
+    This class is in charge of recieving socket data from an external source and saving it as a file
+    """
     def __init__(self):
         #Declare variables
         self.__data = []

@@ -1,3 +1,10 @@
+#Filename: fisheye_camera.py
+#Author: Daniel Smith
+#Created: 5/23/2019
+#Last edited: 5/29/2019 by Daniel Smith
+#TODO: Implement readings from the fisheye camera
+
+#Import libraries:
 #Operating system compatibility
 import os
 
