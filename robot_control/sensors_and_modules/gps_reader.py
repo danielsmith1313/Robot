@@ -12,6 +12,18 @@ class GPS:
         pass
     @ClassMethod
     def GetCurrentCoordinates(self, latorlong):
-        pass
+        """
+        Returns the most recent coordinates [lattitude, longitude, altitude]
+        """
+        #TODO: Use gps to get current coordinates
+        #Return based on which option was chosen
+        if (latorlong == 0):
+            return self.__currentLattitude
+        elif(latorlong == 1):
+            return self.__currentLongitude
     def GetCurrentTrackAngle(self):
-        pass
+        """
+        Returns the most recent track angle
+        """
+        #TODO: use gps coordinates to get actual tracking
+        return self.__trackAngle

@@ -18,7 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
 from ssh_remote import SSHRemote as ssh
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
 from front_facing_camera import FrontFacingCamera as ffc
-from gps_reader import GPSReader as ffc
+from gps_reader import GPS as gps
 print(sys.path)    
 
 try:
@@ -73,14 +73,14 @@ class MoveRobot():
         for i in range(len(lattitudeIn)):
             #while the robot is not close enough to the specified point
             #MoveForward(self.__speed)
-            while(self.__lattitude[i+1] < (self.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (self.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (self.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (self.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
+            while(self.__lattitude[i+1] < (gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
-                if(self.__desiredTrackAngle < self.GetCurrentTrackAngle):
+                if(self.__desiredTrackAngle < gps.GetCurrentTrackAngle()):
                     #IncreaseRightTurn(x)
                     #DecreaseLeftTurn(x)
                     pass
-                elif(self.__desiredTrackAngle > self.GetCurrentTrackAngle):
+                elif(self.__desiredTrackAngle > gps.GetCurrentTrackAngle()):
                     #IncreaseLeftTurn(x)
                     #DecreaseLeftTurn(x)
                     pass
@@ -97,7 +97,7 @@ class MoveRobot():
         Calculates the bearing (Degree on the earth) the current point to another
         """
         #Calculate the bearing of two points
-        angle = degrees(atan2(self.__lattitude[indx] - self.GetCurrentCoordinates(0), self.__longitude[indx] - self.GetCurrentCoordinates(1)))
+        angle = degrees(atan2(self.__lattitude[indx] - gps.GetCurrentCoordinates(0), self.__longitude[indx] - gps.GetCurrentCoordinates(1)))
         #If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
@@ -109,22 +109,3 @@ class MoveRobot():
         ssh.SendSignalToRunScript()
         ffc.TakePicture()
         
-
-    def GetCurrentCoordinates(self, latorlong):
-        """
-        Returns the most recent coordinates [lattitude, longitude, altitude]
-        """
-        #TODO: Use gps to get current coordinates
-        #Return based on which option was chosen
-        if (latorlong == 0):
-            return self.__currentLattitude
-        elif(latorlong == 1):
-            return self.__currentLongitude
-
-    def GetCurrentTrackAngle(self):
-        """
-        Returns the most recent track angle
-        """
-        #TODO: use gps coordinates to get actual tracking
-        return self.__trackAngle
-    
