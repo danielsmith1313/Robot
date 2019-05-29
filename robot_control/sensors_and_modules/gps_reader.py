@@ -10,7 +10,7 @@ class GPS:
     """
     def __init__():
         pass
-    @ClassMethod
+    @classmethod
     def GetCurrentCoordinates(self, latorlong):
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
