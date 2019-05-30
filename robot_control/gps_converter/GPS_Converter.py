@@ -63,21 +63,6 @@ class MyWindow(QtWidgets.QMainWindow):
                 
     #btnloadNewFile
     def loadNewFile(self):
-        
-        #Read from the files
-        """
-        self.__lattitudeList = [2,3,432,234,45,4546,897,5,7,32,234,432,234,45,4546,897]
-        self.__longitudeList = [2,3,5,7,32,234,44,234,87,67,900,432,234,45,4546,897]
-        self.__altitudeList = [2,32,34,56,32,234,55,234,45,65,897,432,234,45,4546,897]     
-
-        for i in range(len(self.__lattitudeList)):
-            #Get the string version for output
-            self.__strAltitude = str(self.__altitudeList[i])
-            self.__strLattitude = str(self.__lattitudeList[i])
-            self.__strLongitude = str(self.__longitudeList[i])
-            self.__coordString = str("Lat: " + self.__strLattitude) +'\t' + "   Long: " + str(self.__strLongitude) +'\t' + "   Alt: " + str(self.__strAltitude)
-            self.loadList.addItem(self.__coordString)
-        """
 
         #Verify from the user if they want to load a new file
         #because that will clear any data that already exists in the arrays for the coordinates

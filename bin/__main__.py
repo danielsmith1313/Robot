@@ -2,7 +2,7 @@ import sys
 import traceback
 #Import external libraries
 try:
-    from PyQt5 import uic, QtCore, QtGui, QtWidgets
+    from PyQt5 import uic, QtCore, QtGui, QtWidgets, QMessageBox
     from PyQt5 import QtCore
     from PyQt5.QtCore import *
     from PyQt5.QtGui import QPixmap
@@ -85,6 +85,7 @@ class MyWindow(QtWidgets.QMainWindow):
         #Set the action listeners for the menu items
         self.actionSaveCoordinates.triggered.connect(self.save)
         self.actionLoadCoordinates.triggered.connect(self.load)
+        self.actionAbout.triggered.connect(self.about)
         #Set a default picture when there are no images that can be read
         self.lblFisheyeNormal.setPixmap(self.__noImagePixmap)
         self.lblFrontFacingNormal.setPixmap(self.__noImagePixmap)
@@ -204,7 +205,7 @@ class MyWindow(QtWidgets.QMainWindow):
             self.__strLattitude = str(self.__lattitudeList[i])
             self.__strLongitude = str(self.__longitudeList[i])
             #Concantenate into an output
-            self.concantenateString
+            self.__coordString = str("Lat: " + self.__strLattitude) + "\t" + "   Long: " + str(self.__strLongitude) + "\t" + "   Alt: " + str(self.__strAltitude)
             self.lstPoints.addItem(self.__coordString)
 
         #Set focus to the beginning
@@ -222,11 +223,14 @@ class MyWindow(QtWidgets.QMainWindow):
         """
         Concantenates three data sets together
         """
-        self.__coordString = str("Lat: " + self.__strLattitude) + "   Long: " + str(self.__strLongitude)+ "   Alt: " + str(self.__strAltitude)
+        self.__coordString = str("Lat: " + self.__strLattitude) + "\t" + "   Long: " + str(self.__strLongitude) + "\t" + "   Alt: " + str(self.__strAltitude)
 
     
 
-        
+    def about(self):
+        buttonAbout = QMessageBox.question(self, 'About This Application',
+                                           "GPS Converter. \nVersion 1.0.0 \n\nThis program is to help read texts from specified files \nand convert the content to GPS coordinates.",
+                                           QMessageBox.Ok, QMessageBox.Ok)
 
         
         
