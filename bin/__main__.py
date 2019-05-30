@@ -1,18 +1,15 @@
 import sys
 import traceback
 #Import external libraries
-try:
-    from PyQt5 import uic, QtCore, QtGui, QtWidgets, QMessageBox
-    from PyQt5 import QtCore
-    from PyQt5.QtCore import *
-    from PyQt5.QtGui import QPixmap
-except ImportError:
-    print("Error importing the external library and components, make sure it is installed")
-    tb = traceback.format_exc()
-    print(tb)
 
-else:
-    tb = "No error"
+from PyQt5 import uic
+from PyQt5 import QtWidgets
+from PyQt5 import QtGui
+
+from PyQt5 import QtCore
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QPixmap
 #Import local classes
 sys.path.append("..")
 #Import from the local package
