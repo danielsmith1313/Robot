@@ -31,7 +31,7 @@ except ImportError:
 
 class MoveRobot():
     """
-    This class is in charge of moving the robot to follow a set amount of poiints
+    This class is in charge of moving the robot to follow a set amount of points
     """
     LOW_SPEED = .3
     MEDIUM_SPEED = .6
@@ -40,9 +40,9 @@ class MoveRobot():
     MARGIN_OF_ERROR = .01
     def __init__(self):
         #Declare variables
-        self.__lattitude = []        #Coordinates imported from main
+        self.__lattitude = []           #Coordinates imported from main
         self.__longitude = []
-        self.__currentLattitude = 0 #Stores coordinate data
+        self.__currentLattitude = 0     #Stores coordinate data
         self.__currentLongitude = 0
         
         
@@ -51,6 +51,8 @@ class MoveRobot():
         self.__speed = 0                #Stores the speed to be ussed in the motor power
         self.__rightSpeed
         self.__leftSpeed
+        self.__turningRate = 5          #Percent of motor speed increased and decreased each time
+        self.__correctionTime = .1      #Time in between gps measurements and turning corrections
     
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
@@ -71,23 +73,30 @@ class MoveRobot():
             self.__speed = self.MEDIUM_SPEED
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
+
+        self.__leftSpeed = 100 * self.__speed
         #Go through every single point
-        for i in range(len(lattitudeIn)):
+        for i in range(len(lattitude)):
             #while the robot is not close enough to the specified point
             #MoveForward(self.__speed)
+            if(self.__lattitude[i+1] == 'nan'):
+                break;
             while(self.__lattitude[i+1] < (gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
                 if(self.__desiredTrackAngle < gps.GetCurrentTrackAngle()):
-                    #IncreaseRightTurn(x)
-                    #DecreaseLeftTurn(x)
-                    pass
+                    if(self.__leftSpeed > 0):
+                        self.__leftSpeed = self.__leftSpeed - self.__turningRate
+                    if(self.__rightSpeed < 100):
+                        self.__rightSpeed = self.__rightSpeed + self.__turningRate
                 elif(self.__desiredTrackAngle > gps.GetCurrentTrackAngle()):
-                    #IncreaseLeftTurn(x)
-                    #DecreaseRightTurn(x)
-                    pass
-                time.sleep(.5)
-            #Stop()
+                    if(self.__rightSpeed > 0 + self.__turningRate):
+                        self.__rightSpeed = self.__rightSpeed - self.__turningRate
+                    if(self.__leftSpeed < 100 - self.__turningRate):
+                        self.__leftSpeed = self.__leftSpeed + self.__turningRate
+                #move(self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
+            
+            #Stop(.5)
             #Take the picture
             if(option1 == True):
                 ssh.SendSignalToRunScript("","")
