@@ -33,9 +33,9 @@ class MoveRobot():
     """
     This class is in charge of moving the robot to follow a set amount of poiints
     """
-    LOW_SPEED = 1
-    MEDIUM_SPEED = 2
-    HIGH_SPEED = 3
+    LOW_SPEED = .3
+    MEDIUM_SPEED = .6
+    HIGH_SPEED = 1
     #Coordinate length +- of error before moving on to the next point
     MARGIN_OF_ERROR = .01
     def __init__(self):
@@ -49,6 +49,8 @@ class MoveRobot():
         self.__desiredTrackAngle = 0    #Stores the calculated bearing
         self.__trackAngle = 0           #Bearing
         self.__speed = 0                #Stores the speed to be ussed in the motor power
+        self.__rightSpeed
+        self.__leftSpeed
     
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
@@ -60,8 +62,8 @@ class MoveRobot():
         self.__lattitude = lattitudeIn
         self.__longitude = longitudeIn
         #Add two 0 to each list to represent the end of the array
-        self.__lattitude.append(0)
-        self.__longitude.append(0)
+        self.__lattitude.append('nan')
+        self.__longitude.append('nan')
         #Get the speed of the function
         if(speed == 1):
             self.__speed = self.LOW_SPEED
@@ -82,7 +84,7 @@ class MoveRobot():
                     pass
                 elif(self.__desiredTrackAngle > gps.GetCurrentTrackAngle()):
                     #IncreaseLeftTurn(x)
-                    #DecreaseLeftTurn(x)
+                    #DecreaseRightTurn(x)
                     pass
                 time.sleep(.5)
             #Stop()
