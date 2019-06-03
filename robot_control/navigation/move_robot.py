@@ -31,25 +31,29 @@ except ImportError:
 
 class MoveRobot():
     """
-    This class is in charge of moving the robot to follow a set amount of poiints
+    This class is in charge of moving the robot to follow a set amount of points
     """
     LOW_SPEED = .3
     MEDIUM_SPEED = .6
     HIGH_SPEED = 1
-    
+      
     #Coordinate length +- of error before moving on to the next point
     MARGIN_OF_ERROR = .01
     def __init__(self):
         #Declare variables
-        self.__lattitude = []        #Coordinates imported from main
+        self.__lattitude = []           #Coordinates imported from main
         self.__longitude = []
-        self.__currentLattitude = 0 #Stores coordinate data
+        self.__currentLattitude = 0     #Stores coordinate data
         self.__currentLongitude = 0
         
         
         self.__desiredTrackAngle = 0    #Stores the calculated bearing
         self.__trackAngle = 0           #Bearing
         self.__speed = 0                #Stores the speed to be ussed in the motor power
+        self.__rightSpeed
+        self.__leftSpeed
+        self.__turningRate = 5          #Percent of motor speed increased and decreased each time
+        self.__correctionTime = .1      #Time in between gps measurements and turning corrections
     
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
@@ -61,8 +65,8 @@ class MoveRobot():
         self.__lattitude = lattitudeIn
         self.__longitude = longitudeIn
         #Add two 0 to each list to represent the end of the array
-        self.__lattitude.append(0)
-        self.__longitude.append(0)
+        self.__lattitude.append('nan')
+        self.__longitude.append('nan')
         #Get the speed of the function
         if(speed == 1):
             self.__speed = self.LOW_SPEED
@@ -70,23 +74,30 @@ class MoveRobot():
             self.__speed = self.MEDIUM_SPEED
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
+
+        self.__leftSpeed = 100 * self.__speed
         #Go through every single point
-        for i in range(len(lattitudeIn)):
+        for i in range(len(lattitude)):
             #while the robot is not close enough to the specified point
             #MoveForward(self.__speed)
+            if(self.__lattitude[i+1] == 'nan'):
+                break;
             while(self.__lattitude[i+1] < (gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
                 if(self.__desiredTrackAngle < gps.GetCurrentTrackAngle()):
-                    #IncreaseRightTurn(x)
-                    #DecreaseLeftTurn(x)
-                    pass
+                    if(self.__leftSpeed > 0):
+                        self.__leftSpeed = self.__leftSpeed - self.__turningRate
+                    if(self.__rightSpeed < 100):
+                        self.__rightSpeed = self.__rightSpeed + self.__turningRate
                 elif(self.__desiredTrackAngle > gps.GetCurrentTrackAngle()):
-                    #IncreaseLeftTurn(x)
-                    #DecreaseLeftTurn(x)
-                    pass
-                time.sleep(.5)
-            #Stop()
+                    if(self.__rightSpeed > 0 + self.__turningRate):
+                        self.__rightSpeed = self.__rightSpeed - self.__turningRate
+                    if(self.__leftSpeed < 100 - self.__turningRate):
+                        self.__leftSpeed = self.__leftSpeed + self.__turningRate
+                #move(self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
+            
+            #Stop(.5)
             #Take the picture
             if(option1 == True):
                 ssh.SendSignalToRunScript("","")
