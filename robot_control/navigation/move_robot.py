@@ -33,9 +33,10 @@ class MoveRobot():
     """
     This class is in charge of moving the robot to follow a set amount of poiints
     """
-    LOW_SPEED = 1
-    MEDIUM_SPEED = 2
-    HIGH_SPEED = 3
+    LOW_SPEED = .3
+    MEDIUM_SPEED = .6
+    HIGH_SPEED = 1
+    
     #Coordinate length +- of error before moving on to the next point
     MARGIN_OF_ERROR = .01
     def __init__(self):
