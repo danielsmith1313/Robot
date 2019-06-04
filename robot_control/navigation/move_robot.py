@@ -18,7 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
 from ssh_remote import SSHRemote as ssh
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
 from front_facing_camera import FrontFacingCamera as ffc
-from gps_reader import GPS as gps
+from gps_reader import GPS
 print(sys.path)    
 
 try:
@@ -55,7 +55,10 @@ class MoveRobot():
         self.__turningRate = 5          #Percent of motor speed increased and decreased each time
         self.__correctionTime = .1      #Time in between gps measurements and turning corrections
         self.__stoppingTime = .75       #Time the motors are stopped in order to take data
-    
+
+
+        #Create objects
+        self.__gps = GPS()
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
         The main move method of the function
@@ -83,15 +86,15 @@ class MoveRobot():
             #MoveForward(self.__speed)
             if(self.__lattitude[i+1] == 'nan'):
                 break;
-            while(self.__lattitude[i+1] < (gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
+            while(self.__lattitude[i+1] < (self.__gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (self.__gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (self.__gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (self.__gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
-                if(self.__desiredTrackAngle < gps.GetCurrentTrackAngle()):
+                if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
                     if(self.__leftSpeed > 0):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
                     if(self.__rightSpeed < 100):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
-                elif(self.__desiredTrackAngle > gps.GetCurrentTrackAngle()):
+                elif(self.__desiredTrackAngle > self.__gps.GetCurrentTrackAngle()):
                     if(self.__rightSpeed > 0 + self.__turningRate):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                     if(self.__leftSpeed < 100 - self.__turningRate):
@@ -111,7 +114,7 @@ class MoveRobot():
         Calculates the bearing (Degree on the earth) the current point to another
         """
         #Calculate the bearing of two points
-        angle = degrees(atan2(self.__lattitude[indx] - gps.GetCurrentCoordinates(0), self.__longitude[indx] - gps.GetCurrentCoordinates(1)))
+        angle = degrees(atan2(self.__lattitude[indx] - self.__gps.GetCurrentCoordinates(0), self.__longitude[indx] - self.__gps.GetCurrentCoordinates(1)))
         #If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
