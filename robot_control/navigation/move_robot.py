@@ -54,6 +54,7 @@ class MoveRobot():
         self.__leftSpeed
         self.__turningRate = 5          #Percent of motor speed increased and decreased each time
         self.__correctionTime = .1      #Time in between gps measurements and turning corrections
+        self.__stoppingTime = .75       #Time the motors are stopped in order to take data
     
     def FollowCoordinates(self, lattitudeIn, longitudeIn, speed, option1, option2, option3, option4):
         """
@@ -77,7 +78,7 @@ class MoveRobot():
 
         self.__leftSpeed = 100 * self.__speed
         #Go through every single point
-        for i in range(len(lattitude)):
+        for i in range(len(self.__lattitude)):
             #while the robot is not close enough to the specified point
             #MoveForward(self.__speed)
             if(self.__lattitude[i+1] == 'nan'):
@@ -98,7 +99,7 @@ class MoveRobot():
                 control.leftOrRight(self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
             
             control.stop()
-            time.sleep(.5)
+            time.sleep(self.__stoppingTime)
             #Take the picture
             if(option1 == True):
                 ssh.SendSignalToRunScript("","")
