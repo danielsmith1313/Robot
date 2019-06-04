@@ -1,7 +1,7 @@
-#Filename: front_facing_camera.py
+#Filename: fisheye_camera.py
 #Author: Daniel Smith
 #Created: 5/23/2019
-#Last edited: 5/29/2019 by Daniel Smith
+#Last edited: 6/4/2019 by Daniel Smith
 #TODO: Implement readings from the front facing camera
 
 class FrontFacingCamera():
@@ -23,4 +23,3 @@ class FrontFacingCamera():
         Converts the image file into a readable image and saves it to the network folder
         """
         pass
-

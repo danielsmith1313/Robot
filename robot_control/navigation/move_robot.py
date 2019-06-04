@@ -17,7 +17,7 @@ import control
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
 from ssh_remote import SSHRemote as ssh
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
-from front_facing_camera import FrontFacingCamera as ffc
+from fisheye_camera import FisheyeCamera as fsh
 from gps_reader import GPS
 print(sys.path)    
 
@@ -124,5 +124,5 @@ class MoveRobot():
         Uses SSH to execute a remote file to take a forward facing picture
         """
         ssh.SendSignalToRunScript()
-        ffc.TakePicture()
+        fsh.TakePicture()
         
