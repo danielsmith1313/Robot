@@ -2,8 +2,9 @@
 #Author: Daniel Smith
 #Created: 5/23/2019
 #Last edited: 6/4/2019 by Daniel Smith
-#TODO: Implement readings from the front facing camera
 
+from picamera import PiCamera
+from time import sleep
 class FrontFacingCamera():
     """
     This static class is in charge of getting data from the front facing camera
@@ -16,7 +17,10 @@ class FrontFacingCamera():
         """
         Sends a signal to recieve data from the front facing camera
         """
-        pass
+        camera.start_preview()
+        sleep(1)
+        #Capture and save the image
+        camera.capture("../../data/pictures/fisheye")
     @classmethod
     def ExportImage(self):
         """
