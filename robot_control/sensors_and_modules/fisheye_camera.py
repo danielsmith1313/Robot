@@ -4,7 +4,11 @@
 #Last edited: 6/4/2019 by Daniel Smith
 
 from picamera import PiCamera
+#import 
+import piexif
+from PIL import Image
 from time import sleep
+import uuid
 class FrontFacingCamera():
     """
     This static class is in charge of getting data from the front facing camera
@@ -13,14 +17,23 @@ class FrontFacingCamera():
         pass
 
     @classmethod
-    def TakePicture(self):
+    def TakePicture(self,longitude,lattitude):
         """
         Sends a signal to recieve data from the front facing camera
         """
+        #Generate a unique filename
+        self.uniqueFilename = str(uuid.uuid4())
+        self.path = str("../../data/pictures/fisheye/",self.uniqueFilename,".jpeg",sep='')
         camera.start_preview()
         sleep(1)
         #Capture and save the image
-        camera.capture("../../data/pictures/fisheye")
+        camera.capture(self.path)
+        img = Image.open(fname)
+        exif_dict = piexif.load(img.info['exif'])
+        exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
+        exif_dict['GPS'][piexif.GPSIFD.GPSLattitude] = (lattitude,1)
+        exif_bytes = piexif.dump(exif_dict)
+        img.save(self.path)
     @classmethod
     def ExportImage(self):
         """

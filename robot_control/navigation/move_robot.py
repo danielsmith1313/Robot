@@ -108,7 +108,7 @@ class MoveRobot():
                 ssh.SendSignalToRunScript("","")
             #Take the second picture
             if(option2 == True):
-                ffc.TakePicture()
+                fsh.TakePicture(self.__gps.GetCurrentCoordinates(0), self.__gps.GetCurrentCoordinates(1))
     def CalculateBearing(self, indx):
         """
         Calculates the bearing (Degree on the earth) the current point to another
