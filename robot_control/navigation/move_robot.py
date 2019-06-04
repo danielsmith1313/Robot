@@ -8,7 +8,7 @@ import traceback
 import time
 import sys
 import os
-
+import control
 
 
     #Note: due to python not indexing folders other than the executable and current class
@@ -95,9 +95,10 @@ class MoveRobot():
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                     if(self.__leftSpeed < 100 - self.__turningRate):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
-                #move(self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
+                control.leftOrRight(self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
             
-            #Stop(.5)
+            control.stop()
+            time.sleep(.5)
             #Take the picture
             if(option1 == True):
                 ssh.SendSignalToRunScript("","")

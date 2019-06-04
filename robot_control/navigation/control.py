@@ -4,6 +4,7 @@ import time
 class control():
     #controls the forward movement of the robot
     #This function accepts how long the motors should run and the speed for both motors
+    @classmethod
     def forward(distance, speed):
         try:
             for i in range(distance):
