@@ -44,7 +44,7 @@ class GPS:
     # ClassMethod
 
     def GetHasFix(self):
-        if not gps.has_fix:
+        if not self.__gps.has_fix:
             # Try again if we don't have a fix yet.
             return False
 
