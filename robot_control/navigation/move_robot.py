@@ -2,23 +2,25 @@
 # Author: Daniel Smith
 #Created: 5/23/2019
 # Last edited: 5/29/2019 by Daniel Smith
-
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
+sys.path.append(os.path.join(os.path.dirname(
+    __file__), '..', 'sensors_and_modules'))
 # Import libraries
 from gps_reader import GPS
 from fisheye_camera import FisheyeCamera as fsh
 from ssh_remote import SSHRemote as ssh
 import traceback
 import time
-import sys
-import os
+
+
 from .control import control
 
 # Note: due to python not indexing folders other than the executable and current class
 # the parent folder must be manually appended to the system path.
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
-sys.path.append(os.path.join(os.path.dirname(
-    __file__), '..', 'sensors_and_modules'))
+
 print(sys.path)
 
 try:
