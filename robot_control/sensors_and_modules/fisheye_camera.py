@@ -43,17 +43,17 @@ class FisheyeCamera():
             camera.capture(self.path)
         finally:
             camera.close()
-        img = Image.open(self.path)
-        exif_dict = piexif.load(img.info['exif'])
-        exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
+        #img = Image.open(self.path)
+        #exif_dict = piexif.load(img.info['exif'])
+        #exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
         #exif_dict['GPS'][piexif.GPSIFD.GPSLattitude] = (lattitude, 1)
         # Get the current date and time
         #currentDateAndTime = str(now.year, ":", now.month, ":", now.day, " ", now.hour,
          #                        ":", now.minute, ":", now.second, sep='').decode(encoding="utf-8")
         #exif_dict['GPS'][piexif.GPSIFD.GPSDateStamp] = (currentDateAndTime)
 
-        exif_bytes = piexif.dump(exif_dict)
-        img.save(self.path)
+        #exif_bytes = piexif.dump(exif_dict)
+        #img.save(self.path)
 
     @classmethod
     def ExportImage(self):
