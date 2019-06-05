@@ -60,18 +60,19 @@ class GPS:
             self.__gps.update()
             current = time.monotonic()
             if current - last_print >= 1.0:
+                last_print = current
                 if not self.__gps.has_fix:
                     print('waiting for fix')
                     continue
 
-                    if (latOrLong == 0 and self.__gps.latitude is not None):
-                        self.__currentLattitude = self.__gps.latitude
-                        return self.__currentLattitude
-                        running = False
-                    elif(latOrLong == 1 and self.__gps.longitude is not None):
-                        self.__currentLongitude = self.__gps.longitude
-                        return self.__currentLongitude
-                        running = False
+                if (latOrLong == 0 and self.__gps.latitude is not None):
+                    self.__currentLattitude = self.__gps.latitude
+                    return self.__currentLattitude
+                    running = False
+                elif(latOrLong == 1 and self.__gps.longitude is not None):
+                    self.__currentLongitude = self.__gps.longitude
+                    return self.__currentLongitude
+                    running = False
 
     def GetCurrentTrackAngle(self):
         """
