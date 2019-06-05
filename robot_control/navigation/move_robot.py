@@ -53,9 +53,9 @@ class MoveRobot():
         self.__rightSpeed
         self.__leftSpeed
         self.__turningRate = 5          #Percent of motor speed increased and decreased each time
-        self.__correctionTime = .1      #Time in between gps measurements and turning corrections
+        self.__correctionTime = .2      #Time in between gps measurements and turning corrections
         self.__stoppingTime = .75       #Time the motors are stopped in order to take data
-
+        self.__startupTime = 1
 
         #Create objects
         self.__gps = GPS()
@@ -81,10 +81,13 @@ class MoveRobot():
 
         self.__leftSpeed = 90 * self.__speed
         self.__rightSpeed = 90 * self.__speed
+        control.leftOrRight(self.__leftSpeed, self.__rightSpeed, self.__startupTime)
         #Go through every single point
         for i in range(len(self.__lattitude)):
+            
+            #Move the robot forward
+            control.leftOrRight(self.__leftSpeed, self.__rightSpeed, self.__startupTime)
             #while the robot is not close enough to the specified point
-            #MoveForward(self.__speed)
             if(self.__lattitude[i+1] == 'nan'):
                 break;
             while(self.__lattitude[i+1] < (self.__gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (self.__gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (self.__gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (self.__gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
