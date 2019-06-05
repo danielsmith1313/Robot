@@ -78,6 +78,17 @@ class GPS:
         Returns the most recent track angle
         """
         # TODO: use gps coordinates to get actual tracking
-        if self.__gps.track_angle_deg is not None:
-            self.__trackAngle = self.__gps.track_angle_deg
-        return self.__trackAngle
+
+        running = True
+        last_print = time.monotonic()
+        while running == True:
+            # Return based on which option was chosen
+            self.__gps.update()
+            current = time.monotonic()
+            if current - last_print >= 1.0:
+                if not self.__gps.has_fix:
+                    print('waiting for fix')
+                    continue
+                if self.__gps.track_angle_deg is not None:
+                    self.__trackAngle = self.__gps.track_angle_deg
+                    return self.__trackAngle
