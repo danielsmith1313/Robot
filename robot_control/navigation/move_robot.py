@@ -79,7 +79,8 @@ class MoveRobot():
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
 
-        self.__leftSpeed = 100 * self.__speed
+        self.__leftSpeed = 90 * self.__speed
+        self.__rightSpeed = 90 * self.__speed
         #Go through every single point
         for i in range(len(self.__lattitude)):
             #while the robot is not close enough to the specified point
@@ -104,8 +105,8 @@ class MoveRobot():
             control.stop()
             time.sleep(self.__stoppingTime)
             #Take the picture
-            if(option1 == True):
-                ssh.SendSignalToRunScript("","")
+            #if(option1 == True):
+            #    ssh.SendSignalToRunScript("","")
             #Take the second picture
             if(option2 == True):
                 fsh.TakePicture(self.__gps.GetCurrentCoordinates(0), self.__gps.GetCurrentCoordinates(1))
