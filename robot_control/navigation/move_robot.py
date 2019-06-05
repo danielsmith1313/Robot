@@ -83,8 +83,8 @@ class MoveRobot():
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
 
-        self.__leftSpeed = 90 * self.__speed
-        self.__rightSpeed = 90 * self.__speed
+        self.__leftSpeed = .9 * self.__speed
+        self.__rightSpeed = .9 * self.__speed
         control.leftOrRight(
             self.__leftSpeed, self.__rightSpeed, self.__startupTime)
         # Go through every single point
