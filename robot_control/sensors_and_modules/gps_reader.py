@@ -74,7 +74,7 @@ class GPS:
 
                 if option == 0:
                     self.__currentLattitude =  self.gps.latitude
-                    return self._GPS__currentLattitude
+                    return self.__currentLattitude
                     running = False
                 elif option == 1:
                     self.__currentLongitude = gps.longitude
