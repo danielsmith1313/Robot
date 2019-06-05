@@ -56,7 +56,8 @@ class GPS:
         self.gps.send_command(b'PMTK220,1000')
         # Main loop runs forever printing the location, etc. every second.
         last_print = time.monotonic()
-        while True:
+        running = True
+        while running == True:
             # Make sure to call gps.update() every loop iteration and at least twice
             # as fast as data comes from the GPS unit (usually every second).
             # This returns a bool that's true if it parsed new data (you can ignore it
@@ -73,13 +74,20 @@ class GPS:
 
                 if option == 0:
                     self.__currentLattitude =  self.gps.latitude
+                    return self._GPS__currentLattitude
+                    running = False
                 elif option == 1:
-                    self.__currentAltitude = gps.longitude
+                    self.__currentLongitude = gps.longitude
+                    return self.__currentLongitude
+                    running = False
                 # Some attributes beyond latitude, longitude and timestamp are optional
                 # and might not be present.  Check if they're None before trying to use!
                 elif option == 2:
                     if gps.track_angle_deg is not None:
                         self.__trackAngle = gps.track_angle_deg
+                        return self.__trackAngle
+                        running = False
+                
                 
 
     def GetCurrentTrackAngle(self):
