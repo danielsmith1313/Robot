@@ -3,7 +3,7 @@
 #Created: 5/23/2019
 # Last edited: 6/4/2019 by Daniel Smith
 
-from picamera import PiCamera
+import picamera
 # import
 import piexif
 from PIL import Image
