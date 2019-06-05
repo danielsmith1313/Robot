@@ -83,4 +83,4 @@ class GPS:
                 
 
     def GetCurrentTrackAngle(self):
-        return GetCurrentCoordinates(3)
+        return self.GetCurrentCoordinates(3)
