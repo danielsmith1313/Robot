@@ -32,10 +32,10 @@ class FisheyeCamera():
         self.uniqueFilename = str(uuid.uuid4())
         self.path = "../../data/pictures/fisheye/"+self.uniqueFilename
         self.path += ".jpeg"
-        camera.start_preview()
+        picamera.PiCamera().start_preview()
         sleep(1)
         # Capture and save the image
-        camera.capture(self.path)
+        picamera.PiCamera().capture(self.path)
         img = Image.open(self.path)
         exif_dict = piexif.load(img.info['exif'])
         exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
