@@ -64,14 +64,14 @@ class GPS:
                     print('waiting for fix')
                     continue
 
-                if (latOrLong == 0 and self.__gps.latitude is not None):
-                    self.__currentLattitude = self.__gps.latitude
-                    return self.__currentLattitude
-                    running = False
-                elif(latOrLong == 1 and self.__gps.longitude is not None):
-                    self.__currentLongitude = self.__gps.longitude
-                    return self.__currentLongitude
-                    running = False
+                    if (latOrLong == 0 and self.__gps.latitude is not None):
+                        self.__currentLattitude = self.__gps.latitude
+                        return self.__currentLattitude
+                        running = False
+                    elif(latOrLong == 1 and self.__gps.longitude is not None):
+                        self.__currentLongitude = self.__gps.longitude
+                        return self.__currentLongitude
+                        running = False
 
     def GetCurrentTrackAngle(self):
         """
