@@ -38,7 +38,7 @@ class MoveRobot():
     HIGH_SPEED = 1
       
     #Coordinate length +- of error before moving on to the next point
-    MARGIN_OF_ERROR = .01
+    MARGIN_OF_ERROR = .000005
     def __init__(self):
         #Declare variables
         self.__lattitude = []           #Coordinates imported from main
