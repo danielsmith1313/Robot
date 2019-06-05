@@ -31,7 +31,7 @@ class FisheyeCamera():
 
         # Generate a unique filename
         self.uniqueFilename = str(uuid.uuid4())
-        self.path = "../../data/pictures/fisheye/"+self.uniqueFilename
+        self.path = self.uniqueFilename
         self.path += ".jpeg"
         #picamera.PiCamera.close(self)
         try:
