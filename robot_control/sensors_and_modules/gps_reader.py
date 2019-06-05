@@ -77,14 +77,14 @@ class GPS:
                     return self.__currentLattitude
                     running = False
                 elif option == 1:
-                    self.__currentLongitude = gps.longitude
+                    self.__currentLongitude = self.gps.longitude
                     return self.__currentLongitude
                     running = False
                 # Some attributes beyond latitude, longitude and timestamp are optional
                 # and might not be present.  Check if they're None before trying to use!
                 elif option == 2:
                     if gps.track_angle_deg is not None:
-                        self.__trackAngle = gps.track_angle_deg
+                        self.__trackAngle = self.gps.track_angle_deg
                         return self.__trackAngle
                         running = False
                 
