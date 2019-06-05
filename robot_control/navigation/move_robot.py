@@ -8,7 +8,7 @@ import traceback
 import time
 import sys
 import os
-import control
+from .control import control
 
 
     #Note: due to python not indexing folders other than the executable and current class
@@ -38,7 +38,7 @@ class MoveRobot():
     HIGH_SPEED = 1
       
     #Coordinate length +- of error before moving on to the next point
-    MARGIN_OF_ERROR = .000005
+    MARGIN_OF_ERROR = .00001
     def __init__(self):
         #Declare variables
         self.__lattitude = []           #Coordinates imported from main
@@ -50,8 +50,8 @@ class MoveRobot():
         self.__desiredTrackAngle = 0    #Stores the calculated bearing
         self.__trackAngle = 0           #Bearing
         self.__speed = 0                #Stores the speed to be ussed in the motor power
-        self.__rightSpeed
-        self.__leftSpeed
+        self.__rightSpeed = 0
+        self.__leftSpeed = 0
         self.__turningRate = 5          #Percent of motor speed increased and decreased each time
         self.__correctionTime = .2      #Time in between gps measurements and turning corrections
         self.__stoppingTime = .75       #Time the motors are stopped in order to take data
