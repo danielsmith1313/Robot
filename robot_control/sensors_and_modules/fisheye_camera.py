@@ -30,8 +30,7 @@ class FisheyeCamera():
 
         # Generate a unique filename
         self.uniqueFilename = str(uuid.uuid4())
-        self.path = str("../../data/pictures/fisheye/",
-                        self.uniqueFilename, sep='')
+        self.path = "../../data/pictures/fisheye/"+self.uniqueFilename
         self.path += ".jpeg"
         camera.start_preview()
         sleep(1)
