@@ -34,7 +34,6 @@ class FisheyeCamera():
         self.path = "../../data/pictures/fisheye/"+self.uniqueFilename
         self.path += ".jpeg"
         #picamera.PiCamera.close(self)
-        camera = picamera.PiCamera()
         try:
             camera = PiCamera()
             camera.resolution = (1024, 768)
