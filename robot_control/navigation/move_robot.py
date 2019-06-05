@@ -5,8 +5,7 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'network'))
-sys.path.append(os.path.join(os.path.dirname(
-    __file__), '..', 'sensors_and_modules'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'sensors_and_modules'))
 # Import libraries
 from gps_reader import GPS
 from fisheye_camera import FisheyeCamera as fsh
@@ -55,7 +54,7 @@ class MoveRobot():
         self.__speed = 0  # Stores the speed to be ussed in the motor power
         self.__rightSpeed = 0
         self.__leftSpeed = 0
-        self.__turningRate = 5  # Percent of motor speed increased and decreased each time
+        self.__turningRate = .05  # Percent of motor speed increased and decreased each time
         self.__correctionTime = .2  # Time in between gps measurements and turning corrections
         self.__stoppingTime = .75  # Time the motors are stopped in order to take data
         self.__startupTime = 1
@@ -102,12 +101,12 @@ class MoveRobot():
                 if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
                     if(self.__leftSpeed > 0):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
-                    if(self.__rightSpeed < 100):
+                    if(self.__rightSpeed < 1):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                 elif(self.__desiredTrackAngle > self.__gps.GetCurrentTrackAngle()):
                     if(self.__rightSpeed > 0 + self.__turningRate):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                    if(self.__leftSpeed < 100 - self.__turningRate):
+                    if(self.__leftSpeed < 1 - self.__turningRate):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                 control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
