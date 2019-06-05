@@ -3,11 +3,12 @@
 #Created: 5/23/2019
 # Last edited: 6/4/2019 by Daniel Smith
 
-import picamera
+from picamera import PiCamera
 # import
 import piexif
 from PIL import Image
 from time import sleep
+import time
 import uuid
 import datetime
 
@@ -33,10 +34,16 @@ class FisheyeCamera():
         self.path = "../../data/pictures/fisheye/"+self.uniqueFilename
         self.path += ".jpeg"
         #picamera.PiCamera.close(self)
-        picamera.PiCamera().start_preview()
-        sleep(1)
-        # Capture and save the image
-        picamera.PiCamera().capture(self.path)
+        camera = picamera.PiCamera()
+        try:
+            camera = PiCamera()
+            camera.resolution = (1024, 768)
+            camera.start_preview()
+            # Camera warm-up time
+            sleep(2)
+            camera.capture(self.path)
+        finally:
+            camera.close()
         img = Image.open(self.path)
         exif_dict = piexif.load(img.info['exif'])
         exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
