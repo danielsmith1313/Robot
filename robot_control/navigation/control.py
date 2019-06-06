@@ -13,8 +13,8 @@ class control():
         try:
             for i in range(distance):
                 
-                motors.setSpeeds(int(speed * MAX_SPEED),
-                                 int(speed * MAX_SPEED))
+                motors.setSpeeds(int(-1 * speed * MAX_SPEED),
+                                 int(-1 * speed * MAX_SPEED))
                 time.sleep(.005)
 
         finally:
@@ -32,8 +32,8 @@ class control():
         try:
             for i in range(distance):
                 
-                motors.setSpeeds(int(-1 * speed * MAX_SPEED),
-                                 int(-1 * speed * MAX_SPEED))
+                motors.setSpeeds(int(speed * MAX_SPEED),
+                                 int(speed * MAX_SPEED))
                 time.sleep(.005)
 
         finally:
@@ -51,8 +51,8 @@ class control():
         motors.enable()
         try:
             for i in range(int(distance)):
-                motors.motor1.setSpeed(int(speedM1 * MAX_SPEED))
-                motors.motor2.setSpeed(int(speedM2 * MAX_SPEED))
+                motors.motor1.setSpeed(int(-1 * speedM1 * MAX_SPEED))
+                motors.motor2.setSpeed(int(-1 * speedM2 * MAX_SPEED))
                 time.sleep(.005)
 
         finally:
