@@ -55,9 +55,8 @@ class MoveRobot():
         self.__rightSpeed = 0
         self.__leftSpeed = 0
         self.__turningRate = .05  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 200  # Time in between gps measurements and turning corrections
-        self.__stoppingTime = 750  # Time the motors are stopped in order to take data
-        self.__startupTime = 1000
+        self.__correctionTime = 100  # Time in between gps measurements and turning corrections
+        self.__startupTime = 200
         self.__control = control()
 
         # Create objects
@@ -113,7 +112,8 @@ class MoveRobot():
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
 
             self.__control.stop()
-            
+            self.__leftSpeed =  .9 *self.__speed
+            self.__rightSpeed = 9 * self.__speed
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
