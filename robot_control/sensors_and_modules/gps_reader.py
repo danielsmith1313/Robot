@@ -76,9 +76,11 @@ class GPS:
                     self.__currentLattitude =  self.gps.latitude
                     
                     self.__currentLongitude = self.gps.longitude
-                    return [self.__currentLattitude, self.__currentLongitude]
-                    
+                    self.listOfData = [self._GPS__currentLattitude,self._GPS__currentLongitude]
                     running = False
+                    
+                    
+                    
                 
                     
                     
@@ -89,8 +91,11 @@ class GPS:
                         self.__trackAngle = self.gps.track_angle_deg
                         return self.__trackAngle
                         running = False
-                
-                
+            
+        if option == 1:
+            return self.__listOfData
+        elif option == 2:
+            return self.__trackAngle
 
     def GetCurrentTrackAngle(self):
         return self.GetCurrentCoordinates(3)
