@@ -99,7 +99,7 @@ class MoveRobot():
                 self.__coordinates = self.__gps.GetCurrentCoordinates(0)
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
-                
+                print("desired track angle: ", self.__desiredTrackAngle)
                 #Test if the coordinates are off
                 if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
                     #If the speed is over the maximum...
@@ -112,6 +112,7 @@ class MoveRobot():
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                     if(self.__leftSpeed < .9):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
+                print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                 self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
 
