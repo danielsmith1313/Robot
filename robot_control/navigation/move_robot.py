@@ -100,6 +100,7 @@ class MoveRobot():
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 print("desired track angle: ", self.__desiredTrackAngle)
+                print("current track angle: "), self.__gps.GetCurrentTrackAngle()
                 #Test if the coordinates are off
                 if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
                     #If the speed is over the maximum...
