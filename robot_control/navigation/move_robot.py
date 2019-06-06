@@ -91,6 +91,7 @@ class MoveRobot():
         for i in range(len(self.__lattitude)):
 
             self.__coordinates = self.__gps.GetCurrentCoordinates(0)
+            print("Coordinates:" ,self.__coordinates)
             # while the robot is not close enough to the specified point
             if(self.__lattitude[i+1] == 'nan'):
                 break
