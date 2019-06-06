@@ -40,7 +40,7 @@ class MoveRobot():
     HIGH_SPEED = 1
 
     # Coordinate length +- of error before moving on to the next point
-    MARGIN_OF_ERROR = .00002
+    MARGIN_OF_ERROR = .00004
 
     def __init__(self):
         # Declare variables
@@ -106,7 +106,7 @@ class MoveRobot():
                 print("desired track angle: ", self.__desiredTrackAngle)
                 print("current track angle: "), self.__currentTrackAngle
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle < self.__currentTrackAngle):
+                if(self.__desiredTrackAngle > self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("desiredTrackAngle is < current")
                     if(self.__leftSpeed > .1):
@@ -115,7 +115,7 @@ class MoveRobot():
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
-                elif(self.__desiredTrackAngle > self.__currentTrackAngle):
+                elif(self.__desiredTrackAngle < self.__currentTrackAngle):
                     print("desiredTrackAngle is > current")
                     if(self.__rightSpeed > .1):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
