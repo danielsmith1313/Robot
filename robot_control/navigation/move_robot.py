@@ -102,7 +102,8 @@ class MoveRobot():
             while((((self.__lattitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[0]) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[0] ))) or (((self.__longitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[1] ) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[1])))):
                 
                 
-                self.__desiredTrackAngle = self.CalculateBearing(i+1)
+                #self.__desiredTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self._MoveRobot__lattitude[i+1], self._MoveRobot__coordinates[1], self._MoveRobot__longitude[i+1])
+                self.__desiredTrackAngle = self.CalculateTrackAngle(self.__lattitude[i+1],self.__lattitude[i],self.__longitude[i+1],self.__longitude[i])
                 print("desired track angle: ", self.__desiredTrackAngle)
                 
                 #Test if the coordinates are off
