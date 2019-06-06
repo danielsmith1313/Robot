@@ -104,20 +104,20 @@ class MoveRobot():
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 print("desired track angle: ", self.__desiredTrackAngle)
-                print("current track angle: "), self.__currentTrackAngle
+                
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle > self.__currentTrackAngle):
+                if(self.__desiredTrackAngle < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("desiredTrackAngle is < current")
-                    if(self.__leftSpeed > .1):
+                    if(self.__leftSpeed > .3):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
-                elif(self.__desiredTrackAngle < self.__currentTrackAngle):
+                elif(self.__desiredTrackAngle > self.__currentTrackAngle):
                     print("desiredTrackAngle is > current")
-                    if(self.__rightSpeed > .1):
+                    if(self.__rightSpeed > .3):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                     if(self.__leftSpeed < .9):
@@ -150,8 +150,10 @@ class MoveRobot():
         return bearing1
 
     def CalculateTrackAngle(self, la1,la2,lo1,lo2):
+            print("la1",la1,"La2",la2,"lo1",lo1,"lo2",lo2)
             angle = degrees(atan2(la1 - la2, lo1 - lo2))
             bearing2 = (angle + 360) % 360
+            print("Track Angle From First Point to second; ", bearing2)
             return bearing2
 
     def TakePhotos(self):
