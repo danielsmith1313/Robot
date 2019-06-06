@@ -107,7 +107,7 @@ class MoveRobot():
                 print("desired track angle: ", self.__desiredTrackAngle)
                 
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle < self.__currentTrackAngle):
+                if(self.__desiredTrackAngle + 10 < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("desiredTrackAngle is < current")
                     if(self.__leftSpeed > .3):
@@ -116,7 +116,7 @@ class MoveRobot():
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
-                elif(self.__desiredTrackAngle > self.__currentTrackAngle):
+                elif(self.__desiredTrackAngle - 10 > self.__currentTrackAngle):
                     print("desiredTrackAngle is > current")
                     if(self.__rightSpeed > .3):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
