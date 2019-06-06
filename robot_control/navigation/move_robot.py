@@ -12,6 +12,7 @@ from fisheye_camera import FisheyeCamera as fsh
 from ssh_remote import SSHRemote as ssh
 import traceback
 import time
+import math
 
 
 from .control import control
@@ -54,9 +55,9 @@ class MoveRobot():
         self.__speed = 0  # Stores the speed to be ussed in the motor power
         self.__rightSpeed = 0
         self.__leftSpeed = 0
-        self.__turningRate = .05  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 70  # Time in between gps measurements and turning corrections
-        self.__startupTime = 200
+        self.__turningRate = .03  # Percent of motor speed increased and decreased each time
+        self.__correctionTime = 250  # Time in between gps measurements and turning corrections
+        self.__startupTime = 250
         self.__control = control()
         self.__coordinates = []
 
@@ -104,31 +105,32 @@ class MoveRobot():
                 
                 #self.__desiredTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self._MoveRobot__lattitude[i+1], self._MoveRobot__coordinates[1], self._MoveRobot__longitude[i+1])
                 self.__desiredTrackAngle = self.CalculateTrackAngle(self.__lattitude[i+1],self.__lattitude[i],self.__longitude[i+1],self.__longitude[i])
-                print("desired track angle: ", self.__desiredTrackAngle)
+                
                 
                 #Test if the coordinates are off
                 if(self.__desiredTrackAngle + 10 < self.__currentTrackAngle):
                     #If the speed is over the maximum...
-                    print("desiredTrackAngle is < current")
+                    print("Turning right")
                     if(self.__leftSpeed > .3):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
-                        print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
-                        print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                 elif(self.__desiredTrackAngle - 10 > self.__currentTrackAngle):
-                    print("desiredTrackAngle is > current")
+                    
                     if(self.__rightSpeed > .3):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                        print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
+                        print("Turning left")
                     if(self.__leftSpeed < .9):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
-                print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
+                else:
+                    print("Straight")
+                self.__formerTrackAngle = self.__gps.GetCurrentCoordinates(0)
                 self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
                 self.__coordinates = self.__gps.GetCurrentCoordinates(0)
-                self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self.__lattitude[i], self.__coordinates[1], self.__longitude[i])
+                
+                self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self.__formerTrackAngle[0], self.__coordinates[1], self.__formerTrackAngle[1])
 
             self.__control.stop()
             self.__leftSpeed =  .9 *self.__speed
@@ -151,11 +153,8 @@ class MoveRobot():
         return bearing1
 
     def CalculateTrackAngle(self, la1,la2,lo1,lo2):
-            print("la1",la1,"La2",la2,"lo1",lo1,"lo2",lo2)
-            angle = degrees(atan2(la1 - la2, lo1 - lo2))
-            bearing2 = (angle + 360) % 360
-            print("Track Angle From First Point to second; ", bearing2)
-            return bearing2
+            bearing = 90 - (180/math.pi)*math.atan2(la2-la1, lo2-lo1)
+            return bearing
 
     def TakePhotos(self):
         """
