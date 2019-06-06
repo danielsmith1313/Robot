@@ -100,7 +100,7 @@ class MoveRobot():
             if(self.__lattitude[i+1] == 'nan'):
                 break
             while((((self.__lattitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[0]) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[0] ))) or (((self.__longitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[1] ) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[1])))):
-                self.__coordinates = self.__gps.GetCurrentCoordinates(0)
+                
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 print("desired track angle: ", self.__desiredTrackAngle)
@@ -126,6 +126,7 @@ class MoveRobot():
                 print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                 self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
+                self.__coordinates = self.__gps.GetCurrentCoordinates(0)
                 self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self.__lattitude[i], self.__coordinates[1], self.__longitude[i])
 
             self.__control.stop()
