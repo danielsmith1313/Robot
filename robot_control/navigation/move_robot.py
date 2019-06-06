@@ -116,7 +116,7 @@ class MoveRobot():
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                if(self.__desiredTrackAngle > self.__currentTrackAngle):
+                elif(self.__desiredTrackAngle > self.__currentTrackAngle):
                     print("Turning left")
                     if(self.__rightSpeed > .6):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
@@ -141,6 +141,7 @@ class MoveRobot():
             #    ssh.SendSignalToRunScript("","")
             # Take the second picture
             if(option2 == True):
+                print("Taking Picture...")
                 fsh.TakePicture(self.__coordinates[0], self.__coordinates[1])
 
     def CalculateBearing(self, indx):
