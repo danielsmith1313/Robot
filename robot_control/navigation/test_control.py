@@ -1,2 +1,3 @@
 from control import control
-control.leftOrRight(.8, .8, 100)
+controll = control()
+controll.leftOrRight(.8, .8, 100)
