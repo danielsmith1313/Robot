@@ -113,7 +113,7 @@ class MoveRobot():
                 if(self.__desiredTrackAngle < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("Turning right")
-                    if(lastTurn == 1):
+                    if(self.__lastTurn == 1):
                         self.__leftSpeed =  .9 *self.__speed
                         self.__rightSpeed = .9 * self.__speed
                     if(self.__leftSpeed > .7):
