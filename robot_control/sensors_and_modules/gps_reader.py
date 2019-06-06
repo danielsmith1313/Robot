@@ -80,7 +80,6 @@ class GPS:
                     self.__longitudeCounter = self.gps.longitude + self.__longitudeCounter
                     
                     
-                    self.listOfData = [self._GPS__currentLattitude,self._GPS__currentLongitude]
                     counter = counter + 1
                     if(counter == 10):
                         self.__lattitude = self.__lattitudeCounter / 10
