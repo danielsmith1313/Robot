@@ -14,7 +14,7 @@ import traceback
 import time
 
 
-from .control import control
+from control import control
 
 # Note: due to python not indexing folders other than the executable and current class
 # the parent folder must be manually appended to the system path.
