@@ -61,7 +61,7 @@ class MoveRobot():
         self.__control = control()
         self.__coordinates = []
         #1 is left 2 is right
-        self.lastTurn = 0
+        self.__lastTurn = 0
         # Create objects
         self.__gps = GPS()
 
