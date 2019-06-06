@@ -1,4 +1,6 @@
-from .dual_g2_hpmd_rpi import motors, MAX_SPEED
+import sys
+sys.path.append(".")
+from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import time
 
 
