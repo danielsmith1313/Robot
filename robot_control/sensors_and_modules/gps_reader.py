@@ -93,7 +93,8 @@ class GPS:
                         running = False
             
         if option == 1:
-            return self.__listOfData
+            print("List of data", self.listOfData)
+            return self.listOfData
         elif option == 2:
             return self.__trackAngle
 
