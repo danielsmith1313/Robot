@@ -31,6 +31,7 @@ class GPS:
         self.__counter = 0
         self.__longitudeCounter = 0
         self.__lattitudeCounter = 0
+        
         self.__uart = serial.Serial(
             "/dev/ttyUSB0", baudrate=9600, timeout=3000)
         # Create a GPS module instance.
@@ -80,8 +81,8 @@ class GPS:
                     self.__longitudeCounter = self.gps.longitude + self.__longitudeCounter
                     
                     
-                    counter = counter + 1
-                    if(counter == 10):
+                    self.__counter = self.__counter + 1
+                    if(self.__counter == 10):
                         self.__lattitude = self.__lattitudeCounter / 10
                         self.__longitude = self.__longitudeCounter / 10
                         self.__listOfData = [self._GPS__lattitude, self._GPS__longitude]
