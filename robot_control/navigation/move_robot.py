@@ -56,7 +56,7 @@ class MoveRobot():
         self.__rightSpeed = 0
         self.__leftSpeed = 0
         self.__turningRate = .025  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 250  # Time in between gps measurements and turning corrections
+        self.__correctionTime = 300  # Time in between gps measurements and turning corrections
         self.__startupTime = 250
         self.__control = control()
         self.__coordinates = []
@@ -106,16 +106,17 @@ class MoveRobot():
                 #self.__desiredTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self._MoveRobot__lattitude[i+1], self._MoveRobot__coordinates[1], self._MoveRobot__longitude[i+1])
                 self.__desiredTrackAngle = self.CalculateTrackAngle(self.__lattitude[i+1],self.__lattitude[i],self.__longitude[i+1],self.__longitude[i])
                 print("Track angle desired:", self._MoveRobot__desiredTrackAngle)
-                
+                print("Current Track Angle", self._MoveRobot__currentTrackAngle)
+
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle - 10 < self.__currentTrackAngle):
+                if(self.__desiredTrackAngle < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("Turning right")
                     if(self.__leftSpeed > .6):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                elif(self.__desiredTrackAngle + 10 > self.__currentTrackAngle):
+                if(self.__desiredTrackAngle > self.__currentTrackAngle):
                     print("Turning left")
                     if(self.__rightSpeed > .6):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
