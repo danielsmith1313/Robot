@@ -60,7 +60,8 @@ class MoveRobot():
         self.__startupTime = 250
         self.__control = control()
         self.__coordinates = []
-
+        #1 is left 2 is right
+        self.lastTurn = 0
         # Create objects
         self.__gps = GPS()
 
@@ -112,18 +113,25 @@ class MoveRobot():
                 if(self.__desiredTrackAngle < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("Turning right")
-                    if(self.__leftSpeed > .6):
+                    if(lastTurn == 1):
+                        self.__leftSpeed =  .9 *self.__speed
+                        self.__rightSpeed = .9 * self.__speed
+                    if(self.__leftSpeed > .7):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
-                    if(self.__rightSpeed < .9):
+                    if(self.__rightSpeed < .95):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
+                    self.__lastTurn = 2
                 elif(self.__desiredTrackAngle > self.__currentTrackAngle):
                     print("Turning left")
-                    if(self.__rightSpeed > .6):
+                    if(self.__lastTurn == 2):
+                        self.__leftSpeed =  .9 *self.__speed
+                        self.__rightSpeed = .9 * self.__speed
+                    if(self.__rightSpeed > .7):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         
-                    if(self.__leftSpeed < .9):
+                    if(self.__leftSpeed < .95):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
-                        
+                    self.__lastTurn = 1
                 else:
                     print("Straight")
                 self.__formerTrackAngle = self.__gps.GetCurrentCoordinates(0)
@@ -133,9 +141,9 @@ class MoveRobot():
                 
                 self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self.__formerTrackAngle[0], self.__coordinates[1], self.__formerTrackAngle[1])
 
-            self.__control.stop()
+            
             self.__leftSpeed =  .9 *self.__speed
-            self.__rightSpeed = 9 * self.__speed
+            self.__rightSpeed = .9 * self.__speed
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
@@ -160,7 +168,7 @@ class MoveRobot():
 
     def TakePhotos(self):
         """
-        Uses the FisheyeCam class to take a upward facing picture
+        Uses the FisheyeCam class to take ssa upward facing picture
         Uses SSH to execute a remote file to take a forward facing picture
         """
         ssh.SendSignalToRunScript()
