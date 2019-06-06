@@ -98,16 +98,18 @@ class MoveRobot():
                 self.coordinates = self.__gps.GetCurrentCoordinates()
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
-
+                
+                #Test if the coordinates are off
                 if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
-                    if(self.__leftSpeed > 1):
+                    #If the speed is over the maximum...
+                    if(self.__leftSpeed > .1):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
-                    if(self.__rightSpeed < 1):
+                    if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                 elif(self.__desiredTrackAngle > self.__gps.GetCurrentTrackAngle()):
-                    if(self.__rightSpeed > 1 + self.__turningRate):
+                    if(self.__rightSpeed > .1):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                    if(self.__leftSpeed < 1 - self.__turningRate):
+                    if(self.__leftSpeed < .9):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                 self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
@@ -127,8 +129,8 @@ class MoveRobot():
         Calculates the bearing (Degree on the earth) the current point to another
         """
         # Calculate the bearing of two points
-        angle = degrees(atan2(self.__lattitude[indx] - self.__gps.GetCurrentCoordinates(
-            0), self.__longitude[indx] - self.__gps.GetCurrentCoordinates(1)))
+        angle = degrees(atan2(self.__lattitude[indx] - self.__coordinates(
+            0), self.__longitude[indx] - self.__gps.coordinates(1)))
         # If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
