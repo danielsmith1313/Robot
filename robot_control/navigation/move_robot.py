@@ -105,24 +105,24 @@ class MoveRobot():
                 
                 #self.__desiredTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self._MoveRobot__lattitude[i+1], self._MoveRobot__coordinates[1], self._MoveRobot__longitude[i+1])
                 self.__desiredTrackAngle = self.CalculateTrackAngle(self.__lattitude[i+1],self.__lattitude[i],self.__longitude[i+1],self.__longitude[i])
-                
+                print("Track angle desired:", self._MoveRobot__desiredTrackAngle)
                 
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle + 10 < self.__currentTrackAngle):
+                if(self.__desiredTrackAngle - 10 < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("Turning right")
                     if(self.__leftSpeed > .5):
-                        self.__leftSpeed = self.__leftSpeed - self.__turningRate
-                    if(self.__rightSpeed < .9):
-                        self.__rightSpeed = self.__rightSpeed + self.__turningRate
-                elif(self.__desiredTrackAngle - 10 > self.__currentTrackAngle):
-                    
-                    if(self.__rightSpeed > .5):
-                        self.__rightSpeed = self.__rightSpeed - self.__turningRate
-                        print("Turning left")
-                    if(self.__leftSpeed < .9):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
-                        print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
+                    if(self.__rightSpeed < .9):
+                        self.__rightSpeed = self.__rightSpeed - self.__turningRate
+                elif(self.__desiredTrackAngle + 10 > self.__currentTrackAngle):
+                    print("Turning left")
+                    if(self.__rightSpeed > .5):
+                        self.__rightSpeed = self.__rightSpeed + self.__turningRate
+                        
+                    if(self.__leftSpeed < .9):
+                        self.__leftSpeed = self.__leftSpeed - self.__turningRate
+                        
                 else:
                     print("Straight")
                 self.__formerTrackAngle = self.__gps.GetCurrentCoordinates(0)
