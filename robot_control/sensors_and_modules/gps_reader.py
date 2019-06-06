@@ -65,7 +65,7 @@ class GPS:
             self.gps.update()
             # Every second print out current location details if there's a fix.
             current = time.monotonic()
-            if current - last_print >= 1.0:
+            if current - last_print >= .5:
                 last_print = current
                 if not self.gps.has_fix:
                     # Try again if we don't have a fix yet.
@@ -74,12 +74,14 @@ class GPS:
 
                 if option == 0:
                     self.__currentLattitude =  self.gps.latitude
-                    return self.__currentLattitude
-                    running = False
-                elif option == 1:
+                    
                     self.__currentLongitude = self.gps.longitude
-                    return self.__currentLongitude
+                    return [self.__currentLattitude, self.__currentLongitude]
+                    
                     running = False
+                
+                    
+                    
                 # Some attributes beyond latitude, longitude and timestamp are optional
                 # and might not be present.  Check if they're None before trying to use!
                 elif option == 2:

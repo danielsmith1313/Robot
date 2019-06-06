@@ -55,9 +55,10 @@ class MoveRobot():
         self.__rightSpeed = 0
         self.__leftSpeed = 0
         self.__turningRate = .05  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 100  # Time in between gps measurements and turning corrections
+        self.__correctionTime = 50  # Time in between gps measurements and turning corrections
         self.__startupTime = 200
         self.__control = control()
+        self.__coordinates = []
 
         # Create objects
         self.__gps = GPS()
@@ -89,22 +90,22 @@ class MoveRobot():
         # Go through every single point
         for i in range(len(self.__lattitude)):
 
-            # Move the robot forward
-            self.__control.leftOrRight(
-                self.__leftSpeed, self.__rightSpeed, self.__startupTime)
+            self.coordinates = self.__gps.GetCurrentCoordinates
             # while the robot is not close enough to the specified point
             if(self.__lattitude[i+1] == 'nan'):
                 break
-            while(self.__lattitude[i+1] < (self.__gps.GetCurrentCoordinates(0) + self.MARGIN_OF_ERROR) and self.__lattitude[i+1] > (self.__gps.GetCurrentCoordinates(0) - self.MARGIN_OF_ERROR) and self.__longitude[i+1] < (self.__gps.GetCurrentCoordinates(1) + self.MARGIN_OF_ERROR) and self.__longitude[i+1] > (self.__gps.GetCurrentCoordinates(1) - self.MARGIN_OF_ERROR)):
+            while((self.__lattitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(0)) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(0) ))) or ((self.__longitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(1) )) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(1))))):
+                self.coordinates = self.__gps.GetCurrentCoordinates
+                
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
 
                 if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
-                    if(self.__leftSpeed > 0):
+                    if(self.__leftSpeed > 1):
                         self.__leftSpeed = self.__leftSpeed - self.__turningRate
                     if(self.__rightSpeed < 1):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                 elif(self.__desiredTrackAngle > self.__gps.GetCurrentTrackAngle()):
-                    if(self.__rightSpeed > 0 + self.__turningRate):
+                    if(self.__rightSpeed > 1 + self.__turningRate):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                     if(self.__leftSpeed < 1 - self.__turningRate):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
