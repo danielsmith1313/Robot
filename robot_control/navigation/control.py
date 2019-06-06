@@ -1,11 +1,11 @@
-from .dual_g2_hpmd_rpi import motors, MAX_SPEED
+from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import time
 
 
 class control():
     # controls the forward movement of the robot
     # This function accepts how long the motors should run and the speed for both motors
-    @classmethod
+    
     def forward(self, distance, speed):
         try:
             for i in range(distance):
@@ -41,7 +41,7 @@ class control():
     # controls the left or right movement of the robot
     # This function accepts how long the motors should run and the speed for both motors
     # Depending on the speed difference between the left and right motors, it will either move left or right
-    @classmethod
+    
     def leftOrRight(self, speedM1, speedM2, distance):
         # Reset the motors
         motors.disable()
@@ -58,7 +58,7 @@ class control():
             motors.disable()
 
     # Stops all motors from running
-    @classmethod
+    
     def stop(self):
         motors.setSpeeds(0, 0)
         motors.disable()

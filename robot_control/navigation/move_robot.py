@@ -58,6 +58,7 @@ class MoveRobot():
         self.__correctionTime = 200  # Time in between gps measurements and turning corrections
         self.__stoppingTime = 750  # Time the motors are stopped in order to take data
         self.__startupTime = 1000
+        self.__control = control()
 
         # Create objects
         self.__gps = GPS()
@@ -84,13 +85,13 @@ class MoveRobot():
 
         self.__leftSpeed = .9 * self.__speed
         self.__rightSpeed = .9 * self.__speed
-        control.leftOrRight(
+        self.__control.leftOrRight(
             self.__leftSpeed, self.__rightSpeed, self.__startupTime)
         # Go through every single point
         for i in range(len(self.__lattitude)):
 
             # Move the robot forward
-            control.leftOrRight(
+            self.__control.leftOrRight(
                 self.__leftSpeed, self.__rightSpeed, self.__startupTime)
             # while the robot is not close enough to the specified point
             if(self.__lattitude[i+1] == 'nan'):
@@ -108,11 +109,11 @@ class MoveRobot():
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                     if(self.__leftSpeed < 1 - self.__turningRate):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
-                control.leftOrRight(
+                self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
 
-            control.stop()
-            time.sleep(self.__stoppingTime)
+            self.__control.stop()
+            
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
