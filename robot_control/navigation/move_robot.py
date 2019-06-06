@@ -55,8 +55,8 @@ class MoveRobot():
         self.__speed = 0  # Stores the speed to be ussed in the motor power
         self.__rightSpeed = 0
         self.__leftSpeed = 0
-        self.__turningRate = .025  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 300  # Time in between gps measurements and turning corrections
+        self.__turningRate = .015  # Percent of motor speed increased and decreased each time
+        self.__correctionTime = 50  # Time in between gps measurements and turning corrections
         self.__startupTime = 250
         self.__control = control()
         self.__coordinates = []
