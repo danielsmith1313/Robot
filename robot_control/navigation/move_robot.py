@@ -36,8 +36,8 @@ class MoveRobot():
     """
     This class is in charge of moving the robot to follow a set amount of points
     """
-    LOW_SPEED = .3
-    MEDIUM_SPEED = .6
+    LOW_SPEED = .8
+    MEDIUM_SPEED = .9
     HIGH_SPEED = 1
 
     # Coordinate length +- of error before moving on to the next point
@@ -55,7 +55,7 @@ class MoveRobot():
         self.__speed = 0  # Stores the speed to be ussed in the motor power
         self.__rightSpeed = 0
         self.__leftSpeed = 0
-        self.__turningRate = .03  # Percent of motor speed increased and decreased each time
+        self.__turningRate = .025  # Percent of motor speed increased and decreased each time
         self.__correctionTime = 250  # Time in between gps measurements and turning corrections
         self.__startupTime = 250
         self.__control = control()
@@ -111,13 +111,13 @@ class MoveRobot():
                 if(self.__desiredTrackAngle - 10 < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("Turning right")
-                    if(self.__leftSpeed > .5):
+                    if(self.__leftSpeed > .6):
                         self.__leftSpeed = self.__leftSpeed + self.__turningRate
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
                 elif(self.__desiredTrackAngle + 10 > self.__currentTrackAngle):
                     print("Turning left")
-                    if(self.__rightSpeed > .5):
+                    if(self.__rightSpeed > .6):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         
                     if(self.__leftSpeed < .9):
