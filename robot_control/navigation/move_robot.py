@@ -90,12 +90,12 @@ class MoveRobot():
         # Go through every single point
         for i in range(len(self.__lattitude)):
 
-            self.coordinates = self.__gps.GetCurrentCoordinates
+            self.__coordinates = self.__gps.GetCurrentCoordinates
             # while the robot is not close enough to the specified point
             if(self.__lattitude[i+1] == 'nan'):
                 break
-            while((self.__lattitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(0)) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(0) ))) or ((self.__longitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(1) )) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(1))))):
-                self.coordinates = self.__gps.GetCurrentCoordinates()
+            while((((self.__lattitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[0]) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[0] ))) or (((self.__longitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[1] ) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[1])))):
+                self.__coordinates = self.__gps.GetCurrentCoordinates()
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
@@ -129,8 +129,7 @@ class MoveRobot():
         Calculates the bearing (Degree on the earth) the current point to another
         """
         # Calculate the bearing of two points
-        angle = degrees(atan2(self.__lattitude[indx] - self.__coordinates(
-            0), self.__longitude[indx] - self.__gps.coordinates(1)))
+        angle = degrees(atan2(self.__lattitude[indx] - self.__coordinates[0], self.__longitude[indx] - self.__coordinates[1]))
         # If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
