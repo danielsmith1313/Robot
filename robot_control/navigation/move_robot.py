@@ -95,7 +95,7 @@ class MoveRobot():
             if(self.__lattitude[i+1] == 'nan'):
                 break
             while((self.__lattitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(0)) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(0) ))) or ((self.__longitude[i+1] + self.MARGIN_OF_ERROR < (self.__coordinates(1) )) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates(1))))):
-                self.coordinates = self.__gps.GetCurrentCoordinates
+                self.coordinates = self.__gps.GetCurrentCoordinates()
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
 
