@@ -69,7 +69,7 @@ class GPS:
             self.gps.update()
             # Every second print out current location details if there's a fix.
             current = time.monotonic()
-            if current - last_print >= 1:
+            if current - last_print >= .5:
                 last_print = current
                 if not self.gps.has_fix:
                     # Try again if we don't have a fix yet.
@@ -82,9 +82,9 @@ class GPS:
                     
                     
                     self.__counter = self.__counter + 1
-                    if(self.__counter == 20):
-                        self.__lattitude = self.__lattitudeCounter / 20
-                        self.__longitude = self.__longitudeCounter / 20
+                    if(self.__counter == 100):
+                        self.__lattitude = self.__lattitudeCounter / 100
+                        self.__longitude = self.__longitudeCounter / 100
                         self.__listOfData = [self._GPS__lattitude, self._GPS__longitude]
                         print("Lattitude", self.__lattitude)
                         running = False
