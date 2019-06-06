@@ -28,6 +28,9 @@ class GPS:
         
         # for a computer, use the pyserial library for uart access
         import serial
+        self.__counter = 0
+        self.__longitudeCounter = 0
+        self.__lattitudeCounter = 0
         self.__uart = serial.Serial(
             "/dev/ttyUSB0", baudrate=9600, timeout=3000)
         # Create a GPS module instance.
@@ -65,7 +68,7 @@ class GPS:
             self.gps.update()
             # Every second print out current location details if there's a fix.
             current = time.monotonic()
-            if current - last_print >= 1:
+            if current - last_print >= .2:
                 last_print = current
                 if not self.gps.has_fix:
                     # Try again if we don't have a fix yet.
@@ -73,11 +76,18 @@ class GPS:
                     continue
 
                 if option == 0:
-                    self.__currentLattitude =  self.gps.latitude
+                    self.__lattitudeCounter =  self.gps.latitude + self.__lattitudeCounter
+                    self.__longitudeCounter = self.gps.longitude + self.__longitudeCounter
                     
-                    self.__currentLongitude = self.gps.longitude
+                    
                     self.listOfData = [self._GPS__currentLattitude,self._GPS__currentLongitude]
-                    running = False
+                    counter = counter + 1
+                    if(counter == 10):
+                        self.__lattitude = self.__lattitudeCounter / 10
+                        self.__longitude = self.__longitudeCounter / 10
+                        self.__listOfData = [self._GPS__lattitude, self._GPS__longitude]
+                        print("Lattitude", self.__lattitude)
+                        running = False
                     
                     
                     
