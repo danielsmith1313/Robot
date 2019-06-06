@@ -40,7 +40,7 @@ class MoveRobot():
     HIGH_SPEED = 1
 
     # Coordinate length +- of error before moving on to the next point
-    MARGIN_OF_ERROR = .00001
+    MARGIN_OF_ERROR = .00002
 
     def __init__(self):
         # Declare variables
@@ -55,7 +55,7 @@ class MoveRobot():
         self.__rightSpeed = 0
         self.__leftSpeed = 0
         self.__turningRate = .05  # Percent of motor speed increased and decreased each time
-        self.__correctionTime = 50  # Time in between gps measurements and turning corrections
+        self.__correctionTime = 70  # Time in between gps measurements and turning corrections
         self.__startupTime = 200
         self.__control = control()
         self.__coordinates = []
