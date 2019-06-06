@@ -41,7 +41,7 @@ class MoveRobot():
     HIGH_SPEED = 1
 
     # Coordinate length +- of error before moving on to the next point
-    MARGIN_OF_ERROR = .00004
+    MARGIN_OF_ERROR = .000005
 
     def __init__(self):
         # Declare variables
