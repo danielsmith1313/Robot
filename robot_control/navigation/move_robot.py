@@ -82,14 +82,18 @@ class MoveRobot():
             self.__speed = self.MEDIUM_SPEED
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
-
+        
+        self.startingCoordinates = self.__gps.GetCurrentCoordinates(0)
+        
         self.__leftSpeed = .9 * self.__speed
         self.__rightSpeed = .9 * self.__speed
         self.__control.leftOrRight(
             self.__leftSpeed, self.__rightSpeed, self.__startupTime)
+        self.__coordinates = self.__gps.GetCurrentCoordinates(0)
+        self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0],self.startingCoordinates[0],self.__coordinates[1],self.startingCoordinates[1])
         # Go through every single point
         for i in range(len(self.__lattitude)):
-
+            
             self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             print("Coordinates:", self.__coordinates)
             # while the robot is not close enough to the specified point
@@ -100,9 +104,9 @@ class MoveRobot():
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 print("desired track angle: ", self.__desiredTrackAngle)
-                print("current track angle: "), self.__gps.GetCurrentTrackAngle()
+                print("current track angle: "), self.__currentTrackAngle
                 #Test if the coordinates are off
-                if(self.__desiredTrackAngle < self.__gps.GetCurrentTrackAngle()):
+                if(self.__desiredTrackAngle < self.__currentTrackAngle):
                     #If the speed is over the maximum...
                     print("desiredTrackAngle is < current")
                     if(self.__leftSpeed > .1):
@@ -111,7 +115,7 @@ class MoveRobot():
                     if(self.__rightSpeed < .9):
                         self.__rightSpeed = self.__rightSpeed + self.__turningRate
                         print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
-                elif(self.__desiredTrackAngle > self.__gps.GetCurrentTrackAngle()):
+                elif(self.__desiredTrackAngle > self.__currentTrackAngle):
                     print("desiredTrackAngle is > current")
                     if(self.__rightSpeed > .1):
                         self.__rightSpeed = self.__rightSpeed - self.__turningRate
@@ -122,6 +126,7 @@ class MoveRobot():
                 print("Left speed: ", self.__leftSpeed, "Right Speed:" ,self.__rightSpeed)
                 self.__control.leftOrRight(
                     self.__leftSpeed, self.__rightSpeed, self.__correctionTime)
+                self.__currentTrackAngle = self.CalculateTrackAngle(self.__coordinates[0], self.__lattitude[i], self.__coordinates[1], self.__longitude[i])
 
             self.__control.stop()
             self.__leftSpeed =  .9 *self.__speed
@@ -142,6 +147,11 @@ class MoveRobot():
         # If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
+
+    def CalculateTrackAngle(self, la1,la2,lo1,lo2):
+            angle = degrees(atan2(la1 - la2, lo1 - lo2))
+            bearing2 = (angle + 360) % 360
+            return bearing2
 
     def TakePhotos(self):
         """
