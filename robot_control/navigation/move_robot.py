@@ -90,12 +90,12 @@ class MoveRobot():
         # Go through every single point
         for i in range(len(self.__lattitude)):
 
-            self.__coordinates = self.__gps.GetCurrentCoordinates
+            self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             # while the robot is not close enough to the specified point
             if(self.__lattitude[i+1] == 'nan'):
                 break
             while((((self.__lattitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[0]) or (self.__lattitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[0] ))) or (((self.__longitude[i+1] + self.MARGIN_OF_ERROR) < self.__coordinates[1] ) or (self.__longitude[i+1] - self.MARGIN_OF_ERROR > (self.__coordinates[1])))):
-                self.__coordinates = self.__gps.GetCurrentCoordinates()
+                self.__coordinates = self.__gps.GetCurrentCoordinates(0)
                 
                 self.__desiredTrackAngle = self.CalculateBearing(i+1)
                 
@@ -122,7 +122,7 @@ class MoveRobot():
             #    ssh.SendSignalToRunScript("","")
             # Take the second picture
             if(option2 == True):
-                fsh.TakePicture(self.__gps.GetCurrentCoordinates(0), self.__gps.GetCurrentCoordinates(1))
+                fsh.TakePicture(self.__coordinates[0], self.__coordinates[1])
 
     def CalculateBearing(self, indx):
         """
