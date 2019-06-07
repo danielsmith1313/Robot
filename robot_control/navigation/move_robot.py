@@ -174,7 +174,7 @@ class MoveRobot():
         Calculates the bearing (Degree on the earth) the current point to another
         """
         # Calculate the bearing of two points
-        angle = degrees(atan2(self.__lattitude[indx] - self.__coordinates[0], self.__longitude[indx] - self.__coordinates[1]))
+        angle = math.degrees(math.atan2(self.__lattitude[indx] - self.__coordinates[0], self.__longitude[indx] - self.__coordinates[1]))
         # If the angle is over 360 or under 0 set it so it is at the correct angle
         bearing1 = (angle + 360) % 360
         return bearing1
