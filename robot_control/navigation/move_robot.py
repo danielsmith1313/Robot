@@ -95,10 +95,12 @@ class MoveRobot():
         self.__leftSpeed = self.__speed
         self.__rightSpeed = self.__speed
         # Go through every single point
+        self.__lattitude.append("nan")
         for i in range(len(self.__lattitude)):
             #Set coordinates of current position
             #self.__coordinates = self.__gps.GetCurrentCoordinates(0)
-            
+            if(self.__lattitude[i+1] == "nan"):
+                break
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitudde[i], self.__longitude[i])
             self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION * self.__speedCalibration, self.__speed)
             # Take the picture
