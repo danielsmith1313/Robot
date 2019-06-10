@@ -9,12 +9,12 @@ class control():
     # This function accepts how long the motors should run and the speed for both motors
     
     #Declare constants
-    LEFT_OFFSET = 1
-    RIGHT_OFFSET = .95
+    
 
     
     def __init__(self):
-        pass
+        self.LEFT_OFFSET = 1
+        self.RIGHT_OFFSET = .95
     def forward(self, distance, speed):
         motors.enable()
         
