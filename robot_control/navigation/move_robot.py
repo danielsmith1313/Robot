@@ -102,7 +102,7 @@ class MoveRobot():
             if(self.__lattitude[i+1] == "nan"):
                 break
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i])
-            self.__control.forward(self.__distance * self.DISTANCE_CALIBRATION * self.__speedCalibration, self.__speed)
+            self.__control.forward(int(self.__distance * self.DISTANCE_CALIBRATION * self.__speedCalibration), int(self.__speed))
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
