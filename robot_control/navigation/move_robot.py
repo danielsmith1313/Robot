@@ -106,6 +106,8 @@ class MoveRobot():
             print("distance: ", self.__distance)
             #Increment first value to increase left second for right
             self.__control.leftOrRight(.8, .8, int(self.__distance))
+            if(i == 1):
+                self.__control.leftOrRight(.8, .8, 80)
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
