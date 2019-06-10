@@ -124,7 +124,13 @@ class MoveRobot():
         """
         Takes two gps coordinates and calculates the distance between the two 
         """
+        radiousOfEarth = 6373.0
         dlon = lo2 - lo1
+        dlat = la2 - lo1
+
+        a = math.sin(dlat/2)**2 + math.cos(la1) * math.cos(la2) * math.sin(dlon / 2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
 
     def TakePhotos(self):
         """
