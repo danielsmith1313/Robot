@@ -109,7 +109,7 @@ class MoveRobot():
             # Take the second picture
             if(option2 == True):
                 print("Taking Picture...")
-                fsh.TakePicture(self.__coordinates[0], self.__coordinates[1])
+                fsh.TakePicture(0,0)
 
     def CalculateBearing(self, indx):
         """
