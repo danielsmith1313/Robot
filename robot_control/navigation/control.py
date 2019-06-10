@@ -57,8 +57,8 @@ class control():
     def leftOrRight(self, speedM1, speedM2, distance):
         # Reset the motors
         motors.enable()
-        self.speed1 = speedM1 * LEFT_OFFSET
-        self.speed2 = speedM2 * RIGHT_OFFSET
+        self.speed1 = speedM1 * self.LEFT_OFFSET
+        self.speed2 = speedM2 * self.RIGHT_OFFSET
         try:
             for i in range(int(distance)):
                 motors.motor1.setSpeed(int(-1 * self.speed1 * MAX_SPEED))
