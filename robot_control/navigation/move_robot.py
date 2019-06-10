@@ -45,7 +45,7 @@ class MoveRobot():
     #Note: .1 = 1 mile
     #Note: margin of error is in a square around the point
     MARGIN_OF_ERROR = .000005
-    DISTANCE_CALIBRATION = .1
+    DISTANCE_CALIBRATION = 10000
     def __init__(self):
         # Declare variables
         self.__lattitude = []  # Coordinates imported from main
