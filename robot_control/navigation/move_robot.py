@@ -135,7 +135,7 @@ class MoveRobot():
 
         a = math.sin(dlat/2)**2 + math.cos(la1) * math.cos(la2) * math.sin(dlon / 2)**2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-        c = c*radiousOfEarth
+        
         return c
 
 
