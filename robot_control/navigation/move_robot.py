@@ -45,7 +45,7 @@ class MoveRobot():
     #Note: .1 = 1 mile
     #Note: margin of error is in a square around the point
     MARGIN_OF_ERROR = .000005
-    DISTANCE_CALIBRATION = 10000
+    DISTANCE_CALIBRATION = .1
     def __init__(self):
         # Declare variables
         self.__lattitude = []  # Coordinates imported from main
@@ -103,7 +103,7 @@ class MoveRobot():
                 break
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i])
             print("distance: ", self.__distance)
-            self.__control.forward(int(self.__distance * self.DISTANCE_CALIBRATION * self.__speedCalibration), int(self.__speed))
+            self.__control.leftOrRight(int(self.__speed), int(self.__speed), int(self.__distance * self.DISTANCE_CALIBRATION * self.__speedCalibration))
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
