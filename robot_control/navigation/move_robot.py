@@ -97,7 +97,7 @@ class MoveRobot():
         # Go through every single point
         for i in range(len(self.__lattitude)):
             #Set coordinates of current position
-            self.__coordinates = self.__gps.GetCurrentCoordinates(0)
+            #self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitudde[i], self.__longitude[i])
             self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION * self.__speedCalibration, self.__speed)
