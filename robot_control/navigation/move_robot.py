@@ -103,7 +103,7 @@ class MoveRobot():
                 break
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i])
             print("distance: ", self.__distance)
-            self.__control.leftOrRight(.8, .8, 500)
+            self.__control.leftOrRight(.8, .8, (self.__distance * DISTANCE_CALIBRATION))
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
