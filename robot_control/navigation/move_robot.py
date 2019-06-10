@@ -80,10 +80,13 @@ class MoveRobot():
         # Get the speed of the function from the application
         if(speed == 1):
             self.__speed = self.LOW_SPEED
+            self.__speedCalibration = self.LOW_SPEED + .4
         elif(speed == 2):
             self.__speed = self.MEDIUM_SPEED
+            self.__speedCalibration = self.MEDIUM_SPEED + .2
         elif (speed == 3):
             self.__speed = self.HIGH_SPEED
+            self.__speedCalibration = self.HIGH_SPEED
         
         #Gets the current coordinates from the gps chip
         #NOTE: Gps must be attached to USB0 port by default
@@ -97,7 +100,7 @@ class MoveRobot():
             self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             
             self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitudde[i], self.__longitude[i])
-            self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION, self.__speed)
+            self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION * self.__speedCalibration, self.__speed)
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
