@@ -14,7 +14,7 @@ class control():
     
     def __init__(self):
         self.LEFT_OFFSET = 1
-        self.RIGHT_OFFSET = .96
+        self.RIGHT_OFFSET = .93
     def forward(self, distance, speed):
         motors.enable()
         
