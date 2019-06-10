@@ -101,7 +101,7 @@ class MoveRobot():
             #self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             if(self.__lattitude[i+1] == "nan"):
                 break
-            self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitudde[i], self.__longitude[i])
+            self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i])
             self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION * self.__speedCalibration, self.__speed)
             # Take the picture
             # if(option1 == True):
