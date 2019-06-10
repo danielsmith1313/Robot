@@ -45,14 +45,15 @@ class MoveRobot():
     #Note: .1 = 1 mile
     #Note: margin of error is in a square around the point
     MARGIN_OF_ERROR = .000005
-
+    DISTANCE_CALIBRATION = .1
     def __init__(self):
         # Declare variables
         self.__lattitude = []  # Coordinates imported from main
         self.__longitude = []
         self.__currentLattitude = 0  # Stores coordinate data
         self.__currentLongitude = 0
-
+        self.__distance = 0
+        
         
         self.__speed = 0  # Stores the speed to be ussed in the motor power
         self.__rightSpeed = 0   #Stores the speed of the robot
@@ -88,17 +89,15 @@ class MoveRobot():
         #NOTE: Gps must be attached to USB0 port by default
         
         #Set the speeds to the factor already set
-        self.__leftSpeed = .9 * self.__speed
-        self.__rightSpeed = .9 * self.__speed
+        self.__leftSpeed = self.__speed
+        self.__rightSpeed = self.__speed
         # Go through every single point
         for i in range(len(self.__lattitude)):
             #Set coordinates of current position
             self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             
-
-            #Reset both speeds since the robot is correct
-            self.__leftSpeed =  .9 *self.__speed
-            self.__rightSpeed = .9 * self.__speed
+            self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitudde[i], self.__longitude[i])
+            self.__control.forward(self.__dist * self.DISTANCE_CALIBRATION, self.__speed)
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
@@ -122,7 +121,7 @@ class MoveRobot():
             return bearing
     def CalculateDistance(self, la1,la2,lo1,lo2):
         """
-        Takes two gps coordinates and calculates the distance between the two 
+        Takes two gps coordinates and calculates the distance between the two in kilometers
         """
         radiousOfEarth = 6373.0
         dlon = lo2 - lo1
@@ -130,6 +129,7 @@ class MoveRobot():
 
         a = math.sin(dlat/2)**2 + math.cos(la1) * math.cos(la2) * math.sin(dlon / 2)**2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
 
 
     def TakePhotos(self):

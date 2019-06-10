@@ -17,11 +17,14 @@ class GPS:
         pass
 
     def GetHasFix(self):
+        """
+        Use this to figure out if it currently has 
+        """
         if not self.__gps.has_fix:
             # Try again if we don't have a fix yet.
             return False
 
-    def GetCurrentCoordinates(self, option):
+    def GetCurrentCoordinates(self, option, measurments):
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
         """
