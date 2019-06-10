@@ -101,9 +101,9 @@ class MoveRobot():
             #self.__coordinates = self.__gps.GetCurrentCoordinates(0)
             if(self.__lattitude[i+1] == "nan"):
                 break
-            self.__distance = self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i])
+            self.__distance = (self.DISTANCE_CALIBRATION * self.CalculateDistance(self.__lattitude[i], self.__lattitude[i+1], self.__longitude[i], self.__longitude[i]))
             print("distance: ", self.__distance)
-            self.__control.leftOrRight(.8, .8, int(self.__distance * DISTANCE_CALIBRATION))
+            self.__control.leftOrRight(.8, .8, int(self.__distance))
             # Take the picture
             # if(option1 == True):
             #    ssh.SendSignalToRunScript("","")
