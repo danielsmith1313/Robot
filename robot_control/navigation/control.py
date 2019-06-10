@@ -8,8 +8,16 @@ class control():
     # controls the forward movement of the robot
     # This function accepts how long the motors should run and the speed for both motors
     
+    #Declare constants
+    LEFT_OFFSET = 1
+    RIGHT_OFFSET = .95
+
+    
+    def __init__(self):
+        pass
     def forward(self, distance, speed):
         motors.enable()
+        
         try:
             for i in range(distance):
                 
@@ -49,10 +57,12 @@ class control():
     def leftOrRight(self, speedM1, speedM2, distance):
         # Reset the motors
         motors.enable()
+        self.speed1 = speedM1 * LEFT_OFFSET
+        self.speed2 = speedM2 * RIGHT_OFFSET
         try:
             for i in range(int(distance)):
-                motors.motor1.setSpeed(int(-1 * speedM1 * MAX_SPEED))
-                motors.motor2.setSpeed(int(-1 * speedM2 * MAX_SPEED))
+                motors.motor1.setSpeed(int(-1 * self.speed1 * MAX_SPEED))
+                motors.motor2.setSpeed(int(-1 * self.speed2 * MAX_SPEED))
                 time.sleep(.005)
 
         finally:
