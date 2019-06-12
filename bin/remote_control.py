@@ -16,7 +16,7 @@ import time
 # The seperate ports will be
 # NOTE: USB_VENDOR and USB_PRODUCT can be recieved through lsusb or lsusb -l. It should output a line with xxxx:xxxx for vendor and product respectively
 USB_IF = 0
-USB_TIMEOUT = 5  # Measured in ms
+USB_TIMEOUT = 5  #Measured in ms
 # Both of these are hexadecimal
 USB_VENDOR = 0x0000
 USB_PRODUCT = 0x0000
@@ -39,4 +39,4 @@ while True:
     except:
         pass
 
-    time.sleep(0.01) # allows exiting more easily
+    time.sleep(0.01) #allows exiting more easily
