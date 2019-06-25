@@ -24,7 +24,7 @@ class GPS:
             # Try again if we don't have a fix yet.
             return False
 
-    def GetCurrentCoordinates(self, option, measurments):
+    def GetCurrentCoordinates(self, option):
         """
         Returns the most recent coordinates [lattitude, longitude, altitude]
         """
@@ -112,4 +112,4 @@ class GPS:
             return self.__trackAngle
 
     def GetCurrentTrackAngle(self):
-        return self.GetCurrentCoordinates(3)
+        return self.GetCurrentCoordinates(2)

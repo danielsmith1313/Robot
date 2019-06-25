@@ -8,9 +8,15 @@ from time import sleep
 import time
 import uuid
 import datetime
-
+from gps_reader import GPS
+#Create gps object
+gps = GPS()
 # Create object to get date and time
 now = datetime.datetime.now()
+
+coordinates = gps.GetCurrentCoordinates(0)
+latitude = coordinates[0]
+longitude = coordinates[1]
 
 # Generate a unique filename
 uniqueFilename = str(uuid.uuid4())
@@ -27,3 +33,12 @@ try:
     print("Picture taken, filename: " + path)
 finally:
     camera.close()
+#Set the gps coordinates to the picture
+img = Image.open(path)
+exif_dict = piexif.load(img.info['exif'])
+
+exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef] = 'N'
+exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef] = 'W'
+exif_dict['GPS'][piexif.GPSIFD.GPSLatitude] = (latitude, 1)
+exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
+img.save('_%s' % uniqueFilename, "jpeg", exif=exif_bytes)
