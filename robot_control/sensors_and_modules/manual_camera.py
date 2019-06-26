@@ -9,22 +9,26 @@ import uuid
 import datetime
 from gps_reader import GPS
 import fractions
-import pexif
-from pexif import JpegFile
-import fractions
-import sys
-
 #Create gps object
 gps = GPS()
 # Create object to get date and time
 #now = datetime.datetime.now()
 
+def change_to_rational(number):
+    """convert a number to rantional
+    Keyword arguments: number
+    return: tuple like (1, 2), (numerator, denominator)
+    """
+    f = Fraction(str(number))
+    return (f.numerator, f.denominator)
 
 
 
 coordinates = gps.GetCurrentCoordinates(0)
 latitude = coordinates[0]
 longitude = coordinates[1]
+latitude = fractions.Fraction(latitude)
+longitude = fractions.Fraction(longitude)
 #latitude = latitude * 1000000
 #longitude = longitude * 1000000
 print(latitude)
@@ -47,6 +51,13 @@ try:
 finally:
     camera.close()
 #Set the gps coordinates to the picture
-img = pexif.JpegFile.fromFile(path)
-img.set_geo(float(latitude),float(longitude))
-img.writeFile(path)
+
+gps_ifd = {
+        piexif.GPSIFD.GPSLatitudeRef: 'N',
+        piexif.GPSIFD.GPSLatitude: [latitude.numerator(),latitude.denominator()],
+        piexif.GPSIFD.GPSLongitudeRef: 'W',
+        piexif.GPSIFD.GPSLongitude: [longitude.numerator(),longitude.denominator()],
+    }
+exif_dict = {"GPS": gps_ifd}
+exif_bytes = piexif.dump(exif_dict)
+piexif.insert(exif_bytes, path)
