@@ -24,9 +24,9 @@ def change_to_rational(number):
 
 
 
-coordinates = gps.GetCurrentCoordinates(0)
-latitude = coordinates[0]
-longitude = coordinates[1]
+#coordinates = gps.GetCurrentCoordinates(0)
+#latitude = coordinates[0]
+#longitude = coordinates[1]
 #latitude = latitude * 1000000
 #longitude = longitude * 1000000
 print(latitude)
