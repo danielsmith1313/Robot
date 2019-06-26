@@ -19,13 +19,6 @@ gps = GPS()
 # Create object to get date and time
 #now = datetime.datetime.now()
 
-def change_to_rational(number):
-    """convert a number to rantional
-    Keyword arguments: number
-    return: tuple like (1, 2), (numerator, denominator)
-    """
-    f = Fraction(str(number))
-    return (f.numerator, f.denominator)
 
 
 
