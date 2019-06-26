@@ -16,6 +16,11 @@ gps = GPS()
 coordinates = gps.GetCurrentCoordinates(0)
 latitude = coordinates[0]
 longitude = coordinates[1]
+latitude = latitude * 1000000
+longitude = longitude * 1000000
+print(latitude)
+print(longitude)
+latitude
 
 # Generate a unique filename
 uniqueFilename = str(uuid.uuid4())
@@ -38,7 +43,7 @@ exif_dict = piexif.load(img.info['exif'])
 
 exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef] = 'N'
 exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef] = 'W'
-exif_dict['GPS'][piexif.GPSIFD.GPSLatitude] = latitudea
-exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = longitude
+exif_dict['GPS'][piexif.GPSIFD.GPSLatitude] = [int(latitude),1000000]
+exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = [int(longitude),1000000]
 exif_bytes = piexif.dump(exif_dict)
 img.save('_%s' % uniqueFilename, "jpeg", exif=exif_bytes)
