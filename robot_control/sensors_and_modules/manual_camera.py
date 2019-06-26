@@ -5,7 +5,6 @@ from picamera import PiCamera
 import piexif
 from PIL import Image
 from time import sleep
-import time
 import uuid
 import datetime
 from gps_reader import GPS
@@ -41,4 +40,5 @@ exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef] = 'N'
 exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef] = 'W'
 exif_dict['GPS'][piexif.GPSIFD.GPSLatitude] = (latitude, 1)
 exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = (longitude, 1)
+exif_bytes = piexif.dump(exif_dict)
 img.save('_%s' % uniqueFilename, "jpeg", exif=exif_bytes)
