@@ -122,7 +122,7 @@ def debug(*debug_string):
     DEBUG to 1."""
     if DEBUG:
         for each in debug_string:
-            print each,
+            print(each)
         print
 
 
@@ -180,7 +180,7 @@ class DefaultSegment:
         """This is called by JpegFile.dump() to output a human readable
         representation of the segment. Subclasses should overload this to provide
         extra information."""
-        print >> fd, " Section: [%5s] Size: %6d" % \
+        #print >> fd, " Section: [%5s] Size: %6d" % \
             (jpeg_markers[self.marker][0], len(self.data))
 
 
@@ -218,7 +218,7 @@ class StartOfScanSegment(DefaultSegment):
 
     def dump(self, fd):
         """Dump as ascii readable data to a given file object"""
-        print >> fd, " Section: [  SOS] Size: %6d Image data size: %6d" % \
+        #print >> fd, " Section: [  SOS] Size: %6d Image data size: %6d" % \
             (len(self.data), len(self.img_data))
 
 
@@ -549,7 +549,7 @@ class IfdData(object):
 
     def dump(self, f, indent=""):
         """Dump the IFD file"""
-        print >> f, indent + "<--- %s start --->" % self.name
+        #print >> f, indent + "<--- %s start --->" % self.name
         for entry in self.entries:
             tag, exif_type, data = entry
             if exif_type == ASCII:
@@ -559,9 +559,9 @@ class IfdData(object):
             else:
                 if data and len(data) == 1:
                     data = data[0]
-                print >> f, indent + "  %-40s %s" % \
+                #print >> f, indent + "  %-40s %s" % \
                     (self.tags.get(tag, (hex(tag), 0))[0], data)
-        print >> f, indent + "<--- %s end --->" % self.name
+        #print >> f, indent + "<--- %s end --->" % self.name
 
 
 class IfdInterop(IfdData):
@@ -910,7 +910,7 @@ class ExifSegment(DefaultSegment):
             offset = unpack(self.e + "I", tiff_data[start:start+4])[0]
 
     def dump(self, fd):
-        print >> fd, " Section: [ EXIF] Size: %6d" % (len(self.data))
+        #print >> fd, " Section: [ EXIF] Size: %6d" % (len(self.data))
         for ifd in self.ifds:
             ifd.dump(fd)
 
@@ -1093,7 +1093,7 @@ class JpegFile:
     def dump(self, f=sys.stdout):
         """Write out ASCII representation of the file on a given file
         object. Output default to stdout."""
-        print >> f, "<Dump of JPEG %s>" % self.filename
+        #print >> f, "<Dump of JPEG %s>" % self.filename
         for segment in self._segments:
             segment.dump(f)
 
