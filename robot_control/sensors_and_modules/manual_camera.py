@@ -52,9 +52,9 @@ finally:
 
 gps_ifd = {
         piexif.GPSIFD.GPSLatitudeRef: 'N',
-        piexif.GPSIFD.GPSLatitude: latitude,
+        piexif.GPSIFD.GPSLatitude: (476051999, 10000000),
         piexif.GPSIFD.GPSLongitudeRef: 'W',
-        piexif.GPSIFD.GPSLongitude: longitude,
+        piexif.GPSIFD.GPSLongitude: (14268000, 10000000),
     }
 exif_dict = {"GPS": gps_ifd}
 exif_bytes = piexif.dump(exif_dict)
