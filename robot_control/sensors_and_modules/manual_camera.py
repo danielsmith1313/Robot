@@ -8,7 +8,7 @@ from time import sleep
 import uuid
 import datetime
 from gps_reader import GPS
-import fractions as Fraction
+import fractions
 #Create gps object
 gps = GPS()
 # Create object to get date and time
@@ -27,6 +27,8 @@ def change_to_rational(number):
 coordinates = gps.GetCurrentCoordinates(0)
 latitude = coordinates[0]
 longitude = coordinates[1]
+latitude = fractions.Fraction(latitude)
+longitude = fractions.Fraction(longitude)
 #latitude = latitude * 1000000
 #longitude = longitude * 1000000
 print(latitude)
@@ -52,9 +54,9 @@ finally:
 
 gps_ifd = {
         piexif.GPSIFD.GPSLatitudeRef: 'N',
-        piexif.GPSIFD.GPSLatitude: Fraction(latitude),
+        piexif.GPSIFD.GPSLatitude: latitude,
         piexif.GPSIFD.GPSLongitudeRef: 'W',
-        piexif.GPSIFD.GPSLongitude: Fraction(longitude),
+        piexif.GPSIFD.GPSLongitude: longitude,
     }
 exif_dict = {"GPS": gps_ifd}
 exif_bytes = piexif.dump(exif_dict)
