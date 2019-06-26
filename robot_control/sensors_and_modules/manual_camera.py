@@ -8,16 +8,27 @@ from time import sleep
 import uuid
 import datetime
 from gps_reader import GPS
+import fractions as Fraction
 #Create gps object
 gps = GPS()
 # Create object to get date and time
 #now = datetime.datetime.now()
 
+def change_to_rational(number):
+    """convert a number to rantional
+    Keyword arguments: number
+    return: tuple like (1, 2), (numerator, denominator)
+    """
+    f = Fraction(str(number))
+    return (f.numerator, f.denominator)
+
+
+
 coordinates = gps.GetCurrentCoordinates(0)
 latitude = coordinates[0]
 longitude = coordinates[1]
-latitude = latitude * 1000000
-longitude = longitude * 1000000
+#latitude = latitude * 1000000
+#longitude = longitude * 1000000
 print(latitude)
 print(longitude)
 latitude
@@ -38,12 +49,13 @@ try:
 finally:
     camera.close()
 #Set the gps coordinates to the picture
-img = Image.open(path)
-exif_dict = piexif.load(img.info['exif'])
 
-exif_dict['GPS'][piexif.GPSIFD.GPSLatitudeRef] = 'N'
-exif_dict['GPS'][piexif.GPSIFD.GPSLongitudeRef] = 'W'
-exif_dict['GPS'][piexif.GPSIFD.GPSLatitude] = [int(latitude),1000000]
-exif_dict['GPS'][piexif.GPSIFD.GPSLongitude] = [int(longitude),1000000]
+gps_ifd = {
+        piexif.GPSIFD.GPSLatitudeRef: 'N',
+        piexif.GPSIFD.GPSLatitude: latitude,
+        piexif.GPSIFD.GPSLongitudeRef: 'W',
+        piexif.GPSIFD.GPSLongitude: longitude,
+    }
+exif_dict = {"GPS": gps_ifd}
 exif_bytes = piexif.dump(exif_dict)
-img.save('_%s' % uniqueFilename, "jpeg", exif=exif_bytes)
+piexif.insert(exif_bytes, path)
