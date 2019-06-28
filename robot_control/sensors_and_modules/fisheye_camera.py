@@ -1,4 +1,4 @@
-#Filename: fisheye_camera.py
+#Filename: camera.py
 # Author: Daniel Smith
 #Created: 5/23/2019
 # Last edited: 6/4/2019 by Daniel Smith
@@ -13,7 +13,7 @@ import uuid
 import datetime
 
 
-class FisheyeCamera():
+class Camera():
     """
     This static class is in charge of getting data from the front facing camera
     """
@@ -33,6 +33,12 @@ class FisheyeCamera():
         self.uniqueFilename = str(uuid.uuid4())
         self.path = self.uniqueFilename
         self.path += ".jpeg"
+
+        coordinates = gps.GetCurrentCoordinates(0)
+        latitude = coordinates[0]
+        longitude = coordinates[1]
+        latitude = fractions.Fraction(latitude)
+        longitude = fractions.Fraction(longitude)
         #picamera.PiCamera.close(self)
         try:
             camera = PiCamera()
