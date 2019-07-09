@@ -23,28 +23,32 @@ if(os.name=='nt'):
             print(os.name)
 
 else:
-    import sys
-    import select
-    import tty
-    import termios
+    import pygame
+    from pygame.locals import *
 
-    def isData():
-        return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
+    def display(str):
+        text = font.render(str, True, (255, 255, 255), (159, 182, 205))
+        textRect = text.get_rect()
+        textRect.centerx = screen.get_rect().centerx
+        textRect.centery = screen.get_rect().centery
 
-    old_settings = termios.tcgetattr(sys.stdin)
-    try:
-        tty.setcbreak(sys.stdin.fileno())
+        screen.blit(text, textRect)
+        pygame.display.update()
 
-        i = 0
-        while 1:
-            print(i)
-            i += 1
+    pygame.init()
+    screen = pygame.display.set_mode( (640,480) )
+    pygame.display.set_caption('Python numbers')
+    screen.fill((159, 182, 205))
 
-            if isData():
-                c = sys.stdin.read(1)
-                if c == '\x1b':         # x1b is ESC
-                    print(c)
-                    break
+    font = pygame.font.Font(None, 17)
 
-    finally:
-        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+    num = 0
+    done = False
+    while not done:
+        display( str(num) )
+        num += 1
+
+        pygame.event.pump()
+        keys = pygame.key.get_pressed()
+        if keys[K_ESCAPE]:
+            done = True
