@@ -9,7 +9,9 @@ during the execution of this script.
 """
 
 
+import time
 import os
+from camera import Camera
 if(os.name=='nt'):
     import msvcrt
     num = 0
@@ -50,5 +52,7 @@ else:
 
         pygame.event.pump()
         keys = pygame.key.get_pressed()
+        if keys[K_1]:
+            Camera.TakePicture()
         if keys[K_ESCAPE]:
             done = True
