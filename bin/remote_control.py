@@ -53,7 +53,7 @@ else:
 
         pygame.event.pump()
         keys = pygame.key.get_pressed()
-        if keys[K_UP]:
+        if keys[K_W]:
             try:
                 for i in range(50):
                 
@@ -68,7 +68,7 @@ else:
                 motors.disable()
                 
             pass
-        if keys[K_DOWN]:
+        if keys[K_S]:
             #Reset the motors
         
             try:
@@ -83,7 +83,7 @@ else:
                 # or the user presses Ctrl+C to kill the process.
                 motors.setSpeeds(0, 0)
                 motors.disable()
-        if keys[K_RIGHT]:
+        if keys[K_D]:
             try:
                 for i in range(50):
                     motors.enable()
@@ -93,7 +93,7 @@ else:
                 motors.setSpeeds(0,0)
                 motors.disable()
 
-        if keys[K_LEFT]:
+        if keys[K_A]:
             try:
                 for i in range(50):
                     motors.enable()
