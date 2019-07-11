@@ -67,3 +67,4 @@ class Camera():
         Converts the image file into a readable image and saves it to the network folder
         """
         pass
+Camera.TakePicture(1,1)
