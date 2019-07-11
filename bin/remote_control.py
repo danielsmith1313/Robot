@@ -55,7 +55,7 @@ else:
         keys = pygame.key.get_pressed()
         if keys[K_w]:
             try:
-                for i in range(50):
+                for i in range(1):
                 
                     motors.enable()
                     motors.setSpeeds(300, 300)
@@ -72,7 +72,7 @@ else:
             #Reset the motors
         
             try:
-                for i in range(50):
+                for i in range(1):
                 
                     motors.enable()
                     motors.setSpeeds(-300, -300)
@@ -85,7 +85,7 @@ else:
                 motors.disable()
         if keys[K_d]:
             try:
-                for i in range(50):
+                for i in range(1):
                     motors.enable()
                     motors.setSpeeds(-300,300)
                     time.sleep(.005)
@@ -95,7 +95,7 @@ else:
 
         if keys[K_a]:
             try:
-                for i in range(50):
+                for i in range(1):
                     motors.enable()
                     motors.setSpeeds(300,-300)
                     time.sleep(.005)
@@ -106,5 +106,5 @@ else:
             Camera.TakePicture()
         if keys[K_RETURN]:
             pass
-        if keys[K_ESCAPE]:
+        if keys[K_e]:
             done = True
