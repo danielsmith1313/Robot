@@ -12,6 +12,7 @@ during the execution of this script.
 import time
 import os
 from camera import Camera
+from dual_g2_hpmd_rpi import motors, MAX_SPEED
 if(os.name=='nt'):
     import msvcrt
     num = 0
@@ -52,6 +53,55 @@ else:
 
         pygame.event.pump()
         keys = pygame.key.get_pressed()
+        if keys[K_UP]:
+            try:
+                for i in range(50):
+                
+                    motors.enable()
+                    motors.setSpeeds(300, 300)
+                    time.sleep(.005)
+            
+            finally:
+                # Stop the motors, even if there is an exception
+                # or the user presses Ctrl+C to kill the process.
+                motors.setSpeeds(0, 0)
+                motors.disable()
+                
+            pass
+        if keys[K_DOWN]:
+            #Reset the motors
+        
+            try:
+                for i in range(50):
+                
+                    motors.enable()
+                    motors.setSpeeds(-300, -300)
+                    time.sleep(.005)
+            
+            finally:
+                # Stop the motors, even if there is an exception
+                # or the user presses Ctrl+C to kill the process.
+                motors.setSpeeds(0, 0)
+                motors.disable()
+        if keys[K_RIGHT]:
+            try:
+                for i in range(50):
+                    motors.enable()
+                    motors.setSpeeds(-300,300)
+                    time.sleep(.005)
+            finally:
+                motors.setSpeeds(0,0)
+                motors.disable()
+
+        if keys[K_LEFT]:
+            try:
+                for i in range(50):
+                    motors.enable()
+                    motors.setSpeeds(300,-300)
+                    time.sleep(.005)
+            finally:
+                motors.setSpeeds(0,0)
+                motors.disable()
         if keys[K_1]:
             Camera.TakePicture()
         if keys[K_RETURN]:
