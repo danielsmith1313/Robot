@@ -54,5 +54,7 @@ else:
         keys = pygame.key.get_pressed()
         if keys[K_1]:
             Camera.TakePicture()
+        if keys[K_RETURN]:
+            pass
         if keys[K_ESCAPE]:
             done = True
