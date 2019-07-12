@@ -87,7 +87,7 @@ else:
             try:
                 for i in range(1):
                     motors.enable()
-                    motors.setSpeeds(50,250)
+                    motors.setSpeeds(250,125)
                     time.sleep(.005)
             finally:
                 motors.setSpeeds(0,0)
@@ -97,7 +97,7 @@ else:
             try:
                 for i in range(1):
                     motors.enable()
-                    motors.setSpeeds(250,50)
+                    motors.setSpeeds(125,250)
                     time.sleep(.005)
             finally:
                 motors.setSpeeds(0,0)
