@@ -1,3 +1,4 @@
+
 import numpy as np
 import cv2
 
@@ -24,7 +25,7 @@ cap=cv2.VideoCapture(0)
 
 while True:
     _, img = cap.read()
-    img = cv2.imread('4.jpg') 
+    img = cv2.imread('r.jpg') 
     img = cv2.resize(img, (640, 360), interpolation = cv2.INTER_AREA)
     
     x = 100
