@@ -106,5 +106,8 @@ else:
             Camera.TakePicture()
         if keys[K_RETURN]:
             pass
+        if keys[K_9]:
+            pass    
+        
         if keys[K_e]:
             done = True
