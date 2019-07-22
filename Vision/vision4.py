@@ -16,8 +16,7 @@ cap=cv2.VideoCapture(0)
 while True:
     motors.enable()
     _, image = cap.read()
-    if _:
-        image = cv2.resize(image, None, fx=0.5, fy=0.5)
+    
     img = image
     #Change to 480 p
     #cv2.imwrite("compressed.jpg",img)
