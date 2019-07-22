@@ -19,8 +19,6 @@ while True:
     img = image
     #Change to 480 p
     img = cv2.resize(img,None,fx=0.5,fy=0.5)
-    img = cv2.imread('3.jpg')
-    img = cv2.resize(img,None,fx=0.4,fy=0.4)
     #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
