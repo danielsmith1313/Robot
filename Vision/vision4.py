@@ -16,9 +16,10 @@ cap=cv2.VideoCapture(0)
 while True:
     motors.enable()
     _, image = cap.read()
+    if _:
+        image = cv2.resize(image, None, fx=0.5, fy=0.5)
     img = image
     #Change to 480 p
-    img = cv2.resize(img,None,fx=0.5,fy=0.5)
     #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
