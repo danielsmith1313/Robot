@@ -7,21 +7,20 @@ import cv2
 import numpy as np
 import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
-import threading
 
 #capturing video through webcam
 cap=cv2.VideoCapture(0)
-dist = 0
-orig = None
-orig_img = None
-def getDist():
+
+
+
+while True:
     motors.enable()
-    cap.set(3,720)
-    cap.set(4,480)
     _, image = cap.read()
     img = image
     #Change to 480 p
-    
+    img = cv2.resize(img,None,fx=0.5,fy=0.5)
+    img = cv2.imread('3.jpg')
+    img = cv2.resize(img,None,fx=0.4,fy=0.4)
     #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
@@ -84,6 +83,36 @@ def getDist():
     dist = index_min - int(image_width/2)
 
     t2 = time.time()
+    #print(low)
+    #print(index_min)
+    #print(t2-t1)
+
+    if dist < -20 and dist > -280:
+        cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        motors.setSpeeds(-90, -170)
+        
+    if dist > 20 and dist > 280:
+        cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        motors.setSpeeds(-170, -90)
+        
+    if dist > -20 and dist < 20:
+        cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        motors.setSpeeds(-150, -155)
+        
+    if dist < -280:
+        cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        motors.setSpeeds(0, 0)
+        time.sleep(0.05)
+        for i in range(50):
+            motors.setSpeeds(0, -120)
+        
+    if dist > 280:
+        cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        motors.setSpeeds(0, 0)
+        time.sleep(0.05)
+        for i in range(50):
+            motors.setSpeeds(-120, 0)
+    t2 = time.time()
     print(t2-t1)
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
     center_line = cv2.line(orig,(320,0),(320,420),(0,255,0),2)
@@ -94,60 +123,6 @@ def getDist():
     key = cv2.waitKey(1)
     if key == 27:
         motors.disable()
+        break
         cv2.destroyAllWindows()
 
-def moveRobot():
-    
-    #print(low)
-    #print(index_min)
-    #print(t2-t1)
-
-    if dist < -20 and dist > -280:
-        cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-90, -170)
-            time.sleep(.05)
-        
-    if dist > 20 and dist > 280:
-        cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-170, -90)
-            time.sleep(.05)
-    if dist > -20 and dist < 20:
-        cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-150, -155)
-            time.sleep(.05)
-        
-    if dist < -280:
-        cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        motors.setSpeeds(0, 0)
-        time.sleep(0.05)
-        for i in range(30):
-            motors.setSpeeds(0, -120)
-            time.sleep(.05)
-        
-    if dist > 280:
-        cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        motors.setSpeeds(0, 0)
-        time.sleep(0.05)
-        for i in range(50):
-            motors.setSpeeds(-120, 0)
-            time.sleep(.05)
-    
-#Initialize calculation for the image
-getDist()
-#Create a thread to speed up the calculations
-running = True
-while(running == True):
-    imgThread = threading.Thread(target=getDist)
-    motorThread = threading.Thread(target=moveRobot)
-    try:
-        #Start both threads
-        imgThread.start()
-        motorThread.start()
-
-        imgThread.join()
-        motorThread.join()
-    except Exception:
-        break
