@@ -14,12 +14,12 @@ from dual_g2_hpmd_rpi import motors, MAX_SPEED
 #capturing video through webcam
 cap=cv2.VideoCapture(0)
 
-
+camera = PiCamera()
 
 while True:
     motors.enable()
     # initialize the camera and grab a reference to the raw camera capture
-    camera = PiCamera()
+    
     rawCapture = PiRGBArray(camera)
  
     # allow the camera to warmup
