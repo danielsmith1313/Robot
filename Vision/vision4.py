@@ -91,7 +91,7 @@ while True:
     #print(low)
     #print(index_min)
     #print(t2-t1)
-
+    print(dist)
     if dist < -20 and dist > -280:
         cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
         for i in range (30):
@@ -129,7 +129,7 @@ while True:
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
     center_line = cv2.line(orig,(320,0),(320,420),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-    cv2.imshow("image", orig)
+    
     #cv2.imshow("mask", mask)
     cv2.imshow("original", orig_img)
     key = cv2.waitKey(1)
