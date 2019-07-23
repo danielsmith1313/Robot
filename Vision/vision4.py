@@ -142,9 +142,9 @@ while True:
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     
     #cv2.imshow("mask", mask)
-    plt.imshow(orig_img)
+    plt.subplot(211),plt.imshow(orig_img),plt.title("Output")
+    plt.xticks([]),plt.yticks([])
+    plt.show
     
     motors.disable()
     
-    cv2.destroyAllWindows()
-
