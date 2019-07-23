@@ -11,7 +11,7 @@ import numpy as np
 import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import io
-
+import matplotlib
 
 
 camera = picamera.PiCamera()
@@ -129,6 +129,8 @@ while True:
             for i in range(50):
                 motors.setSpeeds(-120, 0)
                 time.sleep(.05)
+    except KeyboardInterrupt:
+        break
     finally:
         motors.setSpeeds(0,0)
         motors.disable()
@@ -139,12 +141,9 @@ while True:
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     
     #cv2.imshow("mask", mask)
-    cv2.imshow("original", np.array(orig_img, dtype = np.uint8))
-    cv2.waitKey()
-    key = cv2.waitKey(1)
+    matplotlib.pyplot.imshow(orig_img)
+    
     motors.disable()
-    if key == 27:
-        motors.disable()
-        break
-        cv2.destroyAllWindows()
+    
+    cv2.destroyAllWindows()
 
