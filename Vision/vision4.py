@@ -139,7 +139,7 @@ while True:
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     
     #cv2.imshow("mask", mask)
-    cv2.imshow("original", orig_img, dtype = np.uint8)
+    cv2.imshow("original", np.array(orig_img, dtype = np.uint8))
     cv2.waitKey()
     key = cv2.waitKey(1)
     motors.disable()
