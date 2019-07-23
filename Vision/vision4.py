@@ -26,6 +26,7 @@ while True:
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order
     img=cv2.imdecode(data,1)
+    img = cv2.resize(img,(640,420))
     # Camera warm-up time
 
     
@@ -90,7 +91,7 @@ while True:
 
     low = min(xC)
     index_min = np.argmin(xC) + 30
-    dist = index_min - int(image_width/2)
+    dist = index_min - int(orig/2)
 
     t2 = time.time()
     #print(low)
