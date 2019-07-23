@@ -66,7 +66,7 @@ while True:
     
     img = pink
     orig_img = img
-    orig_img = cv2.resize(orig_img, (640, 420))
+    #orig_img = cv2.resize(orig_img, (640, 420))
     image = cv2.resize(img, (640, 420))
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
@@ -140,10 +140,11 @@ while True:
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
     center_line = cv2.line(orig,(320,0),(320,420),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-    
+    cv2.imshow("image", orig)
     #cv2.imshow("mask", mask)
-    plt.imshow(orig_img)
-    plt.show
-    
-    motors.disable()
-    
+    cv2.imshow("original", orig_img)
+    key = cv2.waitKey(1)
+    if key == 27:
+        motors.disable()
+        break
+        cv2.destroyAllWindows()
