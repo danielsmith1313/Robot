@@ -143,6 +143,7 @@ while True:
     cv2.imshow("image", orig)
     #cv2.imshow("mask", mask)
     cv2.imshow("original", orig_img)
+    cv2.waitKey(0)
     key = cv2.waitKey(1)
     if key == 27:
         motors.disable()
