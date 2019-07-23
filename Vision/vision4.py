@@ -17,18 +17,14 @@ camera = picamera.PiCamera()
 
 while True:
     motors.enable()
-    # initialize the camera and grab a reference to the raw camera capture
+    camera.resolution = (1024, 768)
+    camera.start_preview()
+    # Camera warm-up time
+    time.sleep(.5)
+    camera.capture('foo.jpg')
+
     
-    rawCapture = PiRGBArray(camera)
- 
-    # allow the camera to warmup
-    time.sleep(0.1)
- 
-    # grab an image from the camera
-    camera.capture(rawCapture, format="bgr")
-    image = rawCapture.array
-    
-    img = image
+    img = cv2.imread("foo.jpg")
     #Change to 480 p
     #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
