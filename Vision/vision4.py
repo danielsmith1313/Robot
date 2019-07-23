@@ -96,38 +96,42 @@ while True:
     #print(index_min)
     #print(t2-t1)
     print(dist)
-    if dist < -20 and dist > -280:
-        cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-90, -170)
-            time.sleep(.05)
+    try:
+        if dist < -20 and dist > -280:
+            cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            for i in range (30):
+                motors.setSpeeds(-90, -170)
+                time.sleep(.05)
         
-    if dist > 20 and dist > 280:
-        cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-170, -90)
-            time.sleep(.05)
-    if dist > -20 and dist < 20:
-        cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        for i in range (30):
-            motors.setSpeeds(-150, -155)
-            time.sleep(.05)
+        if dist > 20 and dist > 280:
+            cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            for i in range (30):
+                motors.setSpeeds(-170, -90)
+                time.sleep(.05)
+        if dist > -20 and dist < 20:
+            cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            for i in range (30):
+                motors.setSpeeds(-150, -155)
+                time.sleep(.05)
         
-    if dist < -280:
-        cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        motors.setSpeeds(0, 0)
-        time.sleep(0.05)
-        for i in range(30):
-            motors.setSpeeds(0, -120)
-            time.sleep(.05)
+        if dist < -280:
+            cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            motors.setSpeeds(0, 0)
+            time.sleep(0.05)
+            for i in range(30):
+                motors.setSpeeds(0, -120)
+                time.sleep(.05)
         
-    if dist > 280:
-        cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        motors.setSpeeds(0, 0)
-        time.sleep(0.05)
-        for i in range(50):
-            motors.setSpeeds(-120, 0)
-            time.sleep(.05)
+        if dist > 280:
+            cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            motors.setSpeeds(0, 0)
+            time.sleep(0.05)
+            for i in range(50):
+                motors.setSpeeds(-120, 0)
+                time.sleep(.05)
+    finally:
+        motors.setSpeeds(0,0)
+        motors.disable()
     t2 = time.time()
     print(t2-t1)
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
@@ -135,7 +139,7 @@ while True:
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     
     #cv2.imshow("mask", mask)
-    cv2.imshow("original", orig_img)
+    cv2.imshow("original", orig_img, dtype = np.uint8)
     cv2.waitKey()
     key = cv2.waitKey(1)
     motors.disable()
