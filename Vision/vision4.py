@@ -143,5 +143,5 @@ while True:
     cv2.imshow("image", orig)
     #cv2.imshow("mask", mask)
     
-    cv2.waitKey(1000)
-    cv2.destroyAllWindows()
+    cv2.waitKey(500)
+    
