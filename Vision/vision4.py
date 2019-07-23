@@ -1,6 +1,6 @@
 # import the necessary packages
 from picamera.array import PiRGBArray
-from picamera import PiCamera
+import picamera
 from itertools import repeat
 import itertools
 import random
@@ -11,8 +11,7 @@ import numpy as np
 import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 
-#capturing video through webcam
-cap=cv2.VideoCapture(0)
+
 
 camera = picamera.PiCamera()
 
