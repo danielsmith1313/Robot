@@ -155,6 +155,6 @@ def move():
             motorThread.join()
             nextPic = nextPic + 1
             if(nextPic == 3):
-                
+                pass
         except Exception:
             break
