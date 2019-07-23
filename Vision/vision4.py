@@ -143,8 +143,4 @@ while True:
     cv2.imshow("image", orig)
     #cv2.imshow("mask", mask)
     cv2.waitKey(1)
-    key = cv2.waitKey(1)
-    if key == 27:
-        motors.disable()
-        break
-        cv2.destroyAllWindows()
+    
