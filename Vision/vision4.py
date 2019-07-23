@@ -25,7 +25,7 @@ while True:
     camera.capture(stream,format="jpeg")
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order
-    image=cv2.imdecode(data,1)
+    img=cv2.imdecode(data,1)
     # Camera warm-up time
 
     
