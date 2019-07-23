@@ -20,7 +20,6 @@ while True:
     motors.enable()
     #Capture the image
     stream = io.BytesIO()
-    camera.start_preview()
     time.sleep(2)
     camera.capture(stream,format="jpeg")
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
