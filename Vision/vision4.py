@@ -91,7 +91,7 @@ while True:
 
     low = min(xC)
     index_min = np.argmin(xC) + 30
-    dist = index_min - int(orig/2)
+    dist = index_min - int(image_width/2)
 
     t2 = time.time()
     #print(low)
