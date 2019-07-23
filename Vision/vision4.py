@@ -101,14 +101,14 @@ while True:
     try:
         if dist < -20 and dist > -280:
             cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            for i in range (13):
-                motors.setSpeeds(-90, -170)
+            for i in range (20):
+                motors.setSpeeds(-110, -150)
                 time.sleep(.05)
         
         if dist > 20 and dist > 280:
             cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            for i in range (13):
-                motors.setSpeeds(-170, -90)
+            for i in range (20):
+                motors.setSpeeds(-150, -110)
                 time.sleep(.05)
         if dist > -20 and dist < 20:
             cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -120,7 +120,7 @@ while True:
             cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
-            for i in range(12):
+            for i in range(15):
                 motors.setSpeeds(0, -120)
                 time.sleep(.05)
         
@@ -128,7 +128,7 @@ while True:
             cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
-            for i in range(12):
+            for i in range(15):
                 motors.setSpeeds(-120, 0)
                 time.sleep(.05)
     except KeyboardInterrupt:
