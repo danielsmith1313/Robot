@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
+import io
 
 
 
@@ -17,14 +18,18 @@ camera = picamera.PiCamera()
 
 while True:
     motors.enable()
-    camera.resolution = (1024, 768)
+    #Capture the image
+    stream = io.BytesIO()
     camera.start_preview()
+    time.sleep(2)
+    camera.capture(stream,format="jpeg")
+    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    #Convert to BGR order
+    image=cv2.imdecode(data,1)
     # Camera warm-up time
-    time.sleep(.5)
-    camera.capture('foo.jpg')
 
     
-    img = cv2.imread("foo.jpg")
+    
     #Change to 480 p
     #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
