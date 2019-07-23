@@ -14,7 +14,7 @@ from dual_g2_hpmd_rpi import motors, MAX_SPEED
 #capturing video through webcam
 cap=cv2.VideoCapture(0)
 
-camera = PiCamera()
+camera = picamera.PiCamera()
 
 while True:
     motors.enable()
