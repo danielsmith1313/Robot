@@ -12,6 +12,7 @@ import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import io
 import matplotlib
+import matplotlib.pyplot as plt
 
 
 camera = picamera.PiCamera()
@@ -141,7 +142,7 @@ while True:
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     
     #cv2.imshow("mask", mask)
-    matplotlib.pyplot.imshow(orig_img)
+    plt.imshow(orig_img)
     
     motors.disable()
     
