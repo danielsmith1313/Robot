@@ -15,19 +15,22 @@ from dual_g2_hpmd_rpi import motors, MAX_SPEED
 cap=cv2.VideoCapture(0)
 
 camera = PiCamera()
-
+image = None
 while True:
     motors.enable()
-    # initialize the camera and grab a reference to the raw camera capture
-    
-    rawCapture = PiRGBArray(camera)
- 
-    # allow the camera to warmup
-    time.sleep(0.1)
- 
-    # grab an image from the camera
-    camera.capture(rawCapture, format="bgr")
-    image = rawCapture.array
+    camera = PiCamera()
+    camera.resolution = (320, 240)
+    camera.framerate = 30
+    rawCapture = PiRGBArray(camera, size=(320, 240))
+
+    display_window = cv2.namedWindow("Faces")
+
+    face_cascade = cv2.CascadeClassifier('path_to_my_face_cascade.xml')
+
+    time.sleep(1)
+
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        image = frame.array
     
     img = image
     #Change to 480 p
