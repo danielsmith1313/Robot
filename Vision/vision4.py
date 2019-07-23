@@ -140,6 +140,7 @@ while True:
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
     center_line = cv2.line(orig,(320,0),(320,420),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+    cv2.destroyAllWindows()
     cv2.imshow("image", orig)
     #cv2.imshow("mask", mask)
     
