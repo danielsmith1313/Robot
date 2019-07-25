@@ -112,18 +112,18 @@ while True:
     print("Distance: ", dist)
     #Using the calculated distance, control the robot
     try:
-        if dist < -50 and dist >= -350:
+        if dist < -60 and dist >= -350:
             
             for i in range (20):
-                motors.setSpeeds(-160, -220)
+                motors.setSpeeds(-180, -220)
                 time.sleep(.05)
         
-        elif dist > 50 and dist >= 350:
+        elif dist > 60 and dist <= 350:
             
             for i in range (20):
-                motors.setSpeeds(-220, -160)
+                motors.setSpeeds(-220, -180)
                 time.sleep(.05)
-        elif dist > -50 and dist < 50:
+        elif dist > -60 and dist < 60:
             
             for i in range (25):
                 motors.setSpeeds(-210, -217)
