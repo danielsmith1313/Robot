@@ -26,13 +26,12 @@ while True:
     data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order
     img=cv2.imdecode(data,1)
-    img = cv2.resize(img,(640,420))
+    img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
     
     
     #Change to 480 p
-    #cv2.imwrite("compressed.jpg",img)
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
     kernel = np.ones((200,200),np.float32)/40000
@@ -61,15 +60,13 @@ while True:
     pink = np.zeros_like(green, np.uint8)
     pink[imask] = (127,0,255)
 
-    
-    orig = img
-    orig = cv2.resize(orig, (640, 420))
-    
+    #Displayed image
+    orig = pink
+    #img data file
     img = pink
-    orig_img = img
-    #orig_img = cv2.resize(orig_img, (640, 420))
-    image = cv2.resize(img, (640, 420))
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    #Used to calculate through the algorithm
+    orig_img = pink
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
 
     xC = []
@@ -97,27 +94,27 @@ while True:
     #print(low)
     #print(index_min)
     #print(t2-t1)
-    print(dist)
+    print("Distance: ", dist)
     try:
         if dist < -20 and dist > -280:
-            cv2.putText(orig_img,('go left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
             for i in range (20):
                 motors.setSpeeds(-160, -200)
                 time.sleep(.05)
         
         if dist > 20 and dist > 280:
-            cv2.putText(orig_img,('go right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
             for i in range (20):
                 motors.setSpeeds(-200, -160)
                 time.sleep(.05)
         if dist > -20 and dist < 20:
-            cv2.putText(orig_img,('go straight'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
             for i in range (25):
                 motors.setSpeeds(-210, -215)
                 time.sleep(.05)
         
         if dist < -280:
-            cv2.putText(orig_img,('stop and turn left'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
             for i in range(20):
@@ -125,7 +122,7 @@ while True:
                 time.sleep(.05)
         
         if dist > 280:
-            cv2.putText(orig_img,('stop and turn right'),(10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
             for i in range(15):
@@ -139,7 +136,7 @@ while True:
     t2 = time.time()
     print(t2-t1)
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
-    center_line = cv2.line(orig,(320,0),(320,420),(0,255,0),2)
+    center_line = cv2.line(orig,(640,0),(640,420),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.destroyAllWindows()
     cv2.imshow("image", orig)
