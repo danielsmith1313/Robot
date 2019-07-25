@@ -14,7 +14,7 @@ import io
 import matplotlib
 import matplotlib.pyplot as plt
 
-
+BLUR = 200
 camera = picamera.PiCamera()
 
 while True:
@@ -38,7 +38,7 @@ while True:
     #Change to 480 p
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
-    kernel = np.ones((50,50),np.float32)/2500
+    kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
     dst = cv2.filter2D(img,-1,kernel)
     #cv2.imwrite("dst.jpg",dst)
     #Convert to hsv to detect green pixels more easily
