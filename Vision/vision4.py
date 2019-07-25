@@ -20,14 +20,17 @@ camera = picamera.PiCamera()
 while True:
     motors.enable()
     #Capture the image
-    #stream = io.BytesIO()
-    #time.sleep(2)
-    #camera.capture(stream,format="jpeg")
-    #data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-    #Convert to BGR order
-    #img=cv2.imdecode(data,1)
-    img = cv2.imread("test3.jpg")
-    img = cv2.resize(img,(1280,840))
+    stream = io.BytesIO()
+    time.sleep(2)
+    camera.capture(stream,format="jpeg")
+    #Convert the stream from the capture to an array
+    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    #Convert to BGR order for cv2
+    img=cv2.imdecode(data,1)
+    
+    ##Uncomment to test a specific image
+    #img = cv2.imread("test3.jpg")
+    #img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
     
