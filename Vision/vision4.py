@@ -38,7 +38,7 @@ while True:
     #Change to 480 p
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
-    kernel = np.ones((200,200),np.float32)/40000
+    kernel = np.ones((300,300),np.float32)/90000
     dst = cv2.filter2D(img,-1,kernel)
     #cv2.imwrite("dst.jpg",dst)
     #Convert to hsv to detect green pixels more easily
