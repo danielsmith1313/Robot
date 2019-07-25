@@ -40,7 +40,7 @@ while True:
         topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
         imgCropped = img[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
-    pink = cropImgSides(img,0.6)
+    #pink = cropImgSides(img,0.6)
     
     #Change to 480 p
     t1 = time.time()
@@ -53,7 +53,7 @@ while True:
 
     ## mask of green (36,25,25) ~ (86, 255,255)
     # mask = cv2.inRange(hsv, (36, 25, 25), (86, 255,255))
-    mask = cv2.inRange(hsv, (18, 44, 0), (81, 255,255))
+    mask = cv2.inRange(hsv, (30, 0, 10), (90, 255,255))
 
     ## slice the green, replacing other colors with black
     imask = mask>0
