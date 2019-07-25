@@ -20,12 +20,13 @@ camera = picamera.PiCamera()
 while True:
     motors.enable()
     #Capture the image
-    stream = io.BytesIO()
-    time.sleep(2)
-    camera.capture(stream,format="jpeg")
-    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    #stream = io.BytesIO()
+    #time.sleep(2)
+    #camera.capture(stream,format="jpeg")
+    #data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order
-    img=cv2.imdecode(data,1)
+    #img=cv2.imdecode(data,1)
+    cv2.imread("test3.jpg")
     img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
@@ -67,6 +68,7 @@ while True:
     #Used to calculate through the algorithm
     orig_img = pink
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    
     mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
 
     xC = []
@@ -88,6 +90,7 @@ while True:
 
     low = min(xC)
     index_min = np.argmin(xC) + 30
+    #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
 
     t2 = time.time()
@@ -95,25 +98,26 @@ while True:
     #print(index_min)
     #print(t2-t1)
     print("Distance: ", dist)
+    #Using the calculated distance, control the robot
     try:
-        if dist < -20 and dist > -280:
+        if dist < -50 and dist >= -350:
             
             for i in range (20):
-                motors.setSpeeds(-160, -200)
+                motors.setSpeeds(-160, -220)
                 time.sleep(.05)
         
-        if dist > 20 and dist > 280:
+        if dist > 50 and dist >= 350:
             
             for i in range (20):
-                motors.setSpeeds(-200, -160)
+                motors.setSpeeds(-220, -160)
                 time.sleep(.05)
-        if dist > -20 and dist < 20:
+        if dist > -50 and dist < 50:
             
             for i in range (25):
-                motors.setSpeeds(-210, -215)
+                motors.setSpeeds(-210, -217)
                 time.sleep(.05)
         
-        if dist < -280:
+        if dist < -350:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
@@ -121,7 +125,7 @@ while True:
                 motors.setSpeeds(-100, -200)
                 time.sleep(.05)
         
-        if dist > 280:
+        if dist > 350:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
