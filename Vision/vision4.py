@@ -38,7 +38,7 @@ while True:
     #Change to 480 p
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
-    kernel = np.ones((300,300),np.float32)/90000
+    kernel = np.ones((1000,1000),np.float32)/1000000
     dst = cv2.filter2D(img,-1,kernel)
     #cv2.imwrite("dst.jpg",dst)
     #Convert to hsv to detect green pixels more easily
@@ -109,18 +109,18 @@ while True:
                 motors.setSpeeds(-160, -220)
                 time.sleep(.05)
         
-        if dist > 50 and dist >= 350:
+        elif dist > 50 and dist >= 350:
             
             for i in range (20):
                 motors.setSpeeds(-220, -160)
                 time.sleep(.05)
-        if dist > -50 and dist < 50:
+        elif dist > -50 and dist < 50:
             
             for i in range (25):
                 motors.setSpeeds(-210, -217)
                 time.sleep(.05)
         
-        if dist < -350:
+        elif dist < -350:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
@@ -128,7 +128,7 @@ while True:
                 motors.setSpeeds(-100, -200)
                 time.sleep(.05)
         
-        if dist > 350:
+        elif dist > 350:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
