@@ -63,6 +63,15 @@ while True:
     imask = mask>0
     pink = np.zeros_like(green, np.uint8)
     pink[imask] = (127,0,255)
+    #Crop outsides which do not pick up the image very well
+    def cropImgSides(img, scale):
+        centerX,centerY=img.shape[1] / 2, img.shape[0] /2
+        widthScaled, heightScaled = img.shape[1] * scale, img.shape[0]
+        leftX,rightX=centerX - widthScaled / 2, centerX + widthScaled /2
+        topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
+        imgCropped = img[int(topY):int(bottomY),int(leftX):int(rightX)]
+        return imgCropped
+    pink = cropImgSides(img,0.6)
 
     #Displayed image
     orig = pink
