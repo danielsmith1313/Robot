@@ -114,18 +114,18 @@ while True:
     try:
         if dist < -60 and dist >= -350:
             
-            for i in range (20):
+            for i in range (15):
                 motors.setSpeeds(-180, -220)
                 time.sleep(.05)
         
         elif dist > 60 and dist <= 350:
             
-            for i in range (20):
+            for i in range (15):
                 motors.setSpeeds(-220, -180)
                 time.sleep(.05)
         elif dist > -60 and dist < 60:
             
-            for i in range (25):
+            for i in range (20):
                 motors.setSpeeds(-210, -217)
                 time.sleep(.05)
         
@@ -133,7 +133,7 @@ while True:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
-            for i in range(20):
+            for i in range(15):
                 motors.setSpeeds(-100, -200)
                 time.sleep(.05)
         
