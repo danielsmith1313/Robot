@@ -42,7 +42,16 @@ while True:
         return imgCropped
     #pink = cropImgSides(img,0.6)
     
-    
+    #Get the green filter for output
+    maskleaf = cv2.inRange(hsv, (40, 0, 25), (80, 255,255))
+
+    ## slice the green, replacing other colors with black
+    imaskleaf = mask>0
+    greenleaf = np.zeros_like(img, np.uint8)
+    #Replace all the locations where there are green pixels with pink
+    greenleaf[imask] = (127,0,255)
+
+
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
     kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
@@ -117,7 +126,7 @@ while True:
     cv2.destroyAllWindows()
     #Output
     cv2.imshow("orig", orig)
-    cv2.imshow("image", img)
+    cv2.imshow("greenleaf", greenleaf)
     cv2.imshow("dst", dst)
     #cv2.imshow("mask", mask)
     #Wait until the user stops it
