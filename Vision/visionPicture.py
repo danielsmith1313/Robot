@@ -121,5 +121,5 @@ while True:
     cv2.imshow("dst", dst)
     #cv2.imshow("mask", mask)
     
-    cv2.waitKey(500)
+    cv2.waitKey(0)
     break
