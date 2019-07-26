@@ -115,11 +115,7 @@ while True:
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
 
-    t2 = time.time()
-    #print(low)
-    #print(index_min)
-    #print(t2-t1)
-    print("Distance: ", dist)h/2)
+    
 
     t2 = time.time()
     #print(low)
