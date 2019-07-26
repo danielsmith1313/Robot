@@ -41,9 +41,9 @@ while True:
         imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
     #pink = cropImgSides(img,0.6)
-    
+    hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     #Get the green filter for output
-    maskleaf = cv2.inRange(hsv, (40, 0, 25), (80, 255,255))
+    maskleaf = cv2.inRange(hsvleaf, (40, 0, 25), (80, 255,255))
 
     ## slice the green, replacing other colors with black
     imaskleaf = mask>0
