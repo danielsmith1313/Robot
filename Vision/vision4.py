@@ -53,7 +53,7 @@ while True:
 
     ## mask of green (36,25,25) ~ (86, 255,255)
     # mask = cv2.inRange(hsv, (36, 25, 25), (86, 255,255))
-    mask = cv2.inRange(hsv, (30, 0, 10), (90, 255,255))
+    mask = cv2.inRange(hsv, (36, 25, 25), (75, 255,255))
 
     ## slice the green, replacing other colors with black
     imask = mask>0
@@ -66,7 +66,7 @@ while True:
     kernel = np.ones((10,10),np.float32)/100
     dst = cv2.filter2D(green,-1,kernel)
     #Find the textures that are green and replace the green with pink
-    mask = cv2.inRange(dst, (125,0,250),(130,0,255))
+    mask = cv2.inRange(dst, (36, 25, 25), (75, 255,255))
     imask = mask>0
     pink = np.zeros_like(green, np.uint8)
     pink[imask] = (127,0,255)
