@@ -15,7 +15,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 BLUR = 300
-GREENMASK = (33, 25, 25), (75, 255,255)
+GREENMASK = (36, 25, 25), (70, 255,255)
 camera = picamera.PiCamera()
 
 while True:
