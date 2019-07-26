@@ -53,7 +53,7 @@ while True:
 
     ## mask of green (36,25,25) ~ (86, 255,255)
     # mask = cv2.inRange(hsv, (36, 25, 25), (86, 255,255))
-    mask = cv2.inRange(hsv, (40, 0, 15), (80, 255,255))
+    mask = cv2.inRange(hsv, (40, 0, 25), (80, 255,255))
 
     ## slice the green, replacing other colors with black
     imask = mask>0
