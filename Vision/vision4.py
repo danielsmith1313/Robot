@@ -114,7 +114,7 @@ while True:
     index_min = np.argmin(xC) + 30
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
-
+    dist = dist -30
     
 
     t2 = time.time()
