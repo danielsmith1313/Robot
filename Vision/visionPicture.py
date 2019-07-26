@@ -43,8 +43,9 @@ while True:
     #pink = cropImgSides(img,0.6)
     hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     #Get the green filter for output
+    
     maskleaf = cv2.inRange(hsvleaf, (40, 0, 25), (80, 255,255))
-
+    imask = mask>0
     ## slice the green, replacing other colors with black
     imaskleaf = maskleaf>0
     greenleaf = np.zeros_like(img, np.uint8)
