@@ -14,7 +14,7 @@ import io
 import matplotlib
 import matplotlib.pyplot as plt
 
-BLUR = 200
+BLUR = 300
 camera = picamera.PiCamera()
 
 while True:
@@ -76,9 +76,9 @@ while True:
     #Displayed image
     orig = img
     #img data file
-    img = pink
+    img = dst
     #Used to calculate through the algorithm
-    orig_img = pink
+    orig_img = dst
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
     mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
@@ -115,11 +115,11 @@ while True:
     center_line = cv2.line(orig,(640,0),(640,420),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.destroyAllWindows()
+    #Output
     cv2.imshow("orig", orig)
     cv2.imshow("image", img)
-    cv2.imshow("green", green)
     cv2.imshow("dst", dst)
     #cv2.imshow("mask", mask)
-    
+    #Wait until the user stops it
     cv2.waitKey(0)
     break
