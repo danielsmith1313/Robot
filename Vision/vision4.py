@@ -30,7 +30,7 @@ while True:
     
     ##Uncomment to test a specific image
     #img = cv2.imread("test3.jpg")
-    #img = cv2.resize(img,(1280,840))
+    img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
     def cropImgSides(im, scale):
@@ -114,7 +114,7 @@ while True:
     index_min = np.argmin(xC) + 30
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
-    dist = dist -30
+    dist = dist
     
 
     t2 = time.time()
