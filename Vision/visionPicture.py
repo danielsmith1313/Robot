@@ -118,8 +118,8 @@ while True:
     cv2.imshow("orig", orig)
     cv2.imshow("image", img)
     cv2.imshow("green", green)
-    cv2.imshow("hsv", hsv)
+    cv2.imshow("dst", dst)
     #cv2.imshow("mask", mask)
     
     cv2.waitKey(500)
-    
+    break
