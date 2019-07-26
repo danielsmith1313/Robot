@@ -46,7 +46,7 @@ while True:
     maskleaf = cv2.inRange(hsvleaf, (40, 0, 25), (80, 255,255))
 
     ## slice the green, replacing other colors with black
-    imaskleaf = mask>0
+    imaskleaf = maskleaf>0
     greenleaf = np.zeros_like(img, np.uint8)
     #Replace all the locations where there are green pixels with pink
     greenleaf[imask] = (127,0,255)
