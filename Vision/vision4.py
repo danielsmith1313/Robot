@@ -33,16 +33,26 @@ while True:
     #img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
-    def cropImgSides(img, scale):
-        centerX,centerY=img.shape[1] / 2, img.shape[0] /2
-        widthScaled, heightScaled = img.shape[1] * scale, img.shape[0]
+    def cropImgSides(im, scale):
+        centerX,centerY=im.shape[1] / 2, im.shape[0] /2
+        widthScaled, heightScaled = im.shape[1] * scale, im.shape[0]
         leftX,rightX=centerX - widthScaled / 2, centerX + widthScaled /2
         topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
-        imgCropped = img[int(topY):int(bottomY),int(leftX):int(rightX)]
+        imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
     #pink = cropImgSides(img,0.6)
+    hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    #Get the green filter for output
     
-    #Change to 480 p
+    maskleaf = cv2.inRange(hsvleaf, (36, 25, 25), (75, 255,255))
+    imask = maskleaf>0
+    ## slice the green, replacing other colors with black
+    imaskleaf = maskleaf>0
+    greenleaf = np.zeros_like(img, np.uint8)
+    #Replace all the locations where there are green pixels with pink
+    greenleaf[imask] = (127,0,255)
+
+
     t1 = time.time()
     #Blur the initial image to get an estimate of the average shape of the green
     kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
@@ -74,14 +84,14 @@ while True:
     
 
     #Displayed image
-    orig = pink
+    orig = img
     #img data file
-    img = pink
+    img = dst
     #Used to calculate through the algorithm
-    orig_img = pink
+    orig_img = dst
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
-    mask = cv2.inRange(hsv, (36, 25, 25), (75, 255,255))
+    mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
 
     xC = []
     low = 0
@@ -104,6 +114,12 @@ while True:
     index_min = np.argmin(xC) + 30
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
+
+    t2 = time.time()
+    #print(low)
+    #print(index_min)
+    #print(t2-t1)
+    print("Distance: ", dist)h/2)
 
     t2 = time.time()
     #print(low)
