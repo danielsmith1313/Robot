@@ -81,7 +81,7 @@ while True:
     orig_img = pink
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
-    mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
+    mask = cv2.inRange(hsv, (36, 25, 25), (75, 255,255))
 
     xC = []
     low = 0
