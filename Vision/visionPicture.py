@@ -45,7 +45,7 @@ while True:
     #Get the green filter for output
     
     maskleaf = cv2.inRange(hsvleaf, (40, 0, 25), (80, 255,255))
-    imask = mask>0
+    imask = maskleaf>0
     ## slice the green, replacing other colors with black
     imaskleaf = maskleaf>0
     greenleaf = np.zeros_like(img, np.uint8)
