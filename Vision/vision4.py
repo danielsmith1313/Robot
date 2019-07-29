@@ -106,6 +106,8 @@ while True:
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
     dist = dist + OFFSET
+    #Temporary test center line
+    dist = 0
     
 
     t2 = time.time()
