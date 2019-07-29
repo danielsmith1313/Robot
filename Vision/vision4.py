@@ -13,8 +13,10 @@ from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import io
 import matplotlib
 import matplotlib.pyplot as plt
-
+#Radius of pixels to search for the average value
 BLUR = 200
+#Calibration tool to make the robot turn left (negative) or right (positive)
+OFFSET = 90
 camera = picamera.PiCamera()
 
 while True:
@@ -40,17 +42,6 @@ while True:
         topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
         imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
-    #pink = cropImgSides(img,0.6)
-    hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    #Get the green filter for output
-    
-    maskleaf = cv2.inRange(hsvleaf, (36, 25, 25), (75, 255,255))
-    imask = maskleaf>0
-    ## slice the green, replacing other colors with black
-    imaskleaf = maskleaf>0
-    greenleaf = np.zeros_like(img, np.uint8)
-    #Replace all the locations where there are green pixels with pink
-    greenleaf[imask] = (127,0,255)
 
 
     t1 = time.time()
@@ -114,7 +105,7 @@ while True:
     index_min = np.argmin(xC) + 30
     #Set distance so 0 is centered to the middle
     dist = index_min - int(image_width/2)
-    dist = dist
+    dist = dist + OFFSET
     
 
     t2 = time.time()
@@ -124,13 +115,13 @@ while True:
     print("Distance: ", dist)
     #Using the calculated distance, control the robot
     try:
-        if dist < -60 and dist >= -350:
+        if dist < -60 and dist >= -300:
             
             for i in range (15):
                 motors.setSpeeds(-150, -220)
                 time.sleep(.05)
         
-        elif dist > 60 and dist <= 350:
+        elif dist > 60 and dist <= 300:
             
             for i in range (15):
                 motors.setSpeeds(-220, -150)
@@ -141,20 +132,20 @@ while True:
                 motors.setSpeeds(-210, -217)
                 time.sleep(.05)
         
-        elif dist < -350:
+        elif dist < -300:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
             for i in range(15):
-                motors.setSpeeds(-100, -200)
+                motors.setSpeeds(-100, -210)
                 time.sleep(.05)
         
-        elif dist > 350:
+        elif dist > 300:
             
             motors.setSpeeds(0, 0)
             time.sleep(0.05)
             for i in range(15):
-                motors.setSpeeds(-200, -100)
+                motors.setSpeeds(-210, -100)
                 time.sleep(.05)
     except KeyboardInterrupt:
         break
@@ -164,7 +155,7 @@ while True:
     t2 = time.time()
     print(t2-t1)
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
-    center_line = cv2.line(orig,(640,0),(640,420),(0,255,0),2)
+    center_line = cv2.line(orig,(720,0),(720,840),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.destroyAllWindows()
     cv2.imshow("image", orig)

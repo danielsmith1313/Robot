@@ -31,7 +31,7 @@ while True:
     
     ##Uncomment to test a specific image
     #img = cv2.imread("test3.jpg")
-    #img = cv2.resize(img,(1280,840))
+    img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
     def cropImgSides(im, scale):
