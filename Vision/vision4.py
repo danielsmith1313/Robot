@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 #Radius of pixels to search for the average value
 BLUR = 200
 #Calibration tool to make the robot turn left (negative) or right (positive)
-OFFSET = 90
+OFFSET = 80
 camera = picamera.PiCamera()
 
 while True:
@@ -155,7 +155,7 @@ while True:
     t2 = time.time()
     print(t2-t1)
     vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
-    center_line = cv2.line(orig,(720,0),(720,840),(0,255,0),2)
+    center_line = cv2.line(orig,(620,0),(620,840),(0,255,0),2)
     distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.destroyAllWindows()
     cv2.imshow("image", orig)
