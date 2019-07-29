@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 #Radius of pixels to search for the average value
 BLUR = 200
 #Calibration tool to make the robot turn left (negative) or right (positive)
-OFFSET = 80
+OFFSET = 90
 camera = picamera.PiCamera()
 
 while True:
