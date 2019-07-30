@@ -27,7 +27,7 @@ class VisionNavigation:
     def navigate(self):
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
-        OFFSET = 70
+        OFFSET = 75
         
         
         motors.enable()
