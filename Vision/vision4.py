@@ -166,5 +166,7 @@ class VisionNavigation:
     
         cv2.waitKey(500)
 running = True
+vision = VisionNavigation()
 while running:
-    VisionNavigation.navigate()
+    vision.navigate()
+    
