@@ -121,6 +121,7 @@ else:
                     elif keys[K_e]:
                         done = True
                         break
+                    time.sleep(.05)
         
         if keys[K_e]:
             done = True
