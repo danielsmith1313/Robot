@@ -169,4 +169,4 @@ running = True
 vision = VisionNavigation()
 while running:
     vision.navigate()
-    
+    time.sleep(.1)
