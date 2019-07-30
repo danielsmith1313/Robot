@@ -19,17 +19,19 @@ import sys
 
 
 class VisionNavigation:
+    def __init__(self):
+        self.camera = picamera.PiCamera()
     def navigate(self):
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
         OFFSET = 90
         
-        camera = picamera.PiCamera()
+        
         motors.enable()
         #Capture the image
         stream = io.BytesIO()
         time.sleep(1)
-        camera.capture(stream,format="jpeg")
+        self.camera.capture(stream,format="jpeg")
         #Convert the stream from the capture to an array
         data = np.fromstring(stream.getvalue(), dtype=np.uint8)
         
@@ -169,4 +171,4 @@ running = True
 vision = VisionNavigation()
 while running:
     vision.navigate()
-    time.sleep(.1)
+    #time.sleep(.1)
