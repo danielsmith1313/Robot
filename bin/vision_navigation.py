@@ -15,12 +15,15 @@ import matplotlib
 import matplotlib.pyplot as plt
 #Used to exit the program
 import sys
+from ssh_remote import SSHRemote
 #Radius of pixels to search for the average value
 
 
 class VisionNavigation:
     def __init__(self):
         self.camera = picamera.PiCamera()
+        #Tracks how many times the robot has moved
+        self.movements = 0
     def navigate(self):
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
@@ -157,13 +160,25 @@ class VisionNavigation:
         finally:
             motors.setSpeeds(0,0)
             motors.disable()
+            self.movements = self.movements + 1
+
+        if self.movements == 3:
+            try:
+                SSHRemote.SendSignalToRunScript("","camera.py")
+                self.movements = 0
+            except Exception:
+                pass
+                
+        
         t2 = time.time()
         print(t2-t1)
         vanishing_line = cv2.line(orig,(index_min,0),(index_min,420),(0,0,255),2)
         center_line = cv2.line(orig,(620,0),(620,840),(0,255,0),2)
         distance_text = cv2.putText(orig,str(dist),(10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
         cv2.destroyAllWindows()
         cv2.imshow("image", orig)
         #cv2.imshow("mask", mask)
+
     
         cv2.waitKey(500)

@@ -113,15 +113,7 @@ else:
         if keys[K_f]:
             while True:
                 vision.navigate()
-                for i in range(10):
-                    pygame.event.pump()
-                    keys = pygame.key.get_pressed()
-                    if keys[K_c]:
-                        break
-                    elif keys[K_e]:
-                        done = True
-                        break
-                    time.sleep(.05)
+                
         
         if keys[K_e]:
             done = True
