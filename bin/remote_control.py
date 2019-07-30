@@ -13,6 +13,8 @@ import time
 import os
 from camera import Camera
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
+#Import navigation library
+from vision_navigation import VisionNavigation
 if(os.name=='nt'):
     import msvcrt
     num = 0
@@ -28,6 +30,8 @@ if(os.name=='nt'):
 else:
     import pygame
     from pygame.locals import *
+
+    vision = VisionNavigation()
 
     def display(str):
         text = font.render(str, True, (255, 255, 255), (159, 182, 205))
@@ -75,7 +79,7 @@ else:
                 for i in range(1):
                 
                     motors.enable()
-                    motors.setSpeeds(250, 250)
+                    motors.setSpeeds(-250, -250)
                     time.sleep(.005)
             
             finally:
@@ -87,7 +91,7 @@ else:
             try:
                 for i in range(1):
                     motors.enable()
-                    motors.setSpeeds(250,125)
+                    motors.setSpeeds(-250,-125)
                     time.sleep(.005)
             finally:
                 motors.setSpeeds(0,0)
@@ -97,7 +101,7 @@ else:
             try:
                 for i in range(1):
                     motors.enable()
-                    motors.setSpeeds(125,250)
+                    motors.setSpeeds(-125,-250)
                     time.sleep(.005)
             finally:
                 motors.setSpeeds(0,0)
@@ -106,8 +110,16 @@ else:
             Camera.TakePicture()
         if keys[K_RETURN]:
             pass
-        if keys[K_9]:
-            pass    
+        if keys[K_f]:
+            while True:
+                vision.navigate()
+                pygame.event.pump()
+                keys = pygame.key.get_pressed()
+                if keys[K_c]:
+                    break
+                elif keys[K_e]:
+                    done = True
+                    break
         
         if keys[K_e]:
             done = True
