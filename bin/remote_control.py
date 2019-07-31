@@ -44,7 +44,7 @@ else:
 
     pygame.init()
     screen = pygame.display.set_mode( (640,480) )
-    pygame.display.set_caption('Python numbers')
+    pygame.display.set_caption('Robot')
     screen.fill((159, 182, 205))
 
     font = pygame.font.Font(None, 17)
