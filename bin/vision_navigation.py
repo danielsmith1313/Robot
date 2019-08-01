@@ -163,12 +163,10 @@ class VisionNavigation:
             self.movements = self.movements + 1
 
         if self.movements == 3:
-            try:
-                print("Sending ssh to take picture")
-                SSHRemote.SendSignalToRunScript("169.254.247.170","/home/pi/Desktop/Git/Robot/camera.py")
-                self.movements = 0
-            except Exception:
-                pass
+            
+            print("Sending ssh to take picture")
+            SSHRemote.SendSignalToRunScript("169.254.247.170","/home/pi/Desktop/Git/Robot/camera.py")
+            self.movements = 0
 
         
         t2 = time.time()

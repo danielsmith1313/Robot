@@ -21,7 +21,7 @@ class SSHRemote():
         Sends a signal to the second raspberry pi using ssh
         telling it to take a picture. 
         """
-        subprocess.open("ssh pi@" + IPIn + " 'cd ~ && python " + scriptName + "'", shell=True)
+        subprocess.open("sshpass -p 'Password01' ssh pi@" + IPIn + " 'python3 " + scriptName + "'", shell=True)
     
     
 
