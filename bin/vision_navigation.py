@@ -164,7 +164,7 @@ class VisionNavigation:
 
         if self.movements == 3:
             try:
-                SSHRemote.SendSignalToRunScript("","camera.py")
+                SSHRemote.SendSignalToRunScript("169.254.247.170","/home/pi/Desktop/Git/Robot/camera.py")
                 self.movements = 0
             except Exception:
                 pass

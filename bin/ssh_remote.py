@@ -9,6 +9,8 @@ class SSHRemote():
     """
     This static class is in charge of sending an ssh signal to another ip address on the network to run a script
     NOTE: depending on which linux deployment is being used, ssh may need to be enabled for this script to work
+    Main pi last IP: 169.254.124.81
+    Secondary pi last IP: 169.254.247.170
     """
     def __init__(self):
         pass
