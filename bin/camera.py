@@ -52,3 +52,5 @@ class Camera():
         photo = gpsphoto.GPSPhoto(self.path)
         info = gpsphoto.GPSInfo((self.__longitude,self.__latitude))
         photo.modGPSData(info,self.path)
+
+Camera.TakePicture()
