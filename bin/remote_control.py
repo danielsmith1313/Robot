@@ -11,7 +11,7 @@ during the execution of this script.
 
 import time
 import os
-from camera import Camera
+#from camera import Camera
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 #Import navigation library
 from vision_navigation import VisionNavigation
