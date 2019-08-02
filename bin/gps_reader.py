@@ -37,7 +37,7 @@ class GPS:
         #Holds how many times it is waiting for fix
         self.__errorCounter = 0
         
-        self.__uart = hSerial("/dev/ttyUSB0", baudrate=9600, timeout=3000)
+        self.__uart = Serial("/dev/ttyUSB0", baudrate=9600, timeout=3000)
         # Create a GPS module instance.
         self.gps = adafruit_gps.GPS(self.__uart, debug=False)
 
