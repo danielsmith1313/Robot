@@ -79,10 +79,13 @@ class GPS:
                     # Try again if we don't have a fix yet.
                     print('Waiting for fix...')
                     self.__errorCounter = self.__errorCounter + 1
-                    if self.__errorCounter == 100:
+                    if self.__errorCounter == 10:
+                        self.__listOfData = [0,0]
+                        self.__trackAngle = 0
+                        print("Error finding gps data")
                         break
                     else:
-                        self.__listOfData = [0,0]
+                        continue
 
                 if option == 0:
                     self.__lattitudeCounter =  self.gps.latitude + self.__lattitudeCounter
