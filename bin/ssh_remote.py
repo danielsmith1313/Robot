@@ -4,6 +4,8 @@
 #Last edited: 5/29/2019 by Daniel Smith
 
 import subprocess
+import sys
+import os
 
 class SSHRemote():
     """
@@ -21,7 +23,7 @@ class SSHRemote():
         Sends a signal to the second raspberry pi using ssh
         telling it to take a picture. 
         """
-        subprocess.run("sshpass -p 'Password01' ssh pi@" + IPIn + " 'python3 " + scriptName + "'", shell=True)
+        os.system("sudo sshpass -p 'Password01' ssh pi@" + IPIn + " 'sudo python3 " + scriptName + "'" .join(sys.argv[1:]))
     
     
 
