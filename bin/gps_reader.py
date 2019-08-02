@@ -30,12 +30,14 @@ class GPS:
         """
         
         # for a computer, use the pyserial library for uart access
-        import serial
+        from serial import Serial
         self.__counter = 0
         self.__longitudeCounter = 0
         self.__lattitudeCounter = 0
+        #Holds how many times it is waiting for fix
+        self.__errorCounter = 0
         
-        self.__uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3000)
+        self.__uart = hSerial("/dev/ttyUSB0", baudrate=9600, timeout=3000)
         # Create a GPS module instance.
         self.gps = adafruit_gps.GPS(self.__uart, debug=False)
 
@@ -76,7 +78,11 @@ class GPS:
                 if not self.gps.has_fix:
                     # Try again if we don't have a fix yet.
                     print('Waiting for fix...')
-                    continue
+                    self.__errorCounter = self.__errorCounter + 1
+                    if self.__errorCounter == 100:
+                        break
+                    else:
+                        self.__listOfData = [0,0]
 
                 if option == 0:
                     self.__lattitudeCounter =  self.gps.latitude + self.__lattitudeCounter
