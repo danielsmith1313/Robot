@@ -80,8 +80,8 @@ class GPS:
                     print('Waiting for fix...')
                     self.__errorCounter = self.__errorCounter + 1
                     if self.__errorCounter == 10:
-                        self.__listOfData = [0,0]
-                        self.__trackAngle = 0
+                        self.__listOfData = [0.0,0.0]
+                        self.__trackAngle = 0.0
                         print("Error finding gps data")
                         break
                     else:
