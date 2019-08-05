@@ -23,7 +23,7 @@ class SSHRemote():
         Sends a signal to the second raspberry pi using ssh
         telling it to take a picture. 
         """
-        os.system("ssh pi@" + IPIn + " 'sudo python3 " + scriptName + "'" .join(sys.argv[1:]))
+        os.system(("ssh pi@" + IPIn + " sudo python3 " + scriptName).join(sys.argv[1:]))
     
     
 
