@@ -33,10 +33,10 @@ class Camera():
         """
         # Create object to get date and time
         now = datetime.datetime.now()
-        gps = GPS()
-        self.__coordinates = gps.GetCurrentCoordinates(0)
-        self.__longitude = self.__coordinates[0]
-        self.__latitude = self.__coordinates[1]
+        #gps = GPS()
+        #self.__coordinates = gps.GetCurrentCoordinates(0)
+        #self.__longitude = self.__coordinates[0]
+        #self.__latitude = self.__coordinates[1]
 
         # Generate a unique filename
         self.uniqueFilename = str(datetime.datetime.now())
@@ -49,10 +49,10 @@ class Camera():
             time.sleep(2)
             camera.capture(self.path)
             camera.stop_preview()
-
+        
         #Set gps coordinates to exif data
-        photo = gpsphoto.GPSPhoto(self.path)
-        info = gpsphoto.GPSInfo((self.__longitude,self.__latitude))
-        photo.modGPSData(info,self.path)
+        #photo = gpsphoto.GPSPhoto(self.path)
+        #info = gpsphoto.GPSInfo((self.__longitude,self.__latitude))
+        #photo.modGPSData(info,self.path)
 
 Camera.TakePicture()
