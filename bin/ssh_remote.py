@@ -25,7 +25,8 @@ class SSHRemote():
         telling it to take a picture. 
         """
         proc = Popen(["ssh","pi@"+IPIn," sudo python3 "+scriptName],stdin=PIPE)
-        proc.communicate(input='Password01')
+        proc.stdin.write('Password01\n')
+        proc.stdin.flush()
     
     
 
