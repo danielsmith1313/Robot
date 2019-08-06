@@ -4,7 +4,7 @@
 #Last edited: 5/29/2019 by Daniel Smith
 
 from subprocess import Popen, PIPE
-
+import subprocess
 import sys
 import os
 
@@ -24,7 +24,7 @@ class SSHRemote():
         Sends a signal to the second raspberry pi using ssh
         telling it to take a picture. 
         """
-        proc = Popen(["ssh","pi@"+IPIn," sudo python3 "+scriptName],stdin=PIPE)
+        proc = subprocess.run(["ssh","pi@"+IPIn," sudo python3 "+scriptName],stdin=PIPE)
         proc.stdin.write('Password01\n')
         proc.stdin.flush()
     
