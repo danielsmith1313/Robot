@@ -27,6 +27,8 @@ class SSHRemote():
         proc = Popen(["ssh","pi@"+IPIn," sudo python3 "+scriptName],stdin=PIPE)
         proc.stdin.write(b'Password01\n')
         proc.stdin.flush()
+        proc.stdin.write(b'logout\n')
+        proc.stdin.flush()
     
     
 
