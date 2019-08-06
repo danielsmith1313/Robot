@@ -16,6 +16,7 @@ import sys
 from GPSPhoto import gpsphoto
 import datetime
 
+
 class Camera():
     """
     This static class is in charge of getting data from the front facing camera
@@ -26,6 +27,7 @@ class Camera():
 
     @classmethod
     def TakePicture(self):
+        sys.path.append(".")
         """
         Sends a signal to recieve data from the front facing camera
         """
