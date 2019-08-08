@@ -1,6 +1,6 @@
 # import the necessary packages
-from picamera.array import PiRGBArray
-import picamera
+#from picamera.array import PiRGBArray
+#import picamera
 from itertools import repeat
 import itertools
 import random
@@ -9,29 +9,29 @@ import matplotlib
 import cv2
 import numpy as np
 import time
-from dual_g2_hpmd_rpi import motors, MAX_SPEED
+#from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import io
 import matplotlib
 import matplotlib.pyplot as plt
 
 BLUR = 300
 GREENMASK = (36, 25, 25), (75, 255,255)
-camera = picamera.PiCamera()
+#camera = picamera.PiCamera()
 
 while True:
-    motors.enable()
+    #motors.enable()
     #Capture the image
-    stream = io.BytesIO()
-    time.sleep(2)
-    camera.capture(stream,format="jpeg")
+    #stream = io.BytesIO()
+    #time.sleep(2)
+    #camera.capture(stream,format="jpeg")
     #Convert the stream from the capture to an array
-    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    #data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order for cv2
-    img=cv2.imdecode(data,1)
+    img=cv2.imread("test.jpg")
     
     ##Uncomment to test a specific image
     #img = cv2.imread("test3.jpg")
-    img = cv2.resize(img,(1280,840))
+    #img = cv2.resize(img,(1280,840))
     # Camera warm-up time
 
     def cropImgSides(im, scale):
@@ -41,6 +41,11 @@ while True:
         topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
         imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
+    hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+    maskbrown = cv2.inRange(hsvbrown,(10,100,20),(20,255,200))
+    imaskbrown = maskbrown>0
+    brown[imaskbrown] = (127,0,255)
+    
     #pink = cropImgSides(img,0.6)
     hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     #Get the green filter for output
@@ -130,6 +135,7 @@ while True:
     cv2.imshow("orig", orig)
     cv2.imshow("greenleaf", greenleaf)
     cv2.imshow("dst", dst)
+    cv2.imshow("brown",brown)
     #cv2.imshow("mask", mask)
     #Wait until the user stops it
     cv2.waitKey(0)
