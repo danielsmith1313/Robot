@@ -27,8 +27,8 @@ while True:
     #Convert the stream from the capture to an array
     #data = np.fromstring(stream.getvalue(), dtype=np.uint8)
     #Convert to BGR order for cv2
-    img=cv2.imread("test.jpg")
-    
+    img=cv2.imread("test4.jpg")
+    img = cv2.resize(img,(1280,840))
     ##Uncomment to test a specific image
     #img = cv2.imread("test3.jpg")
     #img = cv2.resize(img,(1280,840))
@@ -42,10 +42,12 @@ while True:
         imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
         return imgCropped
     hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-    maskbrown = cv2.inRange(hsvbrown,(10,100,20),(20,255,200))
+    maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
     imaskbrown = maskbrown>0
+    brown = np.zeros_like(img,np.uint8)
     brown[imaskbrown] = (127,0,255)
-    
+    ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
+    print("Ratiobrown ", np.round(ratioBrown*100,2))
     #pink = cropImgSides(img,0.6)
     hsvleaf = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     #Get the green filter for output

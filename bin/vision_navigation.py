@@ -28,8 +28,12 @@ class VisionNavigation:
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
         OFFSET = 75
-        
-        
+        PIXELPERCENTFORBROWN = .5
+        #The number of rows the robot goes through
+        NUMOFROWS = 10
+        #The current row, counter that starts at 0
+        currentRow = 0
+
         motors.enable()
         #Capture the image
         stream = io.BytesIO()
@@ -52,7 +56,16 @@ class VisionNavigation:
             topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
             imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
             return imgCropped
-
+        #-----
+        #Brown pixel detection
+        #-----
+        hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
+        imaskbrown = maskbrown>0
+        brown = np.zeros_like(img,np.uint8)
+        brown[imaskbrown] = (127,0,255)
+        ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
+        print("Ratiobrown ", np.round(ratioBrown*100,2))
 
         t1 = time.time()
         #Blur the initial image to get an estimate of the average shape of the green
