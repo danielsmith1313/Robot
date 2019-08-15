@@ -28,7 +28,7 @@ class VisionNavigation:
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
         OFFSET = 75
-        PIXELPERCENTFORBROWN = .5
+        PIXEL_PERCENT_FOR_BROWN = .5
         #The number of rows the robot goes through
         NUMOFROWS = 10
         #The current row, counter that starts at 0
