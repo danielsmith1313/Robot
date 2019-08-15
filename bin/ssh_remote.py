@@ -29,7 +29,8 @@ class SSHRemote():
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(IPIn, username="pi", password="Password01", timeout=10)
-        ssh.exec_command(["sudo python3 "+scriptName])
+        command = "sudo python3 "+scriptName
+        ssh.exec_command(command)
         ssh.close()
     
     
