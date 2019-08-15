@@ -27,13 +27,9 @@ class SSHRemote():
         #proc = subprocess.run(["ssh","pi@"+IPIn," sudo python3 "+scriptName],stdin=PIPE)
         
         ssh = paramiko.SSHClient()
-
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        ssh.connect(IPIn, username='pi', password='Password01')
-
-        stdin, stdout, stderr = ssh.exec_command(["sudo python3 "+scriptName])
-        print(stdout.readlines())
+        ssh.connect(IPIn, username="pi", password="Password01", timeout=10)
+        ssh.exec_command(["sudo python3 "+scriptName])
         ssh.close()
     
     
