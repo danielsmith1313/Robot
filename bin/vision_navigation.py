@@ -183,10 +183,11 @@ class VisionNavigation:
             motors.disable()
             self.movements = self.movements + 1
 
+        #After 3 movements
         if self.movements == 3:
             
             print("Sending ssh to take picture")
-            SSHRemote.SendSignalToRunScript("169.254.247.170","Desktop/Git/Robot/bin/camera.py")
+            SSHRemote.SendSignalToRunScript("192.168.43.56","Desktop/Git/Robot/bin/camera.py")
             self.movements = 0
 
         
