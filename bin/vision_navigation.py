@@ -69,13 +69,16 @@ class VisionNavigation:
 
         t1 = time.time()
         #Blur the initial image to get an estimate of the average shape of the green
+        #-----
+        #Green pixel detection
+        #-----
         kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
         dst = cv2.filter2D(img,-1,kernel)
         #cv2.imwrite("dst.jpg",dst)
         #Convert to hsv to detect green pixels more easily
         hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2HSV)
 
-        ## mask of green (36,25,25) ~ (86, 255,255)
+        # mask of green (36,25,25) ~ (86, 255,255)
         # mask = cv2.inRange(hsv, (36, 25, 25), (86, 255,255))
         mask = cv2.inRange(hsv, (36, 25, 25), (75, 255,255))
 
@@ -96,7 +99,9 @@ class VisionNavigation:
         pink[imask] = (127,0,255)
         #Crop outsides which do not pick up the image very well
     
-
+        #-----
+        #Pathfinding algorithm
+        #-----
         #Displayed image
         orig = img
         #img data file
@@ -139,6 +144,9 @@ class VisionNavigation:
         #print(t2-t1)
         print("Distance: ", dist)
         #Using the calculated distance, control the robot
+        #-----
+        #Motor controll and navigation
+        #-----
         try:
             if dist < -60 and dist >= -300:
             
@@ -178,7 +186,7 @@ class VisionNavigation:
         if self.movements == 3:
             
             print("Sending ssh to take picture")
-            #SSHRemote.SendSignalToRunScript("169.254.247.170","Desktop/Git/Robot/bin/camera.py")
+            SSHRemote.SendSignalToRunScript("169.254.247.170","Desktop/Git/Robot/bin/camera.py")
             self.movements = 0
 
         
