@@ -30,9 +30,9 @@ class SSHRemote():
 
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        ssh.connect('<hostname>', username='<username>', password='<password>', key_filename='<path/to/openssh-private-key-file>')
+        ssh.connect(IPIn, username='pi', password='Password01')
 
-        stdin, stdout, stderr = ssh.exec_command(["ssh","pi@"+IPIn," sudo python3 "+scriptName])
+        stdin, stdout, stderr = ssh.exec_command(["sudo python3 "+scriptName])
         print(stdout.readlines())
         ssh.close()
     
