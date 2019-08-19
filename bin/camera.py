@@ -15,7 +15,8 @@ import fractions
 import sys
 from GPSPhoto import gpsphoto
 import datetime
-
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 class Camera():
     """
@@ -50,9 +51,18 @@ class Camera():
             camera.capture(self.path)
             camera.stop_preview()
         
+
+
         #Set gps coordinates to exif data
         #photo = gpsphoto.GPSPhoto(self.path)
         #info = gpsphoto.GPSInfo((self.__longitude,self.__latitude))
         #photo.modGPSData(info,self.path)
+        #Display
+        imOut = mpimg.imread(self.path)
+        imgPlot= plt.imshow(imOut)
+        plt.show
+        time.sleep(1)
+        plt.close
+
 
 Camera.TakePicture()
