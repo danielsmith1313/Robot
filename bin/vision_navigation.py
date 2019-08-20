@@ -187,6 +187,7 @@ class VisionNavigation:
         if self.movements == 3:
             
             print("Sending ssh to take picture")
+            
             SSHRemote.SendSignalToRunScript("192.168.43.56","Desktop/Git/Robot/bin/camera.py")
             self.movements = 0
 

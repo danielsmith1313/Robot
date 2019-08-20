@@ -58,11 +58,7 @@ class Camera():
         #info = gpsphoto.GPSInfo((self.__longitude,self.__latitude))
         #photo.modGPSData(info,self.path)
         #Display
-        imOut = mpimg.imread(self.path)
-        imgPlot= plt.imshow(imOut)
-        plt.show
-        time.sleep(1)
-        plt.close
+        
 
 
 Camera.TakePicture()
