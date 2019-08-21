@@ -27,7 +27,7 @@ class VisionNavigation:
     def navigate(self):
         BLUR = 200
         #Calibration tool to make the robot turn left (negative) or right (positive)
-        OFFSET = -50
+        OFFSET = 175
         PIXEL_PERCENT_FOR_BROWN = .5
         #The number of rows the robot goes through
         NUMOFROWS = 10
