@@ -13,6 +13,7 @@ import time
 import io
 import matplotlib
 import matplotlib.pyplot as plt
+import picamera
 
 BLUR = 300
 GREENMASK = (36, 25, 25), (75, 255,255)
@@ -21,14 +22,18 @@ GREENMASK = (36, 25, 25), (75, 255,255)
 while True:
     #motors.enable()
     #Capture the image
-    #stream = io.BytesIO()
-    #time.sleep(2)
-    #camera.capture(stream,format="jpeg")
-    #Convert the stream from the capture to an array
-    #data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    stream = io.BytesIO()
+    with picamera.PiCamera() as camera:
+        
+        time.sleep(2)
+        camera.capture(stream,format="jpeg")
+        #Convert the stream from the capture to an array
+    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+    img = cv2.imdecode(data,1)
+    
     #Convert to BGR order for cv2
-    img=cv2.imread("test4.jpg")
-    img = cv2.resize(img,(1280,840))
+    #img=cv2.imread("test4.jpg")
+    #img = cv2.resize(img,(1280,840))
     ##Uncomment to test a specific image
     #img = cv2.imread("test3.jpg")
     #img = cv2.resize(img,(1280,840))
