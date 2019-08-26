@@ -1,17 +1,24 @@
+#File Description:
+#
+#This program when called using navigate(), will begin movement based on the configured settings
+#and navigate along a single row. 
+
 # import the necessary packages
+#Picamera is included in distributions of raspbian, and is used in conjunction with the raspberry pi camera slot to 
+#take pictures with raspberry pi compatible cameras
 from picamera.array import PiRGBArray
 import picamera
+#Itertools allows for faster and different approaches for iterations in Python
 from itertools import repeat
-import itertools
-import random
-from itertools import starmap
-import matplotlib
+#Open cv library, a powerful library used for image processing
 import cv2
+#Numpy is a data manipulation library which allows for programs to calculate with classic arrays instead of the python lists
 import numpy as np
+#Allows recording of time and sleeping for correct camera pictures
 import time
+#Motor control library provided by Polulu for their 
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 import io
-import matplotlib
 import matplotlib.pyplot as plt
 #Used to exit the program
 import sys
@@ -20,45 +27,48 @@ from ssh_remote import SSHRemote
 
 
 class VisionNavigation:
+    #Constructors
     def __init__(self):
         self.camera = picamera.PiCamera()
-        #Tracks how many times the robot has moved
         self.movements = 0
+    
     def navigate(self):
+        """
+        Navigate is a function that when called activates the ROW-BOT, with the adjusted configuration settings, 
+        to navigate across a row of crops, detect the row end, and move to the next row.
+        """
+        
+        #Configurable constants,
+        #BLUR is the range in pixels the program searches for smoothing. POSTBLUR is used after the colors are isolated. OFFSET is the amount, left (negative) or right (positive)
+        #the program adds to the vanishing point. PIXEL_PERCENT_FOR_BROWN is the amount of pixels needed before the robot auto turns.
+        #NUMOFROWS is the amount of rows the robot navigates before shutting down.
         BLUR = 200
-        #Calibration tool to make the robot turn left (negative) or right (positive)
+        POSTBLUR = 10
         OFFSET = 175
         PIXEL_PERCENT_FOR_BROWN = .5
-        #The number of rows the robot goes through
         NUMOFROWS = 10
-        #The current row, counter that starts at 0
-        currentRow = 0
+        
 
+        currentRow = 0
         motors.enable()
-        #Capture the image
+
+        #This section of code captures the image from a stream using picamera library, and then converts that image into an array
+        # for data manipulation. 
         stream = io.BytesIO()
         time.sleep(1)
         self.camera.capture(stream,format="jpeg")
-        #Convert the stream from the capture to an array
         data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-        
         img=cv2.imdecode(data,1)
     
         ##Uncomment to test a specific image
         #img = cv2.imread("test3.jpg")
-        img = cv2.resize(img,(1280,840))
-        # Camera warm-up time
 
-        def cropImgSides(im, scale):
-            centerX,centerY=im.shape[1] / 2, im.shape[0] /2
-            widthScaled, heightScaled = im.shape[1] * scale, im.shape[0]
-            leftX,rightX=centerX - widthScaled / 2, centerX + widthScaled /2
-            topY,bottomY= centerY - heightScaled / 2, centerY + heightScaled / 2
-            imgCropped = im[int(topY):int(bottomY),int(leftX):int(rightX)]
-            return imgCropped
-        #-----
-        #Brown pixel detection
-        #-----
+        #This section of code changes the resolution to the specified settings
+        img = cv2.resize(img,(1280,840))
+        
+        #This section of code isolates the brown pixels with the rest of the image. NOTE: for all image isolation techniques, the
+        # color range is in HSV (Hue, Saturation, Value). Additionally, for all image isolation techniques, the image is split into
+        # pink pixels for targeted color, and black for all other colors outside the range.
         hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
         imaskbrown = maskbrown>0
@@ -67,46 +77,31 @@ class VisionNavigation:
         ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
         print("Ratiobrown ", np.round(ratioBrown*100,2))
 
-        t1 = time.time()
-        #Blur the initial image to get an estimate of the average shape of the green
-        #-----
-        #Green pixel detection
-        #-----
+        #This section of code blurs the image from a range in pixels equal to BLUR. 
         kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
         dst = cv2.filter2D(img,-1,kernel)
-        #cv2.imwrite("dst.jpg",dst)
-        #Convert to hsv to detect green pixels more easily
+    
+        #This section of code isolates the green pixels with the rest of the image
         hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2HSV)
-
-        # mask of green (36,25,25) ~ (86, 255,255)
-        # mask = cv2.inRange(hsv, (36, 25, 25), (86, 255,255))
         mask = cv2.inRange(hsv, (36, 25, 25), (75, 255,255))
-
-        ## slice the green, replacing other colors with black
         imask = mask>0
         green = np.zeros_like(img, np.uint8)
-        #Replace all the locations where there are green pixels with pink
         green[imask] = (127,0,255)
 
-        #Smooth the image to cut out rough edges
-        #Note: with 300,300: 30000 as the denominator produces a hollow outline while 30000 produces a filled outline
-        kernel = np.ones((10,10),np.float32)/100
+        #This section of code performs a seconod blurring function, cutting down on edges in the image for higher accuracy
+        kernel = np.ones((POSTBLUR,POSTBLUR),np.float32)/(POSTBLUR*POSTBLUR)
         dst = cv2.filter2D(green,-1,kernel)
-        #Find the textures that are green and replace the green with pink
         mask = cv2.inRange(dst, (36, 25, 25), (75, 255,255))
         imask = mask>0
         pink = np.zeros_like(green, np.uint8)
         pink[imask] = (127,0,255)
-        #Crop outsides which do not pick up the image very well
     
         #-----
         #Pathfinding algorithm
         #-----
-        #Displayed image
+        #This section of code organizes the images into easier to manage variables
         orig = img
-        #img data file
         img = dst
-        #Used to calculate through the algorithm
         orig_img = dst
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
@@ -148,7 +143,11 @@ class VisionNavigation:
         #Motor controll and navigation
         #-----
         try:
-            if dist < -60 and dist >= -300:
+            if (ratioBrown > PIXEL_PERCENT_FOR_BROWN):
+                for i in range(40):
+                    motors.setSpeeds(-100, -210)
+                    time.sleep(.05)
+            elif dist < -60 and dist >= -300:
             
                 for i in range (15):
                     motors.setSpeeds(-150, -220)
@@ -188,7 +187,7 @@ class VisionNavigation:
             
             print("Sending ssh to take picture")
             
-            #SSHRemote.SendSignalToRunScript("192.168.43.56","Desktop/Git/Robot/bin/camera.py")
+            SSHRemote.SendSignalToRunScript("192.168.43.56","Desktop/Git/Robot/bin/camera.py")
             self.movements = 0
 
         
