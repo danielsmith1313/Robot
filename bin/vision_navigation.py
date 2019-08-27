@@ -8,22 +8,16 @@
 #take pictures with raspberry pi compatible cameras
 from picamera.array import PiRGBArray
 import picamera
-#Itertools allows for faster and different approaches for iterations in Python
-from itertools import repeat
-#Open cv library, a powerful library used for image processing
-import cv2
-#Numpy is a data manipulation library which allows for programs to calculate with classic arrays instead of the python lists
-import numpy as np
-#Allows recording of time and sleeping for correct camera pictures
-import time
-#Motor control library provided by Polulu for their 
-from dual_g2_hpmd_rpi import motors, MAX_SPEED
-import io
-import matplotlib.pyplot as plt
-#Used to exit the program
-import sys
-from ssh_remote import SSHRemote
-#Radius of pixels to search for the average value
+from itertools import repeat                    #Itertools allows for faster and different approaches for iterations in Python
+
+import cv2                                      #Open cv library, a powerful library used for image processing
+import numpy as np                              #Numpy is a data manipulation library which allows for programs to calculate with classic arrays instead of the python lists
+import time                                     #Allows recording of time and sleeping for correct camera pictures
+from dual_g2_hpmd_rpi import motors, MAX_SPEED  #Motor control library provided by Polulu for their 
+import io                                       #Python library used to manage input and output of the computer
+import matplotlib.pyplot as plt                 #Matplotlib is a library used to display and manage data specifically arrays
+import sys                                      #Used to exit the program
+from ssh_remote import SSHRemote                #SSHRemote is a local class that allows for sshing into a seperate computer on the same network
 
 
 class VisionNavigation:
@@ -104,9 +98,9 @@ class VisionNavigation:
         img = dst
         orig_img = dst
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    
         mask = cv2.inRange(hsv, (160,250,248), (255,255,255))
 
+        #This section of code finds the column with the least amount of green in the center. 
         xC = []
         low = 0
         image_width = orig_img.shape[1]
@@ -126,22 +120,17 @@ class VisionNavigation:
 
         low = min(xC)
         index_min = np.argmin(xC) + 30
-        #Set distance so 0 is centered to the middle
-        dist = index_min - int(image_width/2)
+        dist = index_min - int(image_width/2)                   #This line sets the distance to the center of the image (0)
         dist = dist + OFFSET
-        #Temporary test center line
+        
     
     
 
-        t2 = time.time()
-        #print(low)
-        #print(index_min)
-        #print(t2-t1)
-        print("Distance: ", dist)
-        #Using the calculated distance, control the robot
         #-----
         #Motor controll and navigation
         #-----
+        #This block of code is the decision structure for the robot. First it is tested if the robot has made it to the end of the 
+        # row (through pixel percent) If that is not true, the robot continues with its pathfinding forward.
         try:
             if (ratioBrown > PIXEL_PERCENT_FOR_BROWN):
                 for i in range(40):
@@ -177,12 +166,16 @@ class VisionNavigation:
                     time.sleep(.05)
         except KeyboardInterrupt:
             sys.exit()
+
+        #This block of code ends all control of the motors and increases the amount of movements before having to take
+        # a measurment.
         finally:
             motors.setSpeeds(0,0)
             motors.disable()
             self.movements = self.movements + 1
 
-        #After 3 movements
+        #This block of code, after three movements uses the SSHRemote file to send a secure shell command to the external raspberry pi to execute a 
+        # camera script.
         if self.movements == 3:
             
             print("Sending ssh to take picture")
@@ -191,9 +184,8 @@ class VisionNavigation:
             self.movements = 0
 
         
-        t2 = time.time()
-        print(t2-t1)
-        vanishing_line = cv2.line(orig,(index_min,0),(index_min,840),(0,0,255),2)
+        #This block of code outputs the images along with visual lines
+        vanishing_line = cv2.line(orig,(index_min+OFFSET,0),(index_min+OFFSET,840),(0,0,255),2)
         center_line = cv2.line(orig,(580,0),(580,840),(0,255,0),2)
 
         cv2.destroyAllWindows()
