@@ -18,13 +18,17 @@ import io                                       #Python library used to manage i
 import matplotlib.pyplot as plt                 #Matplotlib is a library used to display and manage data specifically arrays
 import sys                                      #Used to exit the program
 from ssh_remote import SSHRemote                #SSHRemote is a local class that allows for sshing into a seperate computer on the same network
-
-
+try:
+    from configparser import ConfigParser       #Used to read .ini files
+except ImportError:
+    from ConfigParser import ConfigParser
 class VisionNavigation:
     #Constructors
     def __init__(self):
         self.camera = picamera.PiCamera()
         self.movements = 0
+        self.config = ConfigParser()
+        self.config.read("config.ini")
     
     def navigate(self):
         """
@@ -33,14 +37,16 @@ class VisionNavigation:
         """
         
         #Configurable constants,
-        #BLUR is the range in pixels the program searches for smoothing. POSTBLUR is used after the colors are isolated. OFFSET is the amount, left (negative) or right (positive)
-        #the program adds to the vanishing point. PIXEL_PERCENT_FOR_BROWN is the amount of pixels needed before the robot auto turns.
-        #NUMOFROWS is the amount of rows the robot navigates before shutting down.
-        BLUR = 200
-        POSTBLUR = 10
-        OFFSET = 175
-        PIXEL_PERCENT_FOR_BROWN = .5
-        NUMOFROWS = 10
+        BLUR = self.config.getint("pathfinding","postblur")
+        POSTBLUR = self.config.getint("pathfinding","postblur")
+        OFFSET = self.config.getint("pathfinding","offset")
+        PIXEL_PERCENT_TO_TURN = self.config.getfloat("pathfinding","brownpixelpercenttoturns")
+        NUMOFROWS = self.config.getint("pathfinding", "numberofrows")
+        MOTOR_TURNING_TIME = self.config.getint("pathfinding", "motorturningtime")
+        MOTOR_STRAIGHT_TIME = self.config.getint("pathfinding", "motorstraighttime")
+        MOTOR_U_TURN_TIME = self.config.getint("pathfinding", "motoruturntime")
+        DISPLAY_OUTPUT = self.config.get("pathfinding","displayoutput")
+        SECONDARY_IP = self.config.get("network","secondaryip")
         
 
         currentRow = 0
@@ -132,36 +138,36 @@ class VisionNavigation:
         #This block of code is the decision structure for the robot. First it is tested if the robot has made it to the end of the 
         # row (through pixel percent) If that is not true, the robot continues with its pathfinding forward.
         try:
-            if (ratioBrown > PIXEL_PERCENT_FOR_BROWN):
+            if (ratioBrown > PIXEL_PERCENT_TO_TURN):
                 for i in range(40):
                     motors.setSpeeds(-100, -210)
                     time.sleep(.05)
             elif dist < -60 and dist >= -300:
             
-                for i in range (15):
+                for i in range (MOTOR_TURNING_TIME):
                     motors.setSpeeds(-150, -220)
                     time.sleep(.05)
         
             elif dist > 60 and dist <= 300:
             
-                for i in range (15):
+                for i in range (MOTOR_TURNING_TIME):
                     motors.setSpeeds(-220, -150)
                     time.sleep(.05)
             elif dist > -60 and dist < 60:
             
-                for i in range (20):
+                for i in range (MOTOR_STRAIGHT_TIME):
                     motors.setSpeeds(-210, -217)
                     time.sleep(.05)
         
             elif dist < -300:
             
-                for i in range(15):
+                for i in range(MOTOR_TURNING_TIME):
                     motors.setSpeeds(-100, -210)
                     time.sleep(.05)
         
             elif dist > 300:
             
-                for i in range(15):
+                for i in range(MOTOR_TURNING_TIME):
                     motors.setSpeeds(-210, -100)
                     time.sleep(.05)
         except KeyboardInterrupt:
@@ -180,17 +186,18 @@ class VisionNavigation:
             
             print("Sending ssh to take picture")
             
-            SSHRemote.SendSignalToRunScript("192.168.43.56","Desktop/Git/Robot/bin/camera.py")
+            SSHRemote.SendSignalToRunScript(SECONDARY_IP,"Desktop/Git/Robot/bin/camera.py")
             self.movements = 0
 
         
-        #This block of code outputs the images along with visual lines
-        vanishing_line = cv2.line(orig,(index_min+OFFSET,0),(index_min+OFFSET,840),(0,0,255),2)
-        center_line = cv2.line(orig,(580,0),(580,840),(0,255,0),2)
+        if(self.config.getboolean("navigation","displayoutput")):
+            #This block of code outputs the images along with visual lines
+            vanishing_line = cv2.line(orig,(index_min+OFFSET,0),(index_min+OFFSET,840),(0,0,255),2)
+            center_line = cv2.line(orig,(580,0),(580,840),(0,255,0),2)
 
-        cv2.destroyAllWindows()
-        cv2.imshow("image", orig)
-        #cv2.imshow("mask", mask)
+            cv2.destroyAllWindows()
+            cv2.imshow("image", orig)
+            #cv2.imshow("mask", mask)
 
     
-        cv2.waitKey(500)
+            cv2.waitKey(500)
