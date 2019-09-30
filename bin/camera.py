@@ -45,10 +45,11 @@ class Camera():
         self.path += ".jpeg"
         #picamera.PiCamera.close(self)
         with picamera.PiCamera() as camera:
-            camera.resolution = (1024,768)
+            camera.resolution = (1024,768)  
             camera.start_preview()
             time.sleep(2)
             camera.capture(self.path)
+            
             camera.stop_preview()
         
 
