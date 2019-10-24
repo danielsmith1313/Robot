@@ -12,6 +12,7 @@ if gauth.credentials is None:
     # Authenticate if it can not be found
     gauth.LocalWebserverAuth()
 elif gauth.access_token_expired:
+    
     # Refresh them if expired
     gauth.Refresh()
 else:
@@ -26,6 +27,7 @@ drive = GoogleDrive(gauth)
 fisheyeFolderMetadata = {'title':'Fisheye '+ str(datetime.datetime.now()), 'mimeType' : 'application/vnd.google-apps.folder'}
 fisheyeFolder = drive.CreateFile(fisheyeFolderMetadata)
 fisheyeFolder.Upload()
+
 
 #Find folder info
 fisheyeFolderTitle = fisheyeFolder['title']
