@@ -64,6 +64,7 @@ else:
                     motors.enable()
                     motors.setSpeeds(-250, -250)
                     time.sleep(.005)
+                    print("moving forward")
             except Exception as e:
                 print("Failed going forward")
                 print(e)
@@ -83,6 +84,7 @@ else:
                     motors.enable()
                     motors.setSpeeds(-250, -250)
                     time.sleep(.005)
+                    print("moving backward")
             except Exception as e:
                 print("Failed going backwards")
                 print(e)
@@ -97,6 +99,7 @@ else:
                     motors.enable()
                     motors.setSpeeds(-250,-125)
                     time.sleep(.005)
+                    print("moving right")
             except Exception as e:
                 print("Failed moving right")
                 print(e)
@@ -110,6 +113,7 @@ else:
                     motors.enable()
                     motors.setSpeeds(-125,-250)
                     time.sleep(.005)
+                    print("moving left")
             except Exception as e:
                 print("Failed moving left")
                 print(e)
