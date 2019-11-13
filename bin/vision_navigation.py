@@ -14,7 +14,7 @@ import cv2                                      #Open cv library, a powerful lib
 import numpy as np                              #Numpy is a data manipulation library which allows for programs to calculate with classic arrays instead of the python lists
 import time                                     #Allows recording of time and sleeping for correct camera pictures
 from dual_g2_hpmd_rpi import motors, MAX_SPEED  #Motor control library provided by Polulu for their 
-import io                                       #Python library used to manage input and output of the computer
+import io                                       #Python library used to manage inp ut and output of the computer
 import matplotlib.pyplot as plt                 #Matplotlib is a library used to display and manage data specifically arrays
 import sys                                      #Used to exit the program
 from ssh_remote import SSHRemote                #SSHRemote is a local class that allows for sshing into a seperate computer on the same network
@@ -66,16 +66,19 @@ class VisionNavigation:
         #This section of code changes the resolution to the specified settings
         img = cv2.resize(img,(1280,840))
         
+        #Declare variables
+        ratioBrown = 0
+
         #This section of code isolates the brown pixels with the rest of the image. NOTE: for all image isolation techniques, the
         # color range is in HSV (Hue, Saturation, Value). Additionally, for all image isolation techniques, the image is split into
         # pink pixels for targeted color, and black for all other colors outside the range.
-        hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-        maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
-        imaskbrown = maskbrown>0
-        brown = np.zeros_like(img,np.uint8)
-        brown[imaskbrown] = (127,0,255)
-        ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
-        print("Ratiobrown ", np.round(ratioBrown*100,2))
+        #hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        #maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
+        #imaskbrown = maskbrown>0
+        #brown = np.zeros_like(img,np.uint8)
+        #brown[imaskbrown] = (127,0,255)
+        #ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
+        #print("Ratiobrown ", np.round(ratioBrown*100,2))
 
         #This section of code blurs the image from a range in pixels equal to BLUR. 
         kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)

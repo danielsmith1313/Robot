@@ -57,27 +57,27 @@ else:
 
         pygame.event.pump()
         keys = pygame.key.get_pressed()
+        #Note: motors is the object imported from the Pololu motor controller library
         if keys[K_w]:
             try:
+                #Update the motors speed
                 for i in range(1):
                 
                     motors.enable()
                     motors.setSpeeds(-250, -250)
                     time.sleep(.005)
                     print("moving forward")
-            except Exception as e:
-                print("Failed going forward")
-                print(e)
+            
             finally:
-                # Stop the motors, even if there is an exception
-                # or the user presses Ctrl+C to kill the process.
+                #Stop the motors, even if there is an exception (allows exiting of the program)
                 motors.setSpeeds(0, 0)
                 motors.disable()
                 
-            pass
+            
         if keys[K_s]:
             #Reset the motors
-        
+
+            
             try:
                 for i in range(1):
                 
