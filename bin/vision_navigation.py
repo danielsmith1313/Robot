@@ -47,7 +47,8 @@ class VisionNavigation:
         MOTOR_U_TURN_TIME = self.config.getint("pathfinding", "motoruturntime")
         DISPLAY_OUTPUT = self.config.get("pathfinding","displayoutput")
         SECONDARY_IP = self.config.get("network","secondaryip")
-        
+        PIXEL_PERCENT_TO_TURN = self.config.get("pathfinding","pixelpercenttoturn")
+        PIXEL_TYPE_TO_TURN= self.config.get("pathfinding","pixeltype")
 
         currentRow = 0
         motors.enable()
@@ -69,17 +70,27 @@ class VisionNavigation:
         #Declare variables
         ratioBrown = 0
 
-        #This section of code isolates the brown pixels with the rest of the image. NOTE: for all image isolation techniques, the
+        #This section of code isolates the brown or blue pixels with the rest of the image. NOTE: for all image isolation techniques, the
         # color range is in HSV (Hue, Saturation, Value). Additionally, for all image isolation techniques, the image is split into
         # pink pixels for targeted color, and black for all other colors outside the range.
-        #hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-        #maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
-        #imaskbrown = maskbrown>0
-        #brown = np.zeros_like(img,np.uint8)
-        #brown[imaskbrown] = (127,0,255)
-        #ratioBrown = (cv2.countNonZero(maskbrown)/(img.size/3))
-        #print("Ratiobrown ", np.round(ratioBrown*100,2))
-
+        
+        if(PIXEL_TYPE_TO_TURN==0):
+            hsvbrown = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+            maskbrown = cv2.inRange(hsvbrown,(0,0,80),(40,90,255))
+            imaskbrown = maskbrown>0
+            brown = np.zeros_like(img,np.uint8)
+            brown[imaskbrown] = (127,0,255)
+            ratio = (cv2.countNonZero(maskbrown)/(img.size/3))
+            print("Ratio ", np.round(ratio*100,2))
+        #Search blue pixels instead
+        elif(PIXEL_TYPE_TO_TURN==1):
+            hsvblue = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+            maskblue = cv2.inRange(hsvblue,(0,0,80),(40,90,255))
+            imaskblue = maskblue>0
+            blue = np.zeros_like(img,np.uint8)
+            blue[imaskblue] = (127,0,255)
+            ratio = (cv2.countNonZero(maskblue)/(img.size/3))
+            print("Ratio ", np.round(ratio*100,2))
         #This section of code blurs the image from a range in pixels equal to BLUR. 
         kernel = np.ones((BLUR,BLUR),np.float32)/(BLUR*BLUR)
         dst = cv2.filter2D(img,-1,kernel)
